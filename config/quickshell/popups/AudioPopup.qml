@@ -88,7 +88,7 @@ PanelWindow {
                             Text {
                                 anchors.centerIn: parent
                                 text: modelData
-                                font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold
+                                font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black
                                 color: win.tabIndex === index ? Theme.accentOn : Theme.fgMuted
                             }
                             MouseArea { cursorShape: Qt.PointingHandCursor; anchors.fill: parent; onClicked: win.tabIndex = index }
@@ -128,12 +128,12 @@ PanelWindow {
                                 Text {
                                     Layout.fillWidth: true
                                     text: modelData.name
-                                    font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Medium; color: Theme.fg
+                                    font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: Theme.fg
                                     elide: Text.ElideRight
                                 }
                                 Text {
                                     text: Math.round(localVol * 100) + "%"
-                                    font.family: Theme.fontFamily; font.pixelSize: 11; color: Theme.fgMuted
+                                    font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 11; color: Theme.fgMuted
                                 }
                             }
                             WavySlider {
@@ -154,7 +154,7 @@ PanelWindow {
                     Layout.alignment: Qt.AlignHCenter
                     visible: win.appStreams.length === 0
                     text: "Нет активных аудиопотоков"
-                    font.family: Theme.fontFamily; font.pixelSize: 12; color: Theme.fgMuted
+                    font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 12; color: Theme.fgMuted
                 }
             }
 
@@ -176,7 +176,7 @@ PanelWindow {
                             anchors.verticalCenter: parent.verticalCenter
                             anchors.left: parent.left; anchors.right: parent.right; anchors.margins: 12
                             text: modelData.desc
-                            font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: modelData.def ? Font.Bold : Font.Normal
+                            font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: modelData.def ? Font.Black : Font.Black
                             color: modelData.def ? Theme.accentOn : Theme.fg
                             elide: Text.ElideRight
                         }

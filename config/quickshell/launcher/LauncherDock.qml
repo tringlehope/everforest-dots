@@ -161,14 +161,14 @@ Scope {
                                 Layout.fillWidth: true
                                 text: launcherRoot.searchText
                                 onTextChanged: launcherRoot.searchText = text
-                                font.family: Theme.fontFamily; font.pixelSize: 13
+                                font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 13
                                 color: Theme.fg
                                 selectByMouse: true
                                 Keys.onEscapePressed: launcherRoot.open = false
                                 Text {
                                     visible: !parent.text
                                     text: "Поиск..."
-                                    font.family: Theme.fontFamily; font.pixelSize: 13
+                                    font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 13
                                     color: Theme.fgMuted
                                 }
                             }
@@ -231,7 +231,7 @@ Scope {
                                 Text {
                                     Layout.fillWidth: true
                                     text: modelData.name
-                                    font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Medium
+                                    font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Black
                                     color: Theme.fg
                                     elide: Text.ElideRight
                                 }
@@ -292,7 +292,7 @@ Scope {
                     RowLayout {
                         anchors.centerIn: parent; spacing: 8
                         Text { text: "\uf021"; font.family: Theme.iconFont; font.pixelSize: 12; color: Theme.accent }
-                        Text { text: "Обновить софт"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: Theme.fg }
+                        Text { text: "Обновить софт"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: Theme.fg }
                     }
                     MouseArea { cursorShape: Qt.PointingHandCursor; id: updMouse; anchors.fill: parent; hoverEnabled: true; onClicked: console.log("Update stub") }
                 }
@@ -391,7 +391,7 @@ Scope {
                             Text {
                                 anchors.centerIn: parent
                                 text: String(modelData.wsId)
-                                font.family: Theme.fontFamily; font.pixelSize: 10; font.weight: Font.Bold
+                                font.family: Theme.fontFamily; font.pixelSize: 10; font.weight: Font.Black
                                 color: parent.parent.isCurrentWs ? Theme.accentOn : Theme.fg
                             }
                         }

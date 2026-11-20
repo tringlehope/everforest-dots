@@ -17,7 +17,7 @@ Item {
 
         Text {
             text: "Стиль панели и краёв экрана"
-            font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.DemiBold; color: Theme.fgMuted
+            font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Black; color: Theme.fgMuted
         }
 
         RowLayout {
@@ -69,7 +69,7 @@ Item {
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         text: "Панель с рамками"
-                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: active ? Font.Bold : Font.Medium
+                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: active ? Font.Black : Font.Black
                         color: active ? Theme.accent : Theme.fg
                     }
                 }
@@ -115,7 +115,7 @@ Item {
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         text: "Только пузыри"
-                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: active ? Font.Bold : Font.Medium
+                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: active ? Font.Black : Font.Black
                         color: active ? Theme.accent : Theme.fg
                     }
                 }

@@ -149,7 +149,7 @@ PanelWindow {
                             Quickshell.execDetached(["brightnessctl", "set", Math.round(v * 100) + "%"]);
                         }
                     }
-                    Text { text: Math.round(win.brightness * 100) + "%"; font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.Bold; color: Theme.fg }
+                    Text { text: Math.round(win.brightness * 100) + "%"; font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.Black; color: Theme.fg }
                 }
             }
 
@@ -174,7 +174,7 @@ PanelWindow {
                             RowLayout {
                                 anchors.fill: parent; anchors.leftMargin: 12; spacing: 6
                                 Text { text: "\uf0e8"; font.family: Theme.iconFont; font.pixelSize: 13; color: win.ethConnected ? Theme.accentOn : Theme.fg }
-                                Text { Layout.fillWidth: true; text: "Сеть"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: win.ethConnected ? Theme.accentOn : Theme.fg }
+                                Text { Layout.fillWidth: true; text: "Сеть"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: win.ethConnected ? Theme.accentOn : Theme.fg }
                             }
                             MouseArea {
                                 cursorShape: Qt.PointingHandCursor
@@ -220,7 +220,7 @@ PanelWindow {
                             RowLayout {
                                 anchors.fill: parent; anchors.leftMargin: 12; spacing: 6
                                 Text { text: "\uf293"; font.family: Theme.iconFont; font.pixelSize: 13; color: btPill.btOn ? Theme.accentOn : Theme.fg }
-                                Text { Layout.fillWidth: true; text: "Bluetooth"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: btPill.btOn ? Theme.accentOn : Theme.fg }
+                                Text { Layout.fillWidth: true; text: "Bluetooth"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: btPill.btOn ? Theme.accentOn : Theme.fg }
                             }
                             MouseArea {
                                 cursorShape: Qt.PointingHandCursor
@@ -259,7 +259,7 @@ PanelWindow {
                         Text { text: "\uf009"; font.family: Theme.iconFont; font.pixelSize: 12; color: win.scrollingLayout ? Theme.accentOn : Theme.fg }
                         Text {
                             text: win.scrollingLayout ? "Scrolling" : "Dwindle"
-                            font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold
+                            font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black
                             color: win.scrollingLayout ? Theme.accentOn : Theme.fg
                         }
                     }
@@ -285,7 +285,7 @@ PanelWindow {
                     RowLayout {
                         anchors.centerIn: parent; spacing: 6
                         Text { text: "\uf03e"; font.family: Theme.iconFont; font.pixelSize: 12; color: Theme.accentWarm }
-                        Text { text: "Обои"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: Theme.fg }
+                        Text { text: "Обои"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: Theme.fg }
                     }
 
                     MouseArea {
@@ -311,7 +311,7 @@ PanelWindow {
                         Text { text: "\uf08d"; font.family: Theme.iconFont; font.pixelSize: 12; color: win.dockPinned ? Theme.accentOn : Theme.fg }
                         Text {
                             text: win.dockPinned ? "Док: Закреплён" : "Закрепить док"
-                            font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold
+                            font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black
                             color: win.dockPinned ? Theme.accentOn : Theme.fg
                         }
                     }
@@ -333,7 +333,7 @@ PanelWindow {
                     RowLayout {
                         anchors.centerIn: parent; spacing: 6
                         Text { text: "\uf013"; font.family: Theme.iconFont; font.pixelSize: 12; color: Theme.accentWarm }
-                        Text { text: "Настройки"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: Theme.fg }
+                        Text { text: "Настройки"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: Theme.fg }
                     }
 
                     MouseArea {
@@ -359,7 +359,7 @@ PanelWindow {
                     id: netTxt
                     anchors.fill: parent; anchors.margins: 9
                     text: win.netInfo
-                    font.family: Theme.fontFamily; font.pixelSize: 11; color: Theme.fg
+                    font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 11; color: Theme.fg
                     wrapMode: Text.Wrap
                 }
             }
@@ -372,7 +372,7 @@ PanelWindow {
                 Text {
                     visible: Bluetooth.devices.values.length === 0
                     text: "Нет сопряжённых Bluetooth-устройств"
-                    font.family: Theme.fontFamily; font.pixelSize: 11; color: Theme.fgMuted
+                    font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 11; color: Theme.fgMuted
                 }
 
                 Repeater {
@@ -388,7 +388,7 @@ PanelWindow {
                             anchors.verticalCenter: parent.verticalCenter
                             anchors.left: parent.left; anchors.margins: 12
                             text: modelData.name || modelData.address
-                            font.family: Theme.fontFamily; font.pixelSize: 12
+                            font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 12
                             color: modelData.connected ? Theme.accentOn : Theme.fg
                         }
 

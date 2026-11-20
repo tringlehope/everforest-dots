@@ -160,7 +160,7 @@ PanelWindow {
 
                     Text {
                         text: "Настройки"
-                        font.family: Theme.fontFamily; font.pixelSize: 15; font.weight: Font.Bold; color: Theme.fg
+                        font.family: Theme.fontFamily; font.pixelSize: 15; font.weight: Font.Black; color: Theme.fg
                         Layout.leftMargin: 8; Layout.bottomMargin: 8; Layout.topMargin: 4
                     }
 
@@ -183,7 +183,7 @@ PanelWindow {
                                     Layout.fillWidth: true
                                     text: modelData.title
                                     font.family: Theme.fontFamily; font.pixelSize: 13
-                                    font.weight: win.currentTab === index ? Font.Bold : Font.Medium
+                                    font.weight: win.currentTab === index ? Font.Black : Font.Black
                                     color: win.currentTab === index ? Theme.accentOn : Theme.fg
                                 }
                             }
@@ -219,7 +219,7 @@ PanelWindow {
                         Text {
                             Layout.fillWidth: true
                             text: win.currentTab === 0 ? "Мониторы" : (win.currentTab === 1 ? "Приложения" : "Внешний вид")
-                            font.family: Theme.fontFamily; font.pixelSize: 16; font.weight: Font.Bold; color: Theme.fg
+                            font.family: Theme.fontFamily; font.pixelSize: 16; font.weight: Font.Black; color: Theme.fg
                         }
                         Rectangle {
                             implicitWidth: 30; implicitHeight: 30
@@ -257,7 +257,7 @@ PanelWindow {
                             Text {
                                 Layout.fillWidth: true
                                 text: "Настройки не сохранены — нажмите «Применить»"
-                                font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: Theme.accentOn
+                                font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: Theme.accentOn
                             }
                         }
                     }
@@ -276,7 +276,7 @@ PanelWindow {
                         Text {
                             anchors { left: parent.left; top: parent.top; margins: 8 }
                             text: "Перетащите мониторы для расположения"
-                            font.family: Theme.fontFamily; font.pixelSize: 10; color: Theme.fgMuted
+                            font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 10; color: Theme.fgMuted
                         }
 
                         Repeater {
@@ -302,12 +302,12 @@ PanelWindow {
                                     Text {
                                         Layout.alignment: Qt.AlignHCenter
                                         text: modelData.name
-                                        font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.Bold; color: Theme.fg
+                                        font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.Black; color: Theme.fg
                                     }
                                     Text {
                                         Layout.alignment: Qt.AlignHCenter
                                         text: Math.round(modelData.x) + ", " + Math.round(modelData.y)
-                                        font.family: Theme.fontFamily; font.pixelSize: 9; color: Theme.fgMuted
+                                        font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 9; color: Theme.fgMuted
                                     }
                                 }
 
@@ -360,7 +360,7 @@ PanelWindow {
                                 Text {
                                     Layout.fillWidth: true
                                     text: label
-                                    font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Medium; color: Theme.fg
+                                    font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Black; color: Theme.fg
                                 }
                                 Rectangle {
                                     implicitWidth: valRow.implicitWidth + 22
@@ -374,7 +374,7 @@ PanelWindow {
                                         id: valRow
                                         anchors.centerIn: parent
                                         spacing: 8
-                                        Text { text: valueText; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: Theme.fg }
+                                        Text { text: valueText; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: Theme.fg }
                                         Text { text: isOpen ? "\uf077" : "\uf078"; font.family: Theme.iconFont; font.pixelSize: 10; color: Theme.fgMuted }
                                     }
 
@@ -428,7 +428,7 @@ PanelWindow {
                             Text {
                                 anchors.centerIn: parent
                                 text: "Применить"
-                                font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Bold; color: Theme.accentOn
+                                font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Black; color: Theme.accentOn
                             }
                             MouseArea {
                                 cursorShape: Qt.PointingHandCursor
@@ -492,7 +492,7 @@ PanelWindow {
                                     if (win.activeDropdown === "hz") return modelData + " Hz";
                                     return modelData + "x";
                                 }
-                                font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: isCur ? Font.Bold : Font.Normal
+                                font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: isCur ? Font.Black : Font.Black
                                 color: isCur ? Theme.accentOn : Theme.fg
                             }
 

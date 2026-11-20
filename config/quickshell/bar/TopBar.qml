@@ -190,7 +190,7 @@ PanelWindow {
                                     text: wsId
                                     font.family: Theme.fontFamily
                                     font.pixelSize: 11
-                                    font.weight: isActive ? Font.Bold : (hasWindows ? Font.DemiBold : Font.Normal)
+                                    font.weight: isActive ? Font.Black : (hasWindows ? Font.Black : Font.Black)
                                     color: isActive ? Theme.accentOn : (hasWindows ? Theme.fg : Theme.fgDim)
                                 }
                             }
@@ -252,7 +252,7 @@ PanelWindow {
                 Text {
                     visible: !bar.showPlayer
                     text: "Звук"
-                    font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Medium; color: Theme.fg
+                    font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: Theme.fg
                 }
 
                 RowLayout {
@@ -267,7 +267,7 @@ PanelWindow {
 
                     Text {
                         text: bar.playerTitle || "Музыка"
-                        font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.Medium; color: Theme.fg
+                        font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.Black; color: Theme.fg
                         elide: Text.ElideRight; Layout.maximumWidth: 140
                         Layout.rightMargin: 4
                     }
@@ -365,7 +365,7 @@ PanelWindow {
                             id: kbTxt
                             anchors.centerIn: parent
                             text: bar.kbLayout
-                            font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.Bold; color: Theme.fg
+                            font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.Black; color: Theme.fg
                         }
                         MouseArea {
                             cursorShape: Qt.PointingHandCursor
@@ -422,7 +422,7 @@ PanelWindow {
                     id: timeText
                     anchors.centerIn: parent
                     text: Qt.formatDateTime(clock.date, "HH:mm")
-                    font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.SemiBold; color: Theme.fg
+                    font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: Theme.fg
                 }
 
                 MouseArea {
