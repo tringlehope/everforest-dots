@@ -1,0 +1,26 @@
+-- Модульный конфиг Hyprland (Everforest Dark Soft)
+
+hl.monitor({
+    output   = "",
+    mode     = "2048x1152@60",
+    position = "auto",
+    scale    = 1,
+})
+
+hl.env("XCURSOR_SIZE", "24")
+hl.env("HYPRCURSOR_SIZE", "24")
+hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
+hl.env("XDG_SESSION_TYPE", "wayland")
+hl.env("XDG_SESSION_DESKTOP", "Hyprland")
+hl.env("QT_QPA_PLATFORM", "wayland;xcb")
+hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
+
+hl.on("hyprland.start", function ()
+    hl.exec_cmd("systemctl --user start hyprpolkitagent")
+    hl.exec_cmd("sh -c '[ -f ~/.local/state/qs-wallpaper ] && swaybg -i \"$(cat ~/.local/state/qs-wallpaper)\" -m fill'")
+    hl.exec_cmd("qs")
+end)
+
+require("appearance")
+require("workspaces")
+require("binds")
