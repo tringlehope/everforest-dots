@@ -28,3 +28,8 @@ hl.bind(mainMod .. " + mouse_right", hl.dsp.layout("move +col"))
 -- Плавное перетаскивание ленты зажатием Super + колёсико (средняя кнопка)
 hl.bind(mainMod .. " + mouse:274", hl.dsp.exec_cmd("~/.config/hypr/scroll-drag.sh"))
 hl.bind(mainMod .. " + mouse:274", hl.dsp.exec_cmd("touch /tmp/hypr-scroll-stop"), { release = true })
+
+-- Роллер громкости (Aula F75 и мультимедиа-клавиши)
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+ && qs ipc call osd volume"), { locked = true, repeating = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && qs ipc call osd volume"),      { locked = true, repeating = true })
+hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && qs ipc call osd volume"),     { locked = true })

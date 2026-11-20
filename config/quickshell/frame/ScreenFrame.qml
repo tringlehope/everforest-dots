@@ -14,6 +14,7 @@ Scope {
         color: Theme.bgFrame
         WlrLayershell.layer: WlrLayer.Top
         WlrLayershell.namespace: "qs-frame"
+        visible: Theme.showFrame
     }
 
     PanelWindow {
@@ -23,6 +24,7 @@ Scope {
         color: Theme.bgFrame
         WlrLayershell.layer: WlrLayer.Top
         WlrLayershell.namespace: "qs-frame"
+        visible: Theme.showFrame
     }
 
     PanelWindow {
@@ -32,6 +34,7 @@ Scope {
         color: Theme.bgFrame
         WlrLayershell.layer: WlrLayer.Top
         WlrLayershell.namespace: "qs-frame"
+        visible: Theme.showFrame
     }
 
     component CornerCutout: PanelWindow {
@@ -44,6 +47,7 @@ Scope {
         color: "transparent"
         WlrLayershell.layer: WlrLayer.Top
         WlrLayershell.namespace: "qs-corner"
+        visible: Theme.showFrame
         mask: Region {}
 
         margins {

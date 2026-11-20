@@ -2,6 +2,8 @@ pragma Singleton
 import QtQuick
 
 QtObject {
+    property bool showFrame: true
+
     readonly property color bgFrame:      "#232a2e"
     readonly property color bgSurface:    "#2d353b"
     readonly property color bgPill:       "#323c41"
@@ -18,7 +20,7 @@ QtObject {
     readonly property color borderSubtle: "#475258"
     readonly property color danger:       "#e67e80"
 
-    readonly property string fontFamily:  "Inter"
+    readonly property string fontFamily:  "Nunito"
     readonly property string monoFont:    "JetBrainsMono Nerd Font"
     readonly property string iconFont:    "JetBrainsMono Nerd Font"
 

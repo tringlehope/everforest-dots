@@ -74,7 +74,7 @@ Rectangle {
                 anchors.centerIn: parent
                 spacing: 8
                 Text { text: "\uf108"; font.family: "JetBrainsMono Nerd Font"; font.pixelSize: 13; color: "#a7c080" }
-                Text { text: root.currentSessionName; font.family: "Inter"; font.pixelSize: 12; font.weight: Font.DemiBold; color: "#d3c6aa" }
+                Text { text: root.currentSessionName; font.family: "Nunito"; font.pixelSize: 12; font.weight: Font.DemiBold; color: "#d3c6aa" }
             }
 
             MouseArea {
@@ -137,7 +137,7 @@ Rectangle {
                         }
                         return "EN";
                     }
-                    font.family: "Inter"; font.pixelSize: 12; font.weight: Font.Bold; color: "#d3c6aa"
+                    font.family: "Nunito"; font.pixelSize: 12; font.weight: Font.Bold; color: "#d3c6aa"
                 }
             }
 
@@ -234,7 +234,7 @@ Rectangle {
             Text {
                 Layout.alignment: Qt.AlignHCenter
                 text: root.currentUserName
-                font.family: "Inter"; font.pixelSize: 15; font.weight: Font.Bold; color: "#d3c6aa"
+                font.family: "Nunito"; font.pixelSize: 15; font.weight: Font.Bold; color: "#d3c6aa"
             }
 
             // Поле ввода пароля с «желейной» анимацией фокуса
@@ -258,7 +258,7 @@ Rectangle {
                         id: passwordInput
                         Layout.fillWidth: true
                         echoMode: TextInput.Password
-                        font.family: "Inter"; font.pixelSize: 14
+                        font.family: "Nunito"; font.pixelSize: 14
                         color: "#d3c6aa"
                         selectionColor: "#a7c080"
                         onTextChanged: root.loginError = false
@@ -268,7 +268,7 @@ Rectangle {
                         Text {
                             visible: !parent.text
                             text: root.loginError ? "Неверный пароль" : "Пароль..."
-                            font.family: "Inter"; font.pixelSize: 13
+                            font.family: "Nunito"; font.pixelSize: 13
                             color: root.loginError ? "#e67e80" : "#859289"
                         }
                     }

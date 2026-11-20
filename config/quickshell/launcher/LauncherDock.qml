@@ -13,6 +13,7 @@ Scope {
     property bool pinned: false
     property string searchText: ""
     property var runningClients: []
+    property var groupedClients: []
     property int activeWsId: 1
     property var appFreq: ({})
 
@@ -29,6 +30,17 @@ Scope {
                         var arr = JSON.parse(text.slice(idx + 1));
                         arr.sort((a, b) => (a.workspace?.id ?? 0) - (b.workspace?.id ?? 0));
                         launcherRoot.runningClients = arr;
+                        var map = {};
+                        var groups = [];
+                        for (var i = 0; i < arr.length; i++) {
+                            var wid = arr[i].workspace?.id ?? 1;
+                            if (!map[wid]) {
+                                map[wid] = { wsId: wid, items: [] };
+                                groups.push(map[wid]);
+                            }
+                            map[wid].items.push(arr[i]);
+                        }
+                        launcherRoot.groupedClients = groups;
                     }
                 } catch (e) {
                     launcherRoot.runningClients = [];
@@ -120,8 +132,7 @@ Scope {
             Behavior on scale {
                 NumberAnimation {
                     duration: launcherRoot.open ? 260 : 160
-                    easing.type: launcherRoot.open ? Easing.OutBack : Easing.InCubic
-                    easing.overshoot: 1.15
+                    easing.type: launcherRoot.open ? Easing.OutQuint : Easing.InQuad
                 }
             }
 
@@ -168,7 +179,7 @@ Scope {
                         implicitWidth: 34; implicitHeight: 34
                         radius: closeMouse.containsMouse ? 8 : 12
                         color: closeMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
-                        Behavior on radius { NumberAnimation { duration: 200; easing.type: Easing.OutBack } }
+                        Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
                         Text { anchors.centerIn: parent; text: "\uf00d"; font.family: Theme.iconFont; font.pixelSize: 13; color: Theme.fgMuted }
                         MouseArea { id: closeMouse; anchors.fill: parent; hoverEnabled: true; onClicked: launcherRoot.open = false }
                     }
@@ -208,7 +219,7 @@ Scope {
                             implicitHeight: 44
                             radius: appMouse.containsMouse ? 8 : 14
                             color: appMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
-                            Behavior on radius { NumberAnimation { duration: 200; easing.type: Easing.OutBack } }
+                            Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
 
                             RowLayout {
                                 anchors.fill: parent; anchors.leftMargin: 6; anchors.rightMargin: 12; spacing: 10
@@ -227,6 +238,7 @@ Scope {
                             }
 
                             MouseArea {
+                                cursorShape: Qt.PointingHandCursor
                                 id: appMouse
                                 anchors.fill: parent; hoverEnabled: true
                                 onClicked: {
@@ -275,14 +287,14 @@ Scope {
                     color: updMouse.containsMouse ? Theme.bgPillHover : Theme.bgElevated
                     border.color: Theme.borderSubtle
                     border.width: 1
-                    Behavior on radius { NumberAnimation { duration: 200; easing.type: Easing.OutBack } }
+                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
 
                     RowLayout {
                         anchors.centerIn: parent; spacing: 8
                         Text { text: "\uf021"; font.family: Theme.iconFont; font.pixelSize: 12; color: Theme.accent }
                         Text { text: "Обновить софт"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: Theme.fg }
                     }
-                    MouseArea { id: updMouse; anchors.fill: parent; hoverEnabled: true; onClicked: console.log("Update stub") }
+                    MouseArea { cursorShape: Qt.PointingHandCursor; id: updMouse; anchors.fill: parent; hoverEnabled: true; onClicked: console.log("Update stub") }
                 }
             }
         }
@@ -295,7 +307,7 @@ Scope {
         visible: dockCard.scale > 0.05 || shouldShow
         exclusiveZone: (launcherRoot.pinned && launcherRoot.runningClients.length > 0) ? (implicitHeight + 8) : -1
         anchors { bottom: true }
-        margins.bottom: Theme.frameThickness + 8
+        margins.bottom: (Theme.showFrame ? Theme.frameThickness : 0) + 8
         implicitWidth: Math.max(104, dockRow.implicitWidth + 32)
         implicitHeight: 96
         color: "transparent"
@@ -315,40 +327,72 @@ Scope {
             Behavior on scale {
                 NumberAnimation {
                     duration: dockWin.shouldShow ? 280 : 160
-                    easing.type: dockWin.shouldShow ? Easing.OutBack : Easing.InCubic
-                    easing.overshoot: 1.15
+                    easing.type: dockWin.shouldShow ? Easing.OutQuint : Easing.InQuad
                 }
             }
 
             RowLayout {
                 id: dockRow
                 anchors.centerIn: parent
-                spacing: 14
+                spacing: 12
 
                 Repeater {
-                    model: launcherRoot.runningClients
+                    model: launcherRoot.groupedClients
                     delegate: Rectangle {
                         required property var modelData
-                        readonly property bool onCurrentWs: (modelData.workspace?.id ?? -1) === launcherRoot.activeWsId
-                        width: 74; height: 74
-                        radius: 18
-                        color: dockItemMouse.containsMouse ? Theme.bgPillHover : (onCurrentWs ? Theme.bgElevated : Theme.bgPill)
-                        border.color: onCurrentWs ? Theme.accentWarm : "transparent"
-                        border.width: onCurrentWs ? 2 : 0
+                        readonly property bool isCurrentWs: modelData.wsId === launcherRoot.activeWsId
+                        implicitWidth: grpRow.implicitWidth + 12
+                        height: 82
+                        radius: 20
+                        color: isCurrentWs ? Theme.bgElevated : Theme.bgPill
+                        border.color: isCurrentWs ? Theme.accentWarm : Theme.borderSubtle
+                        border.width: isCurrentWs ? 2 : 1
 
-                        IconImage {
+                        RowLayout {
+                            id: grpRow
                             anchors.centerIn: parent
-                            source: launcherRoot.iconForClient(modelData.class)
-                            implicitSize: 64
-                            width: 64; height: 64
+                            spacing: 8
+
+                            Repeater {
+                                model: modelData.items
+                                delegate: Rectangle {
+                                    required property var modelData
+                                    width: 68; height: 68
+                                    radius: 16
+                                    color: dockItemMouse.containsMouse ? Theme.bgPillHover : "transparent"
+
+                                    IconImage {
+                                        anchors.centerIn: parent
+                                        source: launcherRoot.iconForClient(modelData.class)
+                                        implicitSize: 60
+                                        width: 60; height: 60
+                                    }
+
+                                    MouseArea {
+                                        id: dockItemMouse
+                                        cursorShape: Qt.PointingHandCursor
+                                        anchors.fill: parent; hoverEnabled: true
+                                        onClicked: {
+                                            var wid = modelData.workspace?.id ?? 1;
+                                            Quickshell.execDetached(["hyprctl", "dispatch", "hl.dsp.focus({ workspace = " + wid + " })"]);
+                                            launcherRoot.open = false;
+                                        }
+                                    }
+                                }
+                            }
                         }
 
-                        MouseArea {
-                            id: dockItemMouse
-                            anchors.fill: parent; hoverEnabled: true
-                            onClicked: {
-                                Quickshell.execDetached(["hyprctl", "dispatch", "hl.dsp.focus({ workspace = " + (modelData.workspace?.id ?? 1) + " })"]);
-                                launcherRoot.open = false;
+                        // Номер рабочего стола в правом нижнем углу группы
+                        Rectangle {
+                            anchors { right: parent.right; bottom: parent.bottom }
+                            anchors.rightMargin: -4; anchors.bottomMargin: -4
+                            width: 20; height: 20; radius: 7
+                            color: parent.isCurrentWs ? Theme.accentWarm : Theme.borderSubtle
+                            Text {
+                                anchors.centerIn: parent
+                                text: String(modelData.wsId)
+                                font.family: Theme.fontFamily; font.pixelSize: 10; font.weight: Font.Bold
+                                color: parent.parent.isCurrentWs ? Theme.accentOn : Theme.fg
                             }
                         }
                     }

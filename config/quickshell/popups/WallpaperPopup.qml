@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Io
+import Quickshell.Widgets
 import "../components"
 import ".."
 
@@ -48,8 +49,7 @@ PanelWindow {
         Behavior on scale {
             NumberAnimation {
                 duration: win.open ? 260 : 160
-                easing.type: win.open ? Easing.OutBack : Easing.InCubic
-                easing.overshoot: 1.15
+                easing.type: win.open ? Easing.OutQuint : Easing.InQuad
             }
         }
 
@@ -105,16 +105,22 @@ PanelWindow {
                         border.color: wM.containsMouse ? Theme.accentWarm : Theme.borderSubtle
                         border.width: 2
                         clip: true
-                        Behavior on radius { NumberAnimation { duration: 200; easing.type: Easing.OutBack } }
+                        Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
 
-                        Image {
+                        ClippingRectangle {
                             anchors.fill: parent; anchors.margins: 2
-                            source: "file://" + modelData
-                            fillMode: Image.PreserveAspectCrop
-                            asynchronous: true
+                            radius: parent.radius - 2
+                            color: "transparent"
+                            Image {
+                                anchors.fill: parent
+                                source: "file://" + modelData
+                                fillMode: Image.PreserveAspectCrop
+                                asynchronous: true
+                            }
                         }
 
                         MouseArea {
+                            cursorShape: Qt.PointingHandCursor
                             id: wM
                             anchors.fill: parent; hoverEnabled: true
                             onClicked: {

@@ -5,6 +5,7 @@ import Quickshell.Wayland
 import Quickshell.Hyprland
 import Quickshell.Io
 import Quickshell.Services.SystemTray
+import Quickshell.Widgets
 import ".."
 
 PanelWindow {
@@ -14,11 +15,12 @@ PanelWindow {
     signal toggleAudio()
     signal toggleQuickSettings()
     signal toggleNotifications()
+    signal volumeScrolled()
 
     anchors { left: true; right: true; top: true }
     implicitHeight: Theme.topBarHeight
     exclusiveZone: Theme.topBarHeight
-    color: Theme.bgFrame
+    color: "transparent"
     WlrLayershell.layer: WlrLayer.Top
     WlrLayershell.namespace: "qs-bar"
 
@@ -27,6 +29,7 @@ PanelWindow {
     property string kbLayout: "EN"
     property string playerState: ""
     property string playerTitle: ""
+    property string playerName: ""
 
     Process { id: wsDispatch }
     Process { id: actProc }
@@ -43,7 +46,7 @@ PanelWindow {
             "hyprctl activeworkspace -j | python3 -c \"import sys,json; print(json.load(sys.stdin).get('id',1))\"\n" +
             "hyprctl clients -j | python3 -c \"import sys,json; print(','.join(str(c['workspace']['id']) for c in json.load(sys.stdin)))\"\n" +
             "hyprctl devices -j | python3 -c \"import sys,json; ks=json.load(sys.stdin).get('keyboards',[]); m=[k for k in ks if k.get('main')] or ks; print((m[0].get('active_keymap','EN') if m else 'EN'))\"\n" +
-            "python3 -c \"import subprocess\ntry:\n  out=subprocess.check_output(['playerctl','-a','-f','{{status}}||{{title}}','metadata'],stderr=subprocess.DEVNULL).decode().splitlines()\n  p=[l.split('||',1) for l in out if l.startswith('Playing||')] or [l.split('||',1) for l in out if l.startswith('Paused||')]\n  print(p[0][0]+'\\n'+p[0][1] if p else '\\n')\nexcept: print('\\n')\""
+            "python3 -c \"import subprocess\ntry:\n  out=subprocess.check_output(['playerctl','-a','-f','{{status}}||{{playerName}}||{{title}}','metadata'],stderr=subprocess.DEVNULL).decode().splitlines()\n  p=[l.split('||',2) for l in out if l.startswith('Playing||')] or [l.split('||',2) for l in out if l.startswith('Paused||')]\n  print(p[0][0]+'\\n'+p[0][2]+'\\n'+p[0][1] if p else '\\n\\n')\nexcept: print('\\n\\n')\""
         ]
         stdout: StdioCollector {
             onStreamFinished: {
@@ -69,6 +72,9 @@ PanelWindow {
                 if (lines.length >= 5) {
                     bar.playerTitle = lines[4].trim();
                 }
+                if (lines.length >= 6) {
+                    bar.playerName = lines[5].trim().toLowerCase();
+                }
             }
         }
     }
@@ -83,6 +89,12 @@ PanelWindow {
     readonly property bool isPlaying: playerState === "Playing"
 
     SystemClock { id: clock; precision: SystemClock.Minutes }
+
+    Rectangle {
+        anchors.fill: parent
+        color: Theme.bgFrame
+        visible: Theme.showFrame
+    }
 
     Item {
         anchors.fill: parent
@@ -105,7 +117,7 @@ PanelWindow {
                     width: 28; height: 26
                     radius: menuMouse.containsMouse ? 8 : 13
                     color: menuMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
-                    Behavior on radius { NumberAnimation { duration: 220; easing.type: Easing.OutBack; easing.overshoot: 1.4 } }
+                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
 
                     Text {
                         anchors.centerIn: parent
@@ -115,6 +127,7 @@ PanelWindow {
                 }
 
                 MouseArea {
+                    cursorShape: Qt.PointingHandCursor
                     id: menuMouse
                     anchors.fill: parent
                     hoverEnabled: true
@@ -131,7 +144,7 @@ PanelWindow {
                     width: parent.width; height: 26
                     radius: wsHover.hovered ? 9 : 13
                     color: Theme.bgPill
-                    Behavior on radius { NumberAnimation { duration: 220; easing.type: Easing.OutBack; easing.overshoot: 1.3 } }
+                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
                 }
 
                 HoverHandler { id: wsHover }
@@ -168,8 +181,8 @@ PanelWindow {
                                 radius: parent.isActive ? 7 : (wsItemMouse.containsMouse ? 6 : 10)
                                 color: parent.isActive ? Theme.accentWarm : (parent.hasWindows ? Theme.bgPillHover : "transparent")
 
-                                Behavior on width { NumberAnimation { duration: 240; easing.type: Easing.OutBack; easing.overshoot: 1.4 } }
-                                Behavior on radius { NumberAnimation { duration: 200; easing.type: Easing.OutBack; easing.overshoot: 1.3 } }
+                                Behavior on width { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                                Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
                                 Behavior on color { ColorAnimation { duration: Theme.animFast } }
 
                                 Text {
@@ -183,6 +196,7 @@ PanelWindow {
                             }
 
                             MouseArea {
+                                cursorShape: Qt.PointingHandCursor
                                 id: wsItemMouse
                                 anchors.fill: parent
                                 hoverEnabled: true
@@ -211,8 +225,8 @@ PanelWindow {
                 radius: centerMouse.containsMouse ? 8 : 13
                 color: centerMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
 
-                Behavior on width { NumberAnimation { duration: 280; easing.type: Easing.OutBack; easing.overshoot: 1.2 } }
-                Behavior on radius { NumberAnimation { duration: 220; easing.type: Easing.OutBack; easing.overshoot: 1.3 } }
+                Behavior on width { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
             }
 
             WheelHandler {
@@ -223,6 +237,7 @@ PanelWindow {
             }
 
             MouseArea {
+                cursorShape: Qt.PointingHandCursor
                 id: centerMouse
                 anchors.fill: parent
                 hoverEnabled: true
@@ -244,6 +259,12 @@ PanelWindow {
                     visible: bar.showPlayer
                     spacing: 4
 
+                    IconImage {
+                        source: Quickshell.iconPath((bar.playerName || "audio-x-generic").split(".")[0], "audio-x-generic")
+                        implicitSize: 16
+                        width: 16; height: 16
+                    }
+
                     Text {
                         text: bar.playerTitle || "Музыка"
                         font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.Medium; color: Theme.fg
@@ -255,19 +276,19 @@ PanelWindow {
                         implicitWidth: 30; implicitHeight: 26; radius: prevM.containsMouse ? 6 : 11
                         color: prevM.containsMouse ? Theme.bgElevated : "transparent"
                         Text { anchors.centerIn: parent; text: "\uf048"; font.family: Theme.iconFont; font.pixelSize: 11; color: Theme.fg }
-                        MouseArea { id: prevM; anchors.fill: parent; hoverEnabled: true; onClicked: bar.runAct(["playerctl", "previous"]) }
+                        MouseArea { cursorShape: Qt.PointingHandCursor; id: prevM; anchors.fill: parent; hoverEnabled: true; onClicked: bar.runAct(["playerctl", "previous"]) }
                     }
                     Rectangle {
                         implicitWidth: 32; implicitHeight: 26; radius: playM.containsMouse ? 6 : 11
                         color: playM.containsMouse ? Theme.bgElevated : "transparent"
                         Text { anchors.centerIn: parent; text: bar.isPlaying ? "\uf04c" : "\uf04b"; font.family: Theme.iconFont; font.pixelSize: 11; color: Theme.accent }
-                        MouseArea { id: playM; anchors.fill: parent; hoverEnabled: true; onClicked: bar.runAct(["playerctl", "play-pause"]) }
+                        MouseArea { cursorShape: Qt.PointingHandCursor; id: playM; anchors.fill: parent; hoverEnabled: true; onClicked: bar.runAct(["playerctl", "play-pause"]) }
                     }
                     Rectangle {
                         implicitWidth: 30; implicitHeight: 26; radius: nextM.containsMouse ? 6 : 11
                         color: nextM.containsMouse ? Theme.bgElevated : "transparent"
                         Text { anchors.centerIn: parent; text: "\uf051"; font.family: Theme.iconFont; font.pixelSize: 11; color: Theme.fg }
-                        MouseArea { id: nextM; anchors.fill: parent; hoverEnabled: true; onClicked: bar.runAct(["playerctl", "next"]) }
+                        MouseArea { cursorShape: Qt.PointingHandCursor; id: nextM; anchors.fill: parent; hoverEnabled: true; onClicked: bar.runAct(["playerctl", "next"]) }
                     }
                 }
             }
@@ -292,8 +313,8 @@ PanelWindow {
                     width: parent.width; height: 26
                     radius: trayHover.hovered ? 8 : 13
                     color: trayHover.hovered ? Theme.bgPillHover : Theme.bgPill
-                    Behavior on width { NumberAnimation { duration: 280; easing.type: Easing.OutBack; easing.overshoot: 1.2 } }
-                    Behavior on radius { NumberAnimation { duration: 220; easing.type: Easing.OutBack; easing.overshoot: 1.3 } }
+                    Behavior on width { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
                 }
 
                 HoverHandler { id: trayHover }
@@ -318,6 +339,7 @@ PanelWindow {
                                     width: 15; height: 15
                                 }
                                 MouseArea {
+                                    cursorShape: Qt.PointingHandCursor
                                     anchors.fill: parent
                                     acceptedButtons: Qt.LeftButton | Qt.RightButton
                                     onClicked: mouse => {
@@ -346,6 +368,7 @@ PanelWindow {
                             font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.Bold; color: Theme.fg
                         }
                         MouseArea {
+                            cursorShape: Qt.PointingHandCursor
                             anchors.fill: parent
                             onClicked: bar.runAct(["hyprctl", "switchxkblayout", "all", "next"])
                         }
@@ -362,7 +385,7 @@ PanelWindow {
                     width: parent.width; height: 26
                     radius: qsMouse.containsMouse ? 8 : 13
                     color: qsMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
-                    Behavior on radius { NumberAnimation { duration: 220; easing.type: Easing.OutBack; easing.overshoot: 1.3 } }
+                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
                 }
 
                 RowLayout {
@@ -375,6 +398,7 @@ PanelWindow {
                 }
 
                 MouseArea {
+                    cursorShape: Qt.PointingHandCursor
                     id: qsMouse
                     anchors.fill: parent
                     hoverEnabled: true
@@ -391,7 +415,7 @@ PanelWindow {
                     width: parent.width; height: 26
                     radius: timeMouse.containsMouse ? 8 : 13
                     color: timeMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
-                    Behavior on radius { NumberAnimation { duration: 220; easing.type: Easing.OutBack; easing.overshoot: 1.3 } }
+                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
                 }
 
                 Text {
@@ -402,6 +426,7 @@ PanelWindow {
                 }
 
                 MouseArea {
+                    cursorShape: Qt.PointingHandCursor
                     id: timeMouse
                     anchors.fill: parent
                     hoverEnabled: true

@@ -77,6 +77,7 @@ Item {
     }
 
     MouseArea {
+        cursorShape: Qt.PointingHandCursor
         anchors.fill: parent
         enabled: root.interactive
         onPressed: mouse => root.moved(Math.max(0, Math.min(1, mouse.x / width)))

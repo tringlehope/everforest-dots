@@ -1,12 +1,6 @@
 -- Модульный конфиг Hyprland (Everforest Dark Soft)
 
-hl.monitor({
-    output   = "",
-    mode     = "2048x1152@60",
-    position = "auto",
-    scale    = 1,
-})
-
+require("monitors")
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
@@ -24,3 +18,4 @@ end)
 require("appearance")
 require("workspaces")
 require("binds")
+require("autostart")

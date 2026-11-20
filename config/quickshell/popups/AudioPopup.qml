@@ -58,8 +58,7 @@ PanelWindow {
         Behavior on scale {
             NumberAnimation {
                 duration: win.open ? 260 : 160
-                easing.type: win.open ? Easing.OutBack : Easing.InCubic
-                easing.overshoot: 1.15
+                easing.type: win.open ? Easing.OutQuint : Easing.InQuad
             }
         }
 
@@ -92,7 +91,7 @@ PanelWindow {
                                 font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold
                                 color: win.tabIndex === index ? Theme.accentOn : Theme.fgMuted
                             }
-                            MouseArea { anchors.fill: parent; onClicked: win.tabIndex = index }
+                            MouseArea { cursorShape: Qt.PointingHandCursor; anchors.fill: parent; onClicked: win.tabIndex = index }
                         }
                     }
                 }
@@ -183,6 +182,7 @@ PanelWindow {
                         }
 
                         MouseArea {
+                            cursorShape: Qt.PointingHandCursor
                             id: sinkM
                             anchors.fill: parent; hoverEnabled: true
                             onClicked: {

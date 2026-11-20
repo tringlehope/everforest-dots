@@ -32,6 +32,7 @@ hl.config({
 
     cursor = {
         no_hardware_cursors = true,
+        warp_on_change_workspace = 1,
     },
 
     misc = {
@@ -53,6 +54,6 @@ hl.config({
 hl.curve("md3_decel",   { type = "bezier", points = { {0.05, 0.7}, {0.1, 1.0} } })
 hl.curve("easeOutExpo", { type = "bezier", points = { {0.16, 1.0}, {0.3, 1.0} } })
 
-hl.animation({ leaf = "windows",    enabled = true, speed = 3.0, bezier = "md3_decel",   style = "popin 60%" })
-hl.animation({ leaf = "fade",       enabled = true, speed = 2.5, bezier = "md3_decel" })
-hl.animation({ leaf = "workspaces", enabled = true, speed = 3.5, bezier = "easeOutExpo", style = "slidevert" })
+hl.animation({ leaf = "windows",    enabled = true, speed = 2.4, bezier = "md3_decel",   style = "popin 82%" })
+hl.animation({ leaf = "fade",       enabled = false, speed = 2.5, bezier = "md3_decel" })
+hl.animation({ leaf = "workspaces", enabled = true, speed = 2.6, bezier = "easeOutExpo", style = "slidevert" })

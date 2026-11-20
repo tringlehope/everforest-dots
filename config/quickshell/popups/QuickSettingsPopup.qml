@@ -19,6 +19,7 @@ PanelWindow {
     property real brightness: 0.8
 
     signal openWallpapers()
+    signal openSettings()
 
     visible: card.scale > 0.05 || open
     exclusiveZone: -1
@@ -77,8 +78,7 @@ PanelWindow {
         Behavior on scale {
             NumberAnimation {
                 duration: win.open ? 260 : 160
-                easing.type: win.open ? Easing.OutBack : Easing.InCubic
-                easing.overshoot: 1.15
+                easing.type: win.open ? Easing.OutQuint : Easing.InQuad
             }
         }
 
@@ -102,14 +102,14 @@ PanelWindow {
                     radius: m.containsMouse ? 10 : 18
                     color: active ? Theme.danger : (m.containsMouse ? Theme.bgPillHover : Theme.bgPill)
                     Behavior on color { ColorAnimation { duration: Theme.animFast } }
-                    Behavior on radius { NumberAnimation { duration: 200; easing.type: Easing.OutBack } }
+                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
                     Text {
                         anchors.centerIn: parent
                         text: icon
                         font.family: Theme.iconFont; font.pixelSize: 14
                         color: active ? Theme.accentOn : Theme.fg
                     }
-                    MouseArea { id: m; anchors.fill: parent; hoverEnabled: true; onClicked: parent.clicked() }
+                    MouseArea { cursorShape: Qt.PointingHandCursor; id: m; anchors.fill: parent; hoverEnabled: true; onClicked: parent.clicked() }
                 }
 
                 ActionBtn { icon: "\uf030"; onClicked: { win.open = false; Quickshell.execDetached(["sh", "-c", "sleep 0.25 && grim -g \"$(slurp)\" - | wl-copy"]); } }
@@ -165,7 +165,7 @@ PanelWindow {
                     radius: netM.containsMouse ? 10 : 21
                     color: win.ethConnected ? Theme.accent : Theme.bgPill
                     Behavior on color { ColorAnimation { duration: Theme.animFast } }
-                    Behavior on radius { NumberAnimation { duration: 200; easing.type: Easing.OutBack } }
+                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
 
                     RowLayout {
                         anchors.fill: parent; spacing: 0
@@ -177,6 +177,7 @@ PanelWindow {
                                 Text { Layout.fillWidth: true; text: "Сеть"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: win.ethConnected ? Theme.accentOn : Theme.fg }
                             }
                             MouseArea {
+                                cursorShape: Qt.PointingHandCursor
                                 id: netM
                                 anchors.fill: parent; hoverEnabled: true
                                 onClicked: {
@@ -194,6 +195,7 @@ PanelWindow {
                                 color: win.ethConnected ? Theme.accentOn : Theme.fgMuted
                             }
                             MouseArea {
+                                cursorShape: Qt.PointingHandCursor
                                 anchors.fill: parent
                                 onClicked: win.expandedSection = (win.expandedSection === "net" ? "" : "net")
                             }
@@ -209,7 +211,7 @@ PanelWindow {
                     radius: btM.containsMouse ? 10 : 21
                     color: btOn ? Theme.accent : Theme.bgPill
                     Behavior on color { ColorAnimation { duration: Theme.animFast } }
-                    Behavior on radius { NumberAnimation { duration: 200; easing.type: Easing.OutBack } }
+                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
 
                     RowLayout {
                         anchors.fill: parent; spacing: 0
@@ -221,6 +223,7 @@ PanelWindow {
                                 Text { Layout.fillWidth: true; text: "Bluetooth"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: btPill.btOn ? Theme.accentOn : Theme.fg }
                             }
                             MouseArea {
+                                cursorShape: Qt.PointingHandCursor
                                 id: btM
                                 anchors.fill: parent; hoverEnabled: true
                                 onClicked: if (Bluetooth.defaultAdapter) Bluetooth.defaultAdapter.enabled = !Bluetooth.defaultAdapter.enabled
@@ -235,6 +238,7 @@ PanelWindow {
                                 color: btPill.btOn ? Theme.accentOn : Theme.fgMuted
                             }
                             MouseArea {
+                                cursorShape: Qt.PointingHandCursor
                                 anchors.fill: parent
                                 onClicked: win.expandedSection = (win.expandedSection === "bt" ? "" : "bt")
                             }
@@ -248,7 +252,7 @@ PanelWindow {
                     radius: layM.containsMouse ? 10 : 20
                     color: win.scrollingLayout ? Theme.accentWarm : (layM.containsMouse ? Theme.bgPillHover : Theme.bgPill)
                     Behavior on color { ColorAnimation { duration: Theme.animFast } }
-                    Behavior on radius { NumberAnimation { duration: 200; easing.type: Easing.OutBack } }
+                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
 
                     RowLayout {
                         anchors.centerIn: parent; spacing: 6
@@ -261,6 +265,7 @@ PanelWindow {
                     }
 
                     MouseArea {
+                        cursorShape: Qt.PointingHandCursor
                         id: layM
                         anchors.fill: parent; hoverEnabled: true
                         onClicked: {
@@ -275,7 +280,7 @@ PanelWindow {
                     implicitHeight: 40
                     radius: wallM.containsMouse ? 10 : 20
                     color: wallM.containsMouse ? Theme.bgPillHover : Theme.bgPill
-                    Behavior on radius { NumberAnimation { duration: 200; easing.type: Easing.OutBack } }
+                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
 
                     RowLayout {
                         anchors.centerIn: parent; spacing: 6
@@ -284,6 +289,7 @@ PanelWindow {
                     }
 
                     MouseArea {
+                        cursorShape: Qt.PointingHandCursor
                         id: wallM
                         anchors.fill: parent; hoverEnabled: true
                         onClicked: {
@@ -293,28 +299,51 @@ PanelWindow {
                     }
                 }
                 Rectangle {
-                    Layout.columnSpan: 2
                     Layout.fillWidth: true
                     implicitHeight: 40
                     radius: pinM.containsMouse ? 10 : 20
                     color: win.dockPinned ? Theme.accent : (pinM.containsMouse ? Theme.bgPillHover : Theme.bgPill)
                     Behavior on color { ColorAnimation { duration: Theme.animFast } }
-                    Behavior on radius { NumberAnimation { duration: 200; easing.type: Easing.OutBack } }
+                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
 
                     RowLayout {
                         anchors.centerIn: parent; spacing: 8
                         Text { text: "\uf08d"; font.family: Theme.iconFont; font.pixelSize: 12; color: win.dockPinned ? Theme.accentOn : Theme.fg }
                         Text {
-                            text: win.dockPinned ? "Док закреплён" : "Закрепить док"
+                            text: win.dockPinned ? "Док: Закреплён" : "Закрепить док"
                             font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold
                             color: win.dockPinned ? Theme.accentOn : Theme.fg
                         }
                     }
 
                     MouseArea {
+                        cursorShape: Qt.PointingHandCursor
                         id: pinM
                         anchors.fill: parent; hoverEnabled: true
                         onClicked: win.dockPinned = !win.dockPinned
+                    }
+                }
+                Rectangle {
+                    Layout.fillWidth: true
+                    implicitHeight: 40
+                    radius: setM.containsMouse ? 10 : 20
+                    color: setM.containsMouse ? Theme.bgPillHover : Theme.bgPill
+                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+
+                    RowLayout {
+                        anchors.centerIn: parent; spacing: 6
+                        Text { text: "\uf013"; font.family: Theme.iconFont; font.pixelSize: 12; color: Theme.accentWarm }
+                        Text { text: "Настройки"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: Theme.fg }
+                    }
+
+                    MouseArea {
+                        cursorShape: Qt.PointingHandCursor
+                        id: setM
+                        anchors.fill: parent; hoverEnabled: true
+                        onClicked: {
+                            win.open = false;
+                            win.openSettings();
+                        }
                     }
                 }
             }
@@ -364,6 +393,7 @@ PanelWindow {
                         }
 
                         MouseArea {
+                            cursorShape: Qt.PointingHandCursor
                             anchors.fill: parent
                             onClicked: modelData.connected = !modelData.connected
                         }

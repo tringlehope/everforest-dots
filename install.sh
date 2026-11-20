@@ -25,7 +25,7 @@ sudo pacman -S --needed --noconfirm \
 echo "=== 3. Установка шрифтов, тем и Quickshell ==="
 sudo pacman -S --needed --noconfirm \
     adw-gtk-theme qt6ct nwg-look \
-    noto-fonts noto-fonts-emoji inter-font ttf-jetbrains-mono-nerd
+    noto-fonts noto-fonts-emoji ttf-nunito ttf-jetbrains-mono-nerd
 
 yay -S --needed --noconfirm \
     quickshell-git ttf-material-symbols-variable-git gruvbox-plus-icon-theme
@@ -77,7 +77,7 @@ SDDMEOF
 gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark' || true
 gsettings set org.gnome.desktop.interface icon-theme 'Gruvbox-Plus-Dark' || true
 gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' || true
-gsettings set org.gnome.desktop.interface font-name 'Inter 10' || true
+gsettings set org.gnome.desktop.interface font-name 'Nunito 10' || true
 
 fc-cache -fv >/dev/null
 

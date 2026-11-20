@@ -51,8 +51,7 @@ PanelWindow {
         Behavior on scale {
             NumberAnimation {
                 duration: win.open ? 260 : 160
-                easing.type: win.open ? Easing.OutBack : Easing.InCubic
-                easing.overshoot: 1.15
+                easing.type: win.open ? Easing.OutQuint : Easing.InQuad
             }
         }
 
@@ -84,9 +83,9 @@ PanelWindow {
                             anchors.verticalCenter: parent.verticalCenter
                             x: win.dnd ? 23 : 3
                             color: win.dnd ? Theme.accentOn : Theme.fgMuted
-                            Behavior on x { NumberAnimation { duration: 220; easing.type: Easing.OutBack; easing.overshoot: 1.4 } }
+                            Behavior on x { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
                         }
-                        MouseArea { anchors.fill: parent; onClicked: win.dnd = !win.dnd }
+                        MouseArea { cursorShape: Qt.PointingHandCursor; anchors.fill: parent; onClicked: win.dnd = !win.dnd }
                     }
                 }
 
@@ -124,13 +123,14 @@ PanelWindow {
                     implicitHeight: 34
                     radius: clearMouse.containsMouse ? 10 : 17
                     color: clearMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
-                    Behavior on radius { NumberAnimation { duration: 200; easing.type: Easing.OutBack } }
+                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
                     Text {
                         anchors.centerIn: parent
                         text: "Очистить"
                         font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Medium; color: Theme.fg
                     }
                     MouseArea {
+                        cursorShape: Qt.PointingHandCursor
                         id: clearMouse
                         anchors.fill: parent; hoverEnabled: true
                         onClicked: {
@@ -152,6 +152,7 @@ PanelWindow {
                     Text {
                         text: "\uf053"; font.family: Theme.iconFont; font.pixelSize: 13; color: Theme.fgMuted
                         MouseArea {
+                            cursorShape: Qt.PointingHandCursor
                             anchors.fill: parent; anchors.margins: -6
                             onClicked: win.viewDate = new Date(win.viewDate.getFullYear(), win.viewDate.getMonth() - 1, 1)
                         }
@@ -165,6 +166,7 @@ PanelWindow {
                     Text {
                         text: "\uf054"; font.family: Theme.iconFont; font.pixelSize: 13; color: Theme.fgMuted
                         MouseArea {
+                            cursorShape: Qt.PointingHandCursor
                             anchors.fill: parent; anchors.margins: -6
                             onClicked: win.viewDate = new Date(win.viewDate.getFullYear(), win.viewDate.getMonth() + 1, 1)
                         }
