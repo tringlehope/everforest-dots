@@ -20,6 +20,22 @@ ShellRoot {
     }
 
     Process {
+        id: themeInit
+        running: true
+        command: ["sh", "-c", "cat ~/.local/state/qs-theme 2>/dev/null || echo everforest"]
+        stdout: StdioCollector {
+            onStreamFinished: {
+                var t = text.trim();
+                if (Theme.palettes[t]) {
+                    Theme.currentTheme = t;
+                    var pal = Theme.palettes[t];
+                    Quickshell.execDetached(["hyprctl", "eval", "hl.config({ general = { col = { active_border = 'rgb(" + pal.hyprActive + ")', inactive_border = 'rgb(" + pal.hyprInactive + ")' } } })"]);
+                }
+            }
+        }
+    }
+
+    Process {
         id: frameModeInit
         running: true
         command: ["sh", "-c", "cat ~/.local/state/qs-frame-mode 2>/dev/null || echo 1"]

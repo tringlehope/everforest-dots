@@ -21,7 +21,7 @@ PanelWindow {
 
     Process {
         id: scanProc
-        command: ["sh", "-c", "find ~/Pictures/Wallpapers -maxdepth 2 -type f \\( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \\) | sort"]
+        command: ["sh", "-c", "mkdir -p \"$HOME/Pictures/Wallpapers/" + Theme.wallpaperFolder + "\" && find \"$HOME/Pictures/Wallpapers/" + Theme.wallpaperFolder + "\" -maxdepth 2 -type f \\( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \\) | sort"]
         stdout: StdioCollector {
             onStreamFinished: {
                 var lines = text.trim().split("\n");
@@ -30,7 +30,7 @@ PanelWindow {
         }
     }
 
-    onOpenChanged: if (open) scanProc.running = true
+    onOpenChanged: if (open) { scanProc.command = ["sh", "-c", "mkdir -p \"$HOME/Pictures/Wallpapers/" + Theme.wallpaperFolder + "\" && find \"$HOME/Pictures/Wallpapers/" + Theme.wallpaperFolder + "\" -maxdepth 2 -type f \\( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \\) | sort"]; scanProc.running = true; }
 
     MouseArea { anchors.fill: parent; onClicked: win.open = false }
 
@@ -64,7 +64,7 @@ PanelWindow {
                 Layout.fillWidth: true
                 Text {
                     Layout.fillWidth: true
-                    text: "Обои (~/Pictures/Wallpapers)"
+                    text: "Обои (" + Theme.wallpaperFolder + ")"
                     font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Black; color: Theme.fg
                 }
                 Rectangle {
@@ -84,7 +84,7 @@ PanelWindow {
                 Layout.fillHeight: true
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
-                text: "Положи картинки (.png / .jpg / .webp)\nв папку ~/Pictures/Wallpapers"
+                text: "Положи картинки (.png / .jpg / .webp)\nв папку ~/Pictures/Wallpapers/" + Theme.wallpaperFolder
                 font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 13; color: Theme.fgMuted
             }
 

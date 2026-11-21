@@ -8,12 +8,87 @@ Item {
 
     function setFrameMode(enabled) {
         Theme.showFrame = enabled;
-        Quickshell.execDetached(["sh", "-c", "printf '%s' '" + (enabled ? "1" : "0") + "' > ~/.local/state/qs-frame-mode"]);
+        Quickshell.execDetached(["sh", "-c", "mkdir -p ~/.local/state && printf '%s' '" + (enabled ? "1" : "0") + "' > ~/.local/state/qs-frame-mode"]);
+    }
+
+    function setTheme(themeId) {
+        if (!Theme.palettes[themeId]) return;
+        Theme.currentTheme = themeId;
+        var pal = Theme.palettes[themeId];
+        Quickshell.execDetached(["sh", "-c", "mkdir -p ~/.local/state && printf '%s' '" + themeId + "' > ~/.local/state/qs-theme"]);
+        Quickshell.execDetached(["hyprctl", "eval", "hl.config({ general = { col = { active_border = 'rgb(" + pal.hyprActive + ")', inactive_border = 'rgb(" + pal.hyprInactive + ")' } } })"]);
+
+        var folder = pal.folder.replace(/'/g, "'\\''");
+        Quickshell.execDetached(["sh", "-c", "w=$(find \"$HOME/Pictures/Wallpapers/" + folder + "\" -maxdepth 2 -type f \\( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \\) | sort | head -n1); if [ -n \"$w\" ]; then printf '%s' \"$w\" > ~/.local/state/qs-wallpaper && pkill swaybg; swaybg -i \"$w\" -m fill >/dev/null 2>&1 & fi"]);
     }
 
     ColumnLayout {
         anchors.fill: parent
         spacing: 14
+
+        Text {
+            text: "Оформление (тема и папка обоев)"
+            font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Black; color: Theme.fgMuted
+        }
+
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 12
+
+            Repeater {
+                model: [
+                    { id: "everforest",       name: "Everforest",       bg: "#2d353b", acc: "#a7c080", warm: "#dbbc7f" },
+                    { id: "catppuccin-mocha", name: "Catppuccin Mocha", bg: "#1e1e2e", acc: "#cba6f7", warm: "#f9e2af" },
+                    { id: "graphite",         name: "Graphite",         bg: "#222222", acc: "#d4d4d4", warm: "#9a9a9a" }
+                ]
+
+                delegate: Rectangle {
+                    id: themeCard
+                    required property var modelData
+                    readonly property bool isActive: Theme.currentTheme === modelData.id
+
+                    Layout.fillWidth: true
+                    implicitHeight: 96
+                    radius: themeM.pressed ? 12 : (themeM.containsMouse ? 14 : 18)
+                    scale: themeM.pressed ? 0.94 : (themeM.containsMouse ? 1.04 : 1.0)
+                    color: isActive ? Theme.bgElevated : Theme.bgPill
+                    border.color: isActive ? Theme.accent : Theme.borderSubtle
+                    border.width: isActive ? 3 : 1
+
+                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on radius { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on color { ColorAnimation { duration: 140 } }
+
+                    MouseArea {
+                        id: themeM
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: root.setTheme(themeCard.modelData.id)
+                    }
+
+                    ColumnLayout {
+                        anchors.centerIn: parent
+                        spacing: 10
+
+                        Row {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            spacing: 6
+                            Rectangle { width: 22; height: 22; radius: 11; color: themeCard.modelData.bg; border.color: "#555"; border.width: 1 }
+                            Rectangle { width: 22; height: 22; radius: 11; color: themeCard.modelData.acc }
+                            Rectangle { width: 22; height: 22; radius: 11; color: themeCard.modelData.warm }
+                        }
+
+                        Text {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            text: themeCard.modelData.name
+                            font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Black
+                            color: themeCard.isActive ? Theme.accent : Theme.fg
+                        }
+                    }
+                }
+            }
+        }
 
         Text {
             text: "Стиль панели и краёв экрана"
@@ -26,16 +101,17 @@ Item {
 
             // Вариант 1: Панель с рамками
             Rectangle {
+                id: cardFrame
                 scale: btnMa_1.pressed ? 0.94 : (btnMa_1.containsMouse ? 1.04 : 1.0)
                 Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                 Behavior on color { ColorAnimation { duration: 140 } }
-                readonly property bool active: Theme.showFrame
+                readonly property bool isActive: Theme.showFrame
                 Layout.fillWidth: true
-                implicitHeight: 190
+                implicitHeight: 170
                 radius: 18
-                color: active ? Theme.bgElevated : Theme.bgPill
-                border.color: active ? Theme.accent : Theme.borderSubtle
-                border.width: active ? 3 : 1
+                color: isActive ? Theme.bgElevated : Theme.bgPill
+                border.color: isActive ? Theme.accent : Theme.borderSubtle
+                border.width: isActive ? 3 : 1
 
                 MouseArea {
                     id: btnMa_1
@@ -46,9 +122,8 @@ Item {
                 }
 
                 ColumnLayout {
-                    anchors.fill: parent; anchors.margins: 14; spacing: 12
+                    anchors.fill: parent; anchors.margins: 14; spacing: 10
 
-                    // Мини-превью экрана с рамкой
                     Rectangle {
                         Layout.fillWidth: true; Layout.fillHeight: true
                         radius: 12
@@ -74,24 +149,25 @@ Item {
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         text: "Панель с рамками"
-                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: active ? Font.Black : Font.Black
-                        color: active ? Theme.accent : Theme.fg
+                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Black
+                        color: cardFrame.isActive ? Theme.accent : Theme.fg
                     }
                 }
             }
 
             // Вариант 2: Только пузыри
             Rectangle {
+                id: cardBubbles
                 scale: btnMa_2.pressed ? 0.94 : (btnMa_2.containsMouse ? 1.04 : 1.0)
                 Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                 Behavior on color { ColorAnimation { duration: 140 } }
-                readonly property bool active: !Theme.showFrame
+                readonly property bool isActive: !Theme.showFrame
                 Layout.fillWidth: true
-                implicitHeight: 190
+                implicitHeight: 170
                 radius: 18
-                color: active ? Theme.bgElevated : Theme.bgPill
-                border.color: active ? Theme.accent : Theme.borderSubtle
-                border.width: active ? 3 : 1
+                color: isActive ? Theme.bgElevated : Theme.bgPill
+                border.color: isActive ? Theme.accent : Theme.borderSubtle
+                border.width: isActive ? 3 : 1
 
                 MouseArea {
                     id: btnMa_2
@@ -102,9 +178,8 @@ Item {
                 }
 
                 ColumnLayout {
-                    anchors.fill: parent; anchors.margins: 14; spacing: 12
+                    anchors.fill: parent; anchors.margins: 14; spacing: 10
 
-                    // Мини-превью без рамки — только парящие пузыри
                     Rectangle {
                         Layout.fillWidth: true; Layout.fillHeight: true
                         radius: 12
@@ -125,8 +200,8 @@ Item {
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         text: "Только пузыри"
-                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: active ? Font.Black : Font.Black
-                        color: active ? Theme.accent : Theme.fg
+                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Black
+                        color: cardBubbles.isActive ? Theme.accent : Theme.fg
                     }
                 }
             }
