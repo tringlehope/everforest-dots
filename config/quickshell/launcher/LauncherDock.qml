@@ -356,71 +356,43 @@ Scope {
                 spacing: 12
 
                 Repeater {
-                    model: launcherRoot.groupedClients
+                    model: launcherRoot.runningClients
                     delegate: Rectangle {
                         required property var modelData
-                        readonly property bool isCurrentWs: modelData.wsId === launcherRoot.activeWsId
-                        implicitWidth: grpRow.implicitWidth + 12
-                        height: 82
-                        radius: 20
-                        color: isCurrentWs ? Theme.bgElevated : Theme.bgPill
-                        border.color: isCurrentWs ? Theme.accentWarm : Theme.borderSubtle
-                        border.width: isCurrentWs ? 2 : 1
+                        readonly property bool isFocused: (modelData.focusHistoryID ?? 99) === 0
+                        width: 68; height: 68
+                        radius: dockItemMouse.pressed ? 10 : (dockItemMouse.containsMouse ? 14 : 18)
+                        z: dockItemMouse.containsMouse ? 10 : 0
+                        color: isFocused ? Theme.bgElevated : (dockItemMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill)
+                        border.color: isFocused ? Theme.accent : "transparent"
+                        border.width: isFocused ? 2 : 0
+                        Behavior on color { ColorAnimation { duration: 140 } }
+                        Behavior on radius { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on border.color { ColorAnimation { duration: 140 } }
 
-                        RowLayout {
-                            id: grpRow
+                        IconImage {
                             anchors.centerIn: parent
-                            spacing: 8
-
-                            Repeater {
-                                model: modelData.items
-                                delegate: Rectangle {
-                                    required property var modelData
-                                    width: 68; height: 68
-                                    radius: dockItemMouse.pressed ? 10 : (dockItemMouse.containsMouse ? 14 : 16)
-                                    z: dockItemMouse.containsMouse ? 10 : 0
-                                    color: dockItemMouse.containsMouse ? Theme.bgPillHover : "transparent"
-                                    Behavior on color { ColorAnimation { duration: 140 } }
-                                    Behavior on radius { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
-
-                                    IconImage {
-                                        anchors.centerIn: parent
-                                        source: launcherRoot.iconForClient(modelData.class)
-                                        implicitSize: 60
-                                        width: 60; height: 60
-                                        scale: dockItemMouse.pressed ? 0.92 : (dockItemMouse.containsMouse ? 1.26 : 1.0)
-                                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
-                                        transform: Translate {
-                                            y: dockItemMouse.containsMouse ? -7 : 0
-                                            Behavior on y { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
-                                        }
-                                    }
-
-                                    MouseArea {
-                                        id: dockItemMouse
-                                        cursorShape: Qt.PointingHandCursor
-                                        anchors.fill: parent; hoverEnabled: true
-                                        onClicked: {
-                                            var wid = modelData.workspace?.id ?? 1;
-                                            Quickshell.execDetached(["hyprctl", "dispatch", "hl.dsp.focus({ workspace = " + wid + " })"]);
-                                            launcherRoot.open = false;
-                                        }
-                                    }
-                                }
+                            source: launcherRoot.iconForClient(modelData.class)
+                            implicitSize: 54
+                            width: 54; height: 54
+                            scale: dockItemMouse.pressed ? 0.92 : (dockItemMouse.containsMouse ? 1.26 : 1.0)
+                            Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                            transform: Translate {
+                                y: dockItemMouse.containsMouse ? -7 : 0
+                                Behavior on y { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                             }
                         }
 
-                        // Номер рабочего стола в правом нижнем углу группы
-                        Rectangle {
-                            anchors { right: parent.right; bottom: parent.bottom }
-                            anchors.rightMargin: -4; anchors.bottomMargin: -4
-                            width: 20; height: 20; radius: 7
-                            color: parent.isCurrentWs ? Theme.accentWarm : Theme.borderSubtle
-                            Text {
-                                anchors.centerIn: parent
-                                text: String(modelData.wsId)
-                                font.family: Theme.fontFamily; font.pixelSize: 10; font.weight: Font.Black
-                                color: parent.parent.isCurrentWs ? Theme.accentOn : Theme.fg
+                        MouseArea {
+                            id: dockItemMouse
+                            cursorShape: Qt.PointingHandCursor
+                            anchors.fill: parent; hoverEnabled: true
+                            onClicked: {
+                                var addr = modelData.address || "";
+                                if (addr !== "") {
+                                    Quickshell.execDetached(["sh", "-c", "hyprctl dispatch \"hl.dsp.focus({ window = 'address:" + addr + "' })\" 2>/dev/null || hyprctl dispatch \"hl.dsp.focuswindow('address:" + addr + "')\""]);
+                                }
+                                launcherRoot.open = false;
                             }
                         }
                     }
