@@ -300,7 +300,7 @@ PanelWindow {
                             Quickshell.execDetached(["brightnessctl", "set", Math.round(v * 100) + "%"]);
                         }
                     }
-                    Text { text: Math.round(win.brightness * 100) + "%"; font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.DemiBold; color: Theme.fg }
+                    Text { text: Math.round(win.brightness * 100) + "%"; font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.ExtraBold; color: Theme.fg }
                 }
             }
 
@@ -332,7 +332,7 @@ PanelWindow {
                             RowLayout {
                                 anchors.fill: parent; anchors.leftMargin: 12; spacing: 6
                                 Text { text: "\uf0e8"; font.family: Theme.iconFont; font.pixelSize: 13; color: (win.ethConnected || win.connectedWifiSsid !== "") ? Theme.accentOn : Theme.fg }
-                                Text { Layout.fillWidth: true; text: "Сеть"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: (win.ethConnected || win.connectedWifiSsid !== "") ? Theme.accentOn : Theme.fg }
+                                Text { Layout.fillWidth: true; text: "Сеть"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.ExtraBold; color: (win.ethConnected || win.connectedWifiSsid !== "") ? Theme.accentOn : Theme.fg }
                             }
                             MouseArea {
                                 id: netM
@@ -397,7 +397,7 @@ PanelWindow {
                             RowLayout {
                                 anchors.fill: parent; anchors.leftMargin: 12; spacing: 6
                                 Text { text: "\uf293"; font.family: Theme.iconFont; font.pixelSize: 13; color: btPill.btOn ? Theme.accentOn : Theme.fg }
-                                Text { Layout.fillWidth: true; text: "Bluetooth"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: btPill.btOn ? Theme.accentOn : Theme.fg }
+                                Text { Layout.fillWidth: true; text: "Bluetooth"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.ExtraBold; color: btPill.btOn ? Theme.accentOn : Theme.fg }
                             }
                             MouseArea {
                                 id: btM
@@ -447,7 +447,7 @@ PanelWindow {
                         Text { text: "\uf009"; font.family: Theme.iconFont; font.pixelSize: 12; color: win.scrollingLayout ? Theme.accentOn : Theme.fg }
                         Text {
                             text: win.scrollingLayout ? "Scrolling" : "Dwindle"
-                            font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold
+                            font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.ExtraBold
                             color: win.scrollingLayout ? Theme.accentOn : Theme.fg
                         }
                     }
@@ -475,7 +475,7 @@ PanelWindow {
                     RowLayout {
                         anchors.centerIn: parent; spacing: 6
                         Text { text: "\uf03e"; font.family: Theme.iconFont; font.pixelSize: 12; color: Theme.accentWarm }
-                        Text { text: "Обои"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: Theme.fg }
+                        Text { text: "Обои"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.ExtraBold; color: Theme.fg }
                     }
 
                     MouseArea {
@@ -504,7 +504,7 @@ PanelWindow {
                         Text { text: "\uf08d"; font.family: Theme.iconFont; font.pixelSize: 12; color: win.dockPinned ? Theme.accentOn : Theme.fg }
                         Text {
                             text: win.dockPinned ? "Док: Закреплён" : "Закрепить док"
-                            font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold
+                            font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.ExtraBold
                             color: win.dockPinned ? Theme.accentOn : Theme.fg
                         }
                     }
@@ -529,7 +529,7 @@ PanelWindow {
                     RowLayout {
                         anchors.centerIn: parent; spacing: 6
                         Text { text: "\uf013"; font.family: Theme.iconFont; font.pixelSize: 12; color: Theme.accentWarm }
-                        Text { text: "Настройки"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: Theme.fg }
+                        Text { text: "Настройки"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.ExtraBold; color: Theme.fg }
                     }
 
                     MouseArea {
@@ -578,7 +578,7 @@ PanelWindow {
                 Text {
                     Layout.fillWidth: true
                     text: "Настройки сети"
-                    font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.DemiBold
+                    font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.ExtraBold
                     color: Theme.fg
                 }
             }
@@ -607,7 +607,7 @@ PanelWindow {
                         RowLayout {
                             anchors.centerIn: parent; spacing: 6
                             Text { text: "\uf0e8"; font.family: Theme.iconFont; font.pixelSize: 12; color: win.netTab === "eth" ? Theme.accentOn : Theme.fg }
-                            Text { text: "Ethernet"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: win.netTab === "eth" ? Theme.accentOn : Theme.fg }
+                            Text { text: "Ethernet"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.ExtraBold; color: win.netTab === "eth" ? Theme.accentOn : Theme.fg }
                         }
                         MouseArea {
                             id: ethTabM
@@ -625,7 +625,7 @@ PanelWindow {
                         RowLayout {
                             anchors.centerIn: parent; spacing: 6
                             Text { text: "\uf1eb"; font.family: Theme.iconFont; font.pixelSize: 12; color: win.netTab === "wifi" ? Theme.accentOn : Theme.fg }
-                            Text { text: "Wi-Fi"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: win.netTab === "wifi" ? Theme.accentOn : Theme.fg }
+                            Text { text: "Wi-Fi"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.ExtraBold; color: win.netTab === "wifi" ? Theme.accentOn : Theme.fg }
                         }
                         MouseArea {
                             id: wifiTabM
@@ -654,7 +654,7 @@ PanelWindow {
                     RowLayout {
                         anchors.fill: parent; anchors.leftMargin: 12; anchors.rightMargin: 10; spacing: 8
                         Text { text: "\uf0e8"; font.family: Theme.iconFont; font.pixelSize: 13; color: Theme.accent }
-                        Text { Layout.fillWidth: true; text: win.ethConnected ? "Ethernet включён" : "Ethernet выключен"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: Theme.fg }
+                        Text { Layout.fillWidth: true; text: win.ethConnected ? "Ethernet включён" : "Ethernet выключен"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.ExtraBold; color: Theme.fg }
                         TogglePill {
                             checked: win.ethConnected
                             onToggled: {
@@ -683,34 +683,34 @@ PanelWindow {
 
                         Text {
                             text: "Характеристики"
-                            font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold
+                            font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.ExtraBold
                             color: Theme.accent
                         }
                         Text {
                             visible: win.ethDevice !== ""
                             text: "Интерфейс: " + win.ethDevice + (win.ethProfile ? (" (" + win.ethProfile + ")") : "")
-                            font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.DemiBold; color: Theme.fg
+                            font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.ExtraBold; color: Theme.fg
                             elide: Text.ElideRight; Layout.fillWidth: true
                         }
                         Text {
                             visible: win.ethIp !== ""
                             text: "IP: " + win.ethIp
-                            font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.DemiBold; color: Theme.fg
+                            font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.ExtraBold; color: Theme.fg
                         }
                         Text {
                             visible: win.ethGw !== ""
                             text: "Шлюз: " + win.ethGw
-                            font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.DemiBold; color: Theme.fgDim
+                            font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.ExtraBold; color: Theme.fgDim
                         }
                         Text {
                             visible: win.ethDns !== ""
                             text: "DNS: " + win.ethDns
-                            font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.DemiBold; color: Theme.fgDim
+                            font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.ExtraBold; color: Theme.fgDim
                         }
                         Text {
                             visible: win.ethSpeed !== ""
                             text: "Скорость: " + win.ethSpeed
-                            font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.DemiBold; color: Theme.accentWarm
+                            font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.ExtraBold; color: Theme.accentWarm
                         }
                     }
                 }
@@ -718,7 +718,7 @@ PanelWindow {
                 Text {
                     visible: !win.ethConnected
                     text: "Проводное подключение отключено"
-                    font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.DemiBold
+                    font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.ExtraBold
                     color: Theme.fgMuted
                 }
             }
@@ -738,7 +738,7 @@ PanelWindow {
                     RowLayout {
                         anchors.fill: parent; anchors.leftMargin: 12; anchors.rightMargin: 10; spacing: 8
                         Text { text: "\uf1eb"; font.family: Theme.iconFont; font.pixelSize: 13; color: Theme.accentWarm }
-                        Text { Layout.fillWidth: true; text: win.wifiEnabled ? "Wi-Fi включён" : "Wi-Fi выключен"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: Theme.fg }
+                        Text { Layout.fillWidth: true; text: win.wifiEnabled ? "Wi-Fi включён" : "Wi-Fi выключен"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.ExtraBold; color: Theme.fg }
                         TogglePill {
                             checked: win.wifiEnabled
                             onToggled: {
@@ -754,7 +754,7 @@ PanelWindow {
                 Text {
                     visible: !win.wifiEnabled
                     text: "Включите Wi-Fi для поиска сетей"
-                    font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.DemiBold
+                    font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.ExtraBold
                     color: Theme.fgMuted
                 }
 
@@ -768,7 +768,7 @@ PanelWindow {
                         Text {
                             Layout.fillWidth: true
                             text: "Доступные сети"
-                            font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold
+                            font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.ExtraBold
                             color: Theme.fgDim
                         }
                         Rectangle {
@@ -783,7 +783,7 @@ PanelWindow {
                                 id: refRow
                                 anchors.centerIn: parent; spacing: 5
                                 Text { text: "\uf021"; font.family: Theme.iconFont; font.pixelSize: 11; color: Theme.accent }
-                                Text { text: win.wifiScanning ? "Поиск..." : "Обновить"; font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.DemiBold; color: Theme.fg }
+                                Text { text: win.wifiScanning ? "Поиск..." : "Обновить"; font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.ExtraBold; color: Theme.fg }
                             }
                             MouseArea {
                                 id: refM
@@ -809,7 +809,7 @@ PanelWindow {
                             Text {
                                 Layout.fillWidth: true
                                 text: win.connectedWifiSsid + " (" + win.connectedWifiSignal + "%)"
-                                font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold
+                                font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.ExtraBold
                                 color: Theme.accentOn
                                 elide: Text.ElideRight
                             }
@@ -821,7 +821,7 @@ PanelWindow {
                                 implicitHeight: 24
                                 radius: Theme.r(8)
                                 color: discM.containsMouse ? "#232a2e" : "#2d353b"
-                                Text { id: discTxt; anchors.centerIn: parent; text: "Отключить"; font.family: Theme.fontFamily; font.pixelSize: 10; font.weight: Font.DemiBold; color: Theme.fg }
+                                Text { id: discTxt; anchors.centerIn: parent; text: "Отключить"; font.family: Theme.fontFamily; font.pixelSize: 10; font.weight: Font.ExtraBold; color: Theme.fg }
                                 MouseArea {
                                     id: discM
                                     anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
@@ -837,7 +837,7 @@ PanelWindow {
                     Text {
                         visible: win.wifiList.length === 0 && win.connectedWifiSsid === ""
                         text: !win.hasWifiDev ? "Wi-Fi адаптер не найден (виртуальная машина)" : (win.wifiScanning ? "Сканирование сетей..." : "Сети не найдены")
-                        font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.DemiBold
+                        font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.ExtraBold
                         color: Theme.fgMuted
                     }
 
@@ -873,7 +873,7 @@ PanelWindow {
                                             Layout.fillWidth: true
                                             text: modelData.ssid
                                             elide: Text.ElideRight
-                                            font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: Theme.fg
+                                            font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.ExtraBold; color: Theme.fg
                                         }
                                         Text {
                                             visible: modelData.sec !== "" && modelData.sec !== "--"
@@ -882,7 +882,7 @@ PanelWindow {
                                         }
                                         Text {
                                             text: modelData.sig + "%"
-                                            font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.DemiBold; color: Theme.fgDim
+                                            font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.ExtraBold; color: Theme.fgDim
                                         }
                                     }
 
@@ -927,7 +927,7 @@ PanelWindow {
                                 Layout.fillWidth: true
                                 text: "Пароль для " + win.selectedWifiSsid
                                 elide: Text.ElideRight
-                                font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.DemiBold
+                                font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.ExtraBold
                                 color: Theme.accentWarm
                             }
 
@@ -942,7 +942,7 @@ PanelWindow {
                                     TextInput {
                                         id: passInput
                                         Layout.fillWidth: true
-                                        font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold
+                                        font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.ExtraBold
                                         color: Theme.fg
                                         echoMode: win.showPass ? TextInput.Normal : TextInput.Password
                                         clip: true
@@ -969,7 +969,7 @@ PanelWindow {
                                 Layout.fillWidth: true
                                 text: win.wifiStatusMsg
                                 wrapMode: Text.Wrap
-                                font.family: Theme.fontFamily; font.pixelSize: 10; font.weight: Font.DemiBold
+                                font.family: Theme.fontFamily; font.pixelSize: 10; font.weight: Font.ExtraBold
                                 color: Theme.danger
                             }
 
@@ -982,7 +982,7 @@ PanelWindow {
                                     Behavior on color { ColorAnimation { duration: 140 } }
                                     Layout.fillWidth: true; implicitHeight: 28; radius: Theme.r(8)
                                     color: cancelPassM.containsMouse ? Theme.bgPillHover : Theme.bgPill
-                                    Text { anchors.centerIn: parent; text: "Отмена"; font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.DemiBold; color: Theme.fg }
+                                    Text { anchors.centerIn: parent; text: "Отмена"; font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.ExtraBold; color: Theme.fg }
                                     MouseArea {
                                         id: cancelPassM
                                         anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
@@ -995,7 +995,7 @@ PanelWindow {
                                     Behavior on color { ColorAnimation { duration: 140 } }
                                     Layout.fillWidth: true; implicitHeight: 28; radius: Theme.r(8)
                                     color: Theme.accent
-                                    Text { anchors.centerIn: parent; text: "Подключить"; font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.DemiBold; color: Theme.accentOn }
+                                    Text { anchors.centerIn: parent; text: "Подключить"; font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.ExtraBold; color: Theme.accentOn }
                                     MouseArea {
                                         id: animMa_1
                                         hoverEnabled: true
@@ -1041,7 +1041,7 @@ PanelWindow {
                 Text {
                     Layout.fillWidth: true
                     text: "Bluetooth"
-                    font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.DemiBold
+                    font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.ExtraBold
                     color: Theme.fg
                 }
             }
@@ -1049,7 +1049,7 @@ PanelWindow {
             Text {
                 visible: Bluetooth.devices.values.length === 0
                 text: "Нет сопряжённых Bluetooth-устройств"
-                font.family: Theme.fontFamily; font.weight: Font.DemiBold; font.pixelSize: 11; color: Theme.fgMuted
+                font.family: Theme.fontFamily; font.weight: Font.ExtraBold; font.pixelSize: 11; color: Theme.fgMuted
             }
 
             Repeater {
@@ -1065,7 +1065,7 @@ PanelWindow {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.left; anchors.margins: 12
                         text: modelData.name || modelData.address
-                        font.family: Theme.fontFamily; font.weight: Font.DemiBold; font.pixelSize: 12
+                        font.family: Theme.fontFamily; font.weight: Font.ExtraBold; font.pixelSize: 12
                         color: modelData.connected ? Theme.accentOn : Theme.fg
                     }
 

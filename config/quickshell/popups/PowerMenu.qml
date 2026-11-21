@@ -128,7 +128,7 @@ PanelWindow {
                 text: "✕"
                 font.family: Theme.fontFamily
                 font.pixelSize: 18
-                font.weight: Font.DemiBold
+                font.weight: Font.ExtraBold
                 color: Theme.danger
             }
 
@@ -190,7 +190,7 @@ PanelWindow {
                         wrapMode: Text.Wrap
                         font.family: Theme.fontFamily
                         font.pixelSize: 13
-                        font.weight: Font.DemiBold
+                        font.weight: Font.ExtraBold
                         color: Theme.fg
                     }
                 }
@@ -273,7 +273,7 @@ PanelWindow {
                         text: pm.updating ? "Обновление системы и конфигов..." : "Лог обновления"
                         font.family: Theme.fontFamily
                         font.pixelSize: 16
-                        font.weight: Font.DemiBold
+                        font.weight: Font.ExtraBold
                         color: Theme.fg
                     }
                     Text {
@@ -281,7 +281,7 @@ PanelWindow {
                         text: "Не выключайте компьютер"
                         font.family: Theme.fontFamily
                         font.pixelSize: 12
-                        font.weight: Font.DemiBold
+                        font.weight: Font.ExtraBold
                         color: Theme.accentWarm
                     }
                 }
@@ -331,7 +331,7 @@ PanelWindow {
                         text: pm.updating ? "Отмена" : "Закрыть"
                         font.family: Theme.fontFamily
                         font.pixelSize: 14
-                        font.weight: Font.DemiBold
+                        font.weight: Font.ExtraBold
                         color: Theme.danger
                     }
 
