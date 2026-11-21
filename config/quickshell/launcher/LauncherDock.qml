@@ -323,7 +323,7 @@ Scope {
         anchors { bottom: true }
         margins.bottom: (Theme.showFrame ? Theme.frameThickness : 0) + 8
         implicitWidth: Math.max(104, dockRow.implicitWidth + 32)
-        implicitHeight: 96
+        implicitHeight: 112
         color: "transparent"
         WlrLayershell.layer: WlrLayer.Overlay
         WlrLayershell.namespace: "qs-dock"
@@ -377,14 +377,23 @@ Scope {
                                 delegate: Rectangle {
                                     required property var modelData
                                     width: 68; height: 68
-                                    radius: 16
+                                    radius: dockItemMouse.pressed ? 10 : (dockItemMouse.containsMouse ? 14 : 16)
+                                    z: dockItemMouse.containsMouse ? 10 : 0
                                     color: dockItemMouse.containsMouse ? Theme.bgPillHover : "transparent"
+                                    Behavior on color { ColorAnimation { duration: 140 } }
+                                    Behavior on radius { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
 
                                     IconImage {
                                         anchors.centerIn: parent
                                         source: launcherRoot.iconForClient(modelData.class)
                                         implicitSize: 60
                                         width: 60; height: 60
+                                        scale: dockItemMouse.pressed ? 0.92 : (dockItemMouse.containsMouse ? 1.26 : 1.0)
+                                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                                        transform: Translate {
+                                            y: dockItemMouse.containsMouse ? -7 : 0
+                                            Behavior on y { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                                        }
                                     }
 
                                     MouseArea {
