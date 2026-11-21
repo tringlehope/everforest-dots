@@ -102,7 +102,7 @@ PanelWindow {
                         text: modelData
                         font.family: Theme.fontFamily
                         font.pixelSize: 15
-                        font.weight: Font.Black
+                        font.weight: Font.DemiBold
                         color: isActive ? Theme.accentOn : Theme.fgMuted
                     }
                 }

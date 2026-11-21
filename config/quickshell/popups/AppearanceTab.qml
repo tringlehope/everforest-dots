@@ -33,7 +33,7 @@ Item {
 
         Text {
             text: "Оформление (тема и папка обоев)"
-            font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Black; color: Theme.fgMuted
+            font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.DemiBold; color: Theme.fgMuted
         }
 
         RowLayout {
@@ -88,7 +88,7 @@ Item {
                         Text {
                             anchors.horizontalCenter: parent.horizontalCenter
                             text: themeCard.modelData.name
-                            font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Black
+                            font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.DemiBold
                             color: themeCard.isActive ? Theme.accent : Theme.fg
                         }
                     }
@@ -98,7 +98,7 @@ Item {
 
         Text {
             text: "Стиль панели и краёв экрана"
-            font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Black; color: Theme.fgMuted
+            font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.DemiBold; color: Theme.fgMuted
         }
 
         RowLayout {
@@ -155,7 +155,7 @@ Item {
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         text: "Панель с рамками"
-                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Black
+                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.DemiBold
                         color: cardFrame.isActive ? Theme.accent : Theme.fg
                     }
                 }
@@ -206,7 +206,7 @@ Item {
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         text: Theme.isWin7 ? "Квадратная панель" : "Только пузыри"
-                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Black
+                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.DemiBold
                         color: cardBubbles.isActive ? Theme.accent : Theme.fg
                     }
                 }

@@ -176,7 +176,7 @@ Item {
                             color: root.subTab === index ? Theme.accentWarm : "transparent"
                             Text {
                                 anchors.centerIn: parent; text: modelData
-                                font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black
+                                font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold
                                 color: root.subTab === index ? Theme.accentOn : Theme.fgMuted
                             }
                             MouseArea {
@@ -199,7 +199,7 @@ Item {
             RowLayout {
                 visible: !root.termMode
                 spacing: 6
-                Text { text: "Системные"; font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 11; color: Theme.fgMuted }
+                Text { text: "Системные"; font.family: Theme.fontFamily; font.weight: Font.DemiBold; font.pixelSize: 11; color: Theme.fgMuted }
                 Rectangle {
                     scale: btnMa_4.pressed ? 0.94 : (btnMa_4.containsMouse ? 1.04 : 1.0)
                     Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
@@ -254,10 +254,10 @@ Item {
                         Text {
                             Layout.fillWidth: true
                             text: modelData.name
-                            font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Black; color: Theme.fg
+                            font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.DemiBold; color: Theme.fg
                             elide: Text.ElideRight
                         }
-                        Text { text: "ПКМ"; font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 10; color: Theme.fgDim }
+                        Text { text: "ПКМ"; font.family: Theme.fontFamily; font.weight: Font.DemiBold; font.pixelSize: 10; color: Theme.fgDim }
                     }
 
                     MouseArea {
@@ -305,7 +305,7 @@ Item {
                     RowLayout {
                         anchors.centerIn: parent; spacing: 6
                         Text { text: "\uf021"; font.family: Theme.iconFont; font.pixelSize: 11; color: Theme.accent }
-                        Text { text: "Обновить репы"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: Theme.fg }
+                        Text { text: "Обновить репы"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: Theme.fg }
                     }
                     MouseArea {
                         cursorShape: Qt.PointingHandCursor
@@ -323,7 +323,7 @@ Item {
                     RowLayout {
                         anchors.centerIn: parent; spacing: 6
                         Text { text: "\uf019"; font.family: Theme.iconFont; font.pixelSize: 11; color: Theme.accentOn }
-                        Text { text: "Обновить систему"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: Theme.accentOn }
+                        Text { text: "Обновить систему"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: Theme.accentOn }
                     }
                     MouseArea {
                         cursorShape: Qt.PointingHandCursor
@@ -352,7 +352,7 @@ Item {
                         Text {
                             Layout.fillWidth: true
                             text: root.installSource === "pacman" ? "Pacman" : (root.installSource === "aur" ? "AUR" : "Flatpak")
-                            font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: Theme.fg
+                            font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: Theme.fg
                         }
                         Text { text: root.sourceMenuOpen ? "\uf077" : "\uf078"; font.family: Theme.iconFont; font.pixelSize: 10; color: Theme.fgMuted }
                     }
@@ -376,7 +376,7 @@ Item {
                         TextInput {
                             id: pkgSearch
                             Layout.fillWidth: true
-                            font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 12; color: Theme.fg
+                            font.family: Theme.fontFamily; font.weight: Font.DemiBold; font.pixelSize: 12; color: Theme.fg
                             selectByMouse: true
                             onTextChanged: {
                                 root.termMode = false;
@@ -386,7 +386,7 @@ Item {
                             Text {
                                 visible: !parent.text
                                 text: "Поиск пакетов..."
-                                font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 12; color: Theme.fgMuted
+                                font.family: Theme.fontFamily; font.weight: Font.DemiBold; font.pixelSize: 12; color: Theme.fgMuted
                             }
                         }
                     }
@@ -400,7 +400,7 @@ Item {
                     color: findBtnM.containsMouse ? Theme.accentWarm : Theme.bgPill
                     Text {
                         anchors.centerIn: parent; text: "Найти"
-                        font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black
+                        font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold
                         color: findBtnM.containsMouse ? Theme.accentOn : Theme.fg
                     }
                     MouseArea {
@@ -415,7 +415,7 @@ Item {
                 visible: root.searching && !root.termMode
                 Layout.alignment: Qt.AlignHCenter
                 text: "Поиск..."
-                font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 12; color: Theme.accentWarm
+                font.family: Theme.fontFamily; font.weight: Font.DemiBold; font.pixelSize: 12; color: Theme.accentWarm
             }
 
             // Список найденных пакетов
@@ -451,13 +451,13 @@ Item {
                                 Layout.fillWidth: true; spacing: 2
                                 RowLayout {
                                     spacing: 6
-                                    Text { text: modelData.pkg; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: Theme.fg }
-                                    Text { text: modelData.repo + " • " + modelData.ver; font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 10; color: Theme.accentWarm }
+                                    Text { text: modelData.pkg; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: Theme.fg }
+                                    Text { text: modelData.repo + " • " + modelData.ver; font.family: Theme.fontFamily; font.weight: Font.DemiBold; font.pixelSize: 10; color: Theme.accentWarm }
                                 }
                                 Text {
                                     Layout.fillWidth: true
                                     text: modelData.desc
-                                    font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 11; color: Theme.fgMuted
+                                    font.family: Theme.fontFamily; font.weight: Font.DemiBold; font.pixelSize: 11; color: Theme.fgMuted
                                     elide: Text.ElideRight
                                 }
                             }
@@ -471,7 +471,7 @@ Item {
                                 Text {
                                     anchors.centerIn: parent
                                     text: modelData.installed ? "Стоит" : "Установить"
-                                    font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.Black
+                                    font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.DemiBold
                                     color: modelData.installed ? Theme.fgMuted : Theme.accentOn
                                 }
                                 MouseArea {
@@ -513,13 +513,13 @@ Item {
                         Rectangle {
                             implicitWidth: 82; implicitHeight: 26; radius: Theme.r(8)
                             color: backM.containsMouse ? Theme.bgPillHover : Theme.bgPill
-                            Text { anchors.centerIn: parent; text: "← Назад"; font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 11; color: Theme.fg }
+                            Text { anchors.centerIn: parent; text: "← Назад"; font.family: Theme.fontFamily; font.weight: Font.DemiBold; font.pixelSize: 11; color: Theme.fg }
                             MouseArea { cursorShape: Qt.PointingHandCursor; id: backM; anchors.fill: parent; hoverEnabled: true; onClicked: { root.termMode = false; root.refreshAll(); if (pkgSearch.text.trim()) root.runSearch(); } }
                         }
                         Text {
                             Layout.fillWidth: true
                             text: root.termRunning ? "Выполняется..." : "Завершено"
-                            font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.Black
+                            font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.DemiBold
                             color: root.termRunning ? Theme.accentWarm : Theme.accent
                             horizontalAlignment: Text.AlignRight
                         }
@@ -569,7 +569,7 @@ Item {
                                 Text {
                                     visible: !parent.text
                                     text: root.isPasswordPrompt ? "Введите пароль и Enter..." : "Ввод (y / Enter)..."
-                                    font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 11; color: Theme.fgMuted
+                                    font.family: Theme.fontFamily; font.weight: Font.DemiBold; font.pixelSize: 11; color: Theme.fgMuted
                                 }
                             }
                         }
@@ -608,7 +608,7 @@ Item {
                         Text {
                             Layout.fillWidth: true
                             text: modelData.name
-                            font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Black; color: Theme.fg
+                            font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.DemiBold; color: Theme.fg
                             elide: Text.ElideRight
                         }
                         Rectangle {
@@ -665,7 +665,7 @@ Item {
                     color: root.installSource === modelData.id ? Theme.accentWarm : (sm.containsMouse ? Theme.bgPillHover : "transparent")
                     Text {
                         anchors.centerIn: parent; text: modelData.name
-                        font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black
+                        font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold
                         color: root.installSource === modelData.id ? Theme.accentOn : Theme.fg
                     }
                     MouseArea {
@@ -701,7 +701,7 @@ Item {
             Text {
                 Layout.fillWidth: true
                 text: "Источник: " + root.ctxSource + (root.ctxPkg ? " (" + root.ctxPkg + ")" : "")
-                font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 11; color: Theme.fgMuted
+                font.family: Theme.fontFamily; font.weight: Font.DemiBold; font.pixelSize: 11; color: Theme.fgMuted
                 elide: Text.ElideRight
             }
             Rectangle {
@@ -714,7 +714,7 @@ Item {
                 Text {
                     anchors.centerIn: parent
                     text: root.ctxPkg !== "" ? "Удалить" : "Нельзя удалить"
-                    font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black
+                    font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold
                     color: delBtnM.containsMouse ? Theme.accentOn : Theme.danger
                 }
                 MouseArea {
@@ -748,7 +748,7 @@ Item {
                 Layout.fillWidth: true
                 horizontalAlignment: Text.AlignHCenter
                 text: "Удалить " + (root.ctxApp?.name ?? "") + " (" + root.ctxPkg + ")?"
-                font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.Black; color: Theme.fg
+                font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.DemiBold; color: Theme.fg
                 wrapMode: Text.Wrap
             }
 
@@ -758,7 +758,7 @@ Item {
                 Behavior on color { ColorAnimation { duration: 140 } }
                 Layout.fillWidth: true; implicitHeight: 38; radius: Theme.r(12)
                 color: dAllM.containsMouse ? Theme.danger : Theme.bgPill
-                Text { anchors.centerIn: parent; text: "Удалить целиком (вместе с данными)"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: dAllM.containsMouse ? Theme.accentOn : Theme.danger }
+                Text { anchors.centerIn: parent; text: "Удалить целиком (вместе с данными)"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: dAllM.containsMouse ? Theme.accentOn : Theme.danger }
                 MouseArea {
                     cursorShape: Qt.PointingHandCursor
                     id: dAllM; anchors.fill: parent; hoverEnabled: true
@@ -781,7 +781,7 @@ Item {
                 Behavior on color { ColorAnimation { duration: 140 } }
                 Layout.fillWidth: true; implicitHeight: 38; radius: Theme.r(12)
                 color: dKeepM.containsMouse ? Theme.accentWarm : Theme.bgPill
-                Text { anchors.centerIn: parent; text: "Удалить, но оставить данные"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: dKeepM.containsMouse ? Theme.accentOn : Theme.fg }
+                Text { anchors.centerIn: parent; text: "Удалить, но оставить данные"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: dKeepM.containsMouse ? Theme.accentOn : Theme.fg }
                 MouseArea {
                     cursorShape: Qt.PointingHandCursor
                     id: dKeepM; anchors.fill: parent; hoverEnabled: true
@@ -797,7 +797,7 @@ Item {
             Rectangle {
                 Layout.fillWidth: true; implicitHeight: 34; radius: Theme.r(12)
                 color: dCanM.containsMouse ? Theme.bgPillHover : Theme.bgSurface
-                Text { anchors.centerIn: parent; text: "Отмена"; font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 12; color: Theme.fgMuted }
+                Text { anchors.centerIn: parent; text: "Отмена"; font.family: Theme.fontFamily; font.weight: Font.DemiBold; font.pixelSize: 12; color: Theme.fgMuted }
                 MouseArea { cursorShape: Qt.PointingHandCursor; id: dCanM; anchors.fill: parent; hoverEnabled: true; onClicked: root.confirmDeleteOpen = false }
             }
         }

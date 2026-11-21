@@ -81,7 +81,7 @@ PanelWindow {
                     Layout.fillWidth: true
                     Text {
                         text: "Не беспокоить"
-                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Black; color: Theme.fg
+                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.DemiBold; color: Theme.fg
                         Layout.fillWidth: true
                     }
                     Rectangle {
@@ -119,12 +119,12 @@ PanelWindow {
                             anchors.fill: parent; anchors.margins: 10; spacing: 2
                             Text {
                                 text: modelData.appName + (modelData.summary ? " — " + modelData.summary : "")
-                                font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: Theme.accentWarm
+                                font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: Theme.accentWarm
                                 elide: Text.ElideRight; Layout.fillWidth: true
                             }
                             Text {
                                 text: modelData.body || ""
-                                font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 11; color: Theme.fg
+                                font.family: Theme.fontFamily; font.weight: Font.DemiBold; font.pixelSize: 11; color: Theme.fg
                                 elide: Text.ElideRight; Layout.fillWidth: true
                             }
                         }
@@ -143,7 +143,7 @@ PanelWindow {
                     Text {
                         anchors.centerIn: parent
                         text: "Очистить"
-                        font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: Theme.fg
+                        font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.DemiBold; color: Theme.fg
                     }
                     MouseArea {
                         cursorShape: Qt.PointingHandCursor
@@ -177,7 +177,7 @@ PanelWindow {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignHCenter
                         text: win.ruMonths[win.viewDate.getMonth()] + " " + win.viewDate.getFullYear()
-                        font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.Black; color: Theme.fg
+                        font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.DemiBold; color: Theme.fg
                     }
                     Text {
                         text: "\uf054"; font.family: Theme.iconFont; font.pixelSize: 13; color: Theme.fgMuted
@@ -201,7 +201,7 @@ PanelWindow {
                             Layout.fillWidth: true
                             horizontalAlignment: Text.AlignHCenter
                             text: modelData
-                            font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.Black; color: Theme.fgMuted
+                            font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.DemiBold; color: Theme.fgMuted
                         }
                     }
 
@@ -231,7 +231,7 @@ PanelWindow {
                                 anchors.centerIn: parent
                                 text: modelData > 0 ? modelData : ""
                                 font.family: Theme.fontFamily; font.pixelSize: 13
-                                font.weight: isToday ? Font.Black : Font.Black
+                                font.weight: isToday ? Font.DemiBold : Font.DemiBold
                                 color: isToday ? Theme.accentOn : Theme.fg
                             }
                         }

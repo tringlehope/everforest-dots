@@ -201,7 +201,7 @@ PanelWindow {
                                     text: wsId
                                     font.family: Theme.fontFamily
                                     font.pixelSize: 13
-                                    font.weight: isActive ? Font.Black : (hasWindows ? Font.Black : Font.Black)
+                                    font.weight: isActive ? Font.DemiBold : (hasWindows ? Font.DemiBold : Font.DemiBold)
                                     color: isActive ? Theme.accentOn : (hasWindows ? Theme.fg : Theme.fgDim)
                                 }
                             }
@@ -263,7 +263,7 @@ PanelWindow {
                 Text {
                     visible: !bar.showPlayer
                     text: "Звук"
-                    font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.Black; color: Theme.fg
+                    font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.DemiBold; color: Theme.fg
                 }
 
                 RowLayout {
@@ -278,7 +278,7 @@ PanelWindow {
 
                     Text {
                         text: bar.playerTitle || "Музыка"
-                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Black; color: Theme.fg
+                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.DemiBold; color: Theme.fg
                         elide: Text.ElideRight; Layout.maximumWidth: 140
                         Layout.rightMargin: 4
                     }
@@ -352,7 +352,7 @@ PanelWindow {
                         text: "Трансляция"
                         font.family: Theme.fontFamily
                         font.pixelSize: 13
-                        font.weight: Font.Black
+                        font.weight: Font.DemiBold
                         color: Theme.fg
                     }
 
@@ -361,7 +361,7 @@ PanelWindow {
                         text: bar.recElapsed
                         font.family: Theme.fontFamily
                         font.pixelSize: 13
-                        font.weight: Font.Black
+                        font.weight: Font.DemiBold
                         color: Theme.fg
                     }
 
@@ -478,7 +478,7 @@ PanelWindow {
                             id: kbTxt
                             anchors.centerIn: parent
                             text: bar.kbLayout
-                            font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Black; color: Theme.fg
+                            font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.DemiBold; color: Theme.fg
                         }
                         MouseArea {
                             cursorShape: Qt.PointingHandCursor
@@ -541,7 +541,7 @@ PanelWindow {
                     id: timeText
                     anchors.centerIn: parent
                     text: Qt.formatDateTime(clock.date, "HH:mm")
-                    font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.Black; color: Theme.fg
+                    font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.DemiBold; color: Theme.fg
                 }
 
                 MouseArea {

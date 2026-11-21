@@ -189,7 +189,7 @@ Scope {
                     color: Theme.fg
                     font.family: Theme.fontFamily
                     font.pixelSize: 16
-                    font.weight: Font.Black
+                    font.weight: Font.DemiBold
                     horizontalAlignment: Text.AlignHCenter
                 }
 
@@ -199,7 +199,7 @@ Scope {
                     color: Theme.fgDim
                     font.family: Theme.fontFamily
                     font.pixelSize: 13
-                    font.weight: Font.Black
+                    font.weight: Font.DemiBold
                     horizontalAlignment: Text.AlignHCenter
                 }
 
@@ -221,7 +221,7 @@ Scope {
                             color: Theme.danger
                             font.family: Theme.fontFamily
                             font.pixelSize: 14
-                            font.weight: Font.Black
+                            font.weight: Font.DemiBold
                         }
                         MouseArea {
                             id: delM
@@ -246,7 +246,7 @@ Scope {
                             color: Theme.accentOn
                             font.family: Theme.fontFamily
                             font.pixelSize: 14
-                            font.weight: Font.Black
+                            font.weight: Font.DemiBold
                         }
                         MouseArea {
                             id: saveM
