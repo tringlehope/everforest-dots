@@ -705,6 +705,9 @@ Item {
                 elide: Text.ElideRight
             }
             Rectangle {
+                scale: delBtnM.pressed ? 0.93 : (delBtnM.containsMouse ? 1.05 : 1.0)
+                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                Behavior on color { ColorAnimation { duration: 140 } }
                 Layout.fillWidth: true; implicitHeight: 34; radius: 10
                 color: delBtnM.containsMouse ? Theme.danger : Theme.bgPill
                 enabled: root.ctxPkg !== ""
@@ -750,6 +753,9 @@ Item {
             }
 
             Rectangle {
+                scale: dAllM.pressed ? 0.93 : (dAllM.containsMouse ? 1.05 : 1.0)
+                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                Behavior on color { ColorAnimation { duration: 140 } }
                 Layout.fillWidth: true; implicitHeight: 38; radius: 12
                 color: dAllM.containsMouse ? Theme.danger : Theme.bgPill
                 Text { anchors.centerIn: parent; text: "Удалить целиком (вместе с данными)"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: dAllM.containsMouse ? Theme.accentOn : Theme.danger }
@@ -770,6 +776,9 @@ Item {
             }
 
             Rectangle {
+                scale: dKeepM.pressed ? 0.93 : (dKeepM.containsMouse ? 1.05 : 1.0)
+                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                Behavior on color { ColorAnimation { duration: 140 } }
                 Layout.fillWidth: true; implicitHeight: 38; radius: 12
                 color: dKeepM.containsMouse ? Theme.accentWarm : Theme.bgPill
                 Text { anchors.centerIn: parent; text: "Удалить, но оставить данные"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: dKeepM.containsMouse ? Theme.accentOn : Theme.fg }

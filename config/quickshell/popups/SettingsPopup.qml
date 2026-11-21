@@ -372,6 +372,9 @@ PanelWindow {
                                     font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Black; color: Theme.fg
                                 }
                                 Rectangle {
+                                    scale: dm.pressed ? 0.93 : (dm.containsMouse ? 1.05 : 1.0)
+                                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                                    Behavior on color { ColorAnimation { duration: 140 } }
                                     implicitWidth: valRow.implicitWidth + 22
                                     implicitHeight: 30
                                     radius: 10

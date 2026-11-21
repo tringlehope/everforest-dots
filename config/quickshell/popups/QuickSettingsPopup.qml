@@ -599,6 +599,9 @@ PanelWindow {
                     spacing: 4
 
                     Rectangle {
+                        scale: ethTabM.pressed ? 0.93 : (ethTabM.containsMouse ? 1.05 : 1.0)
+                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on color { ColorAnimation { duration: 140 } }
                         Layout.fillWidth: true; Layout.fillHeight: true; radius: 9
                         color: win.netTab === "eth" ? Theme.accent : (ethTabM.containsMouse ? Theme.bgPill : "transparent")
                         RowLayout {
@@ -614,6 +617,9 @@ PanelWindow {
                     }
 
                     Rectangle {
+                        scale: wifiTabM.pressed ? 0.93 : (wifiTabM.containsMouse ? 1.05 : 1.0)
+                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on color { ColorAnimation { duration: 140 } }
                         Layout.fillWidth: true; Layout.fillHeight: true; radius: 9
                         color: win.netTab === "wifi" ? Theme.accent : (wifiTabM.containsMouse ? Theme.bgPill : "transparent")
                         RowLayout {
@@ -808,6 +814,9 @@ PanelWindow {
                                 elide: Text.ElideRight
                             }
                             Rectangle {
+                                scale: discM.pressed ? 0.93 : (discM.containsMouse ? 1.05 : 1.0)
+                                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                                Behavior on color { ColorAnimation { duration: 140 } }
                                 implicitWidth: discTxt.implicitWidth + 12
                                 implicitHeight: 24
                                 radius: 8
@@ -968,6 +977,9 @@ PanelWindow {
                                 Layout.fillWidth: true
                                 spacing: 6
                                 Rectangle {
+                                    scale: cancelPassM.pressed ? 0.93 : (cancelPassM.containsMouse ? 1.05 : 1.0)
+                                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                                    Behavior on color { ColorAnimation { duration: 140 } }
                                     Layout.fillWidth: true; implicitHeight: 28; radius: 8
                                     color: cancelPassM.containsMouse ? Theme.bgPillHover : Theme.bgPill
                                     Text { anchors.centerIn: parent; text: "Отмена"; font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.Black; color: Theme.fg }
@@ -978,10 +990,15 @@ PanelWindow {
                                     }
                                 }
                                 Rectangle {
+                                    scale: animMa_1.pressed ? 0.93 : (animMa_1.containsMouse ? 1.05 : 1.0)
+                                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                                    Behavior on color { ColorAnimation { duration: 140 } }
                                     Layout.fillWidth: true; implicitHeight: 28; radius: 8
                                     color: Theme.accent
                                     Text { anchors.centerIn: parent; text: "Подключить"; font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.Black; color: Theme.accentOn }
                                     MouseArea {
+                                        id: animMa_1
+                                        hoverEnabled: true
                                         anchors.fill: parent; cursorShape: Qt.PointingHandCursor
                                         onClicked: {
                                             wifiConnectProc.command = ["nmcli", "dev", "wifi", "connect", win.selectedWifiSsid, "password", passInput.text];

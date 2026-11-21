@@ -208,6 +208,9 @@ Scope {
                     spacing: 10
 
                     Rectangle {
+                        scale: delM.pressed ? 0.93 : (delM.containsMouse ? 1.05 : 1.0)
+                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on color { ColorAnimation { duration: 140 } }
                         Layout.fillWidth: true
                         implicitHeight: 38
                         radius: 12
@@ -230,6 +233,9 @@ Scope {
                     }
 
                     Rectangle {
+                        scale: saveM.pressed ? 0.93 : (saveM.containsMouse ? 1.05 : 1.0)
+                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on color { ColorAnimation { duration: 140 } }
                         Layout.fillWidth: true
                         implicitHeight: 38
                         radius: 12

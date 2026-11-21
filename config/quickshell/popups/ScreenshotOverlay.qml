@@ -519,6 +519,9 @@ PanelWindow {
                         Repeater {
                             model: root.paletteColors
                             Rectangle {
+                                scale: btnMa_12.pressed ? 0.93 : (btnMa_12.containsMouse ? 1.05 : 1.0)
+                                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                                Behavior on color { ColorAnimation { duration: 140 } }
                                 width: 24
                                 height: 24
                                 radius: 12
@@ -652,6 +655,9 @@ PanelWindow {
                         Repeater {
                             model: ["HEX", "RGB", "HSL"]
                             Rectangle {
+                                scale: animMa_2.pressed ? 0.93 : (animMa_2.containsMouse ? 1.05 : 1.0)
+                                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                                Behavior on color { ColorAnimation { duration: 140 } }
                                 width: fmtTxt.implicitWidth + 18
                                 height: 28
                                 radius: 8
@@ -666,6 +672,8 @@ PanelWindow {
                                     font.weight: Font.Black
                                 }
                                 MouseArea {
+                                    id: animMa_2
+                                    hoverEnabled: true
                                     anchors.fill: parent
                                     cursorShape: Qt.PointingHandCursor
                                     onClicked: root.colorFormat = modelData
@@ -727,6 +735,9 @@ PanelWindow {
                             { id: "pipette", icon: "\uf1fb" }
                         ]
                         Rectangle {
+                            scale: btnMa_13.pressed ? 0.93 : (btnMa_13.containsMouse ? 1.05 : 1.0)
+                            Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                            Behavior on color { ColorAnimation { duration: 140 } }
                             width: 36
                             height: 34
                             radius: 10
@@ -749,6 +760,9 @@ PanelWindow {
                     }
 
                     Rectangle {
+                        scale: animMa_3.pressed ? 0.93 : (animMa_3.containsMouse ? 1.05 : 1.0)
+                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on color { ColorAnimation { duration: 140 } }
                         visible: root.strokes.length > 0
                         width: undoLbl.implicitWidth + 20
                         height: 34
@@ -764,6 +778,8 @@ PanelWindow {
                             font.weight: Font.Black
                         }
                         MouseArea {
+                            id: animMa_3
+                            hoverEnabled: true
                             anchors.fill: parent
                             cursorShape: Qt.PointingHandCursor
                             onClicked: root.undo()
@@ -771,6 +787,9 @@ PanelWindow {
                     }
 
                     Rectangle {
+                        scale: animMa_4.pressed ? 0.93 : (animMa_4.containsMouse ? 1.05 : 1.0)
+                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on color { ColorAnimation { duration: 140 } }
                         width: copyLbl.implicitWidth + 22
                         height: 34
                         radius: 10
@@ -785,6 +804,8 @@ PanelWindow {
                             font.weight: Font.Black
                         }
                         MouseArea {
+                            id: animMa_4
+                            hoverEnabled: true
                             anchors.fill: parent
                             cursorShape: Qt.PointingHandCursor
                             onClicked: root.runExport("copy")
@@ -792,6 +813,9 @@ PanelWindow {
                     }
 
                     Rectangle {
+                        scale: animMa_5.pressed ? 0.93 : (animMa_5.containsMouse ? 1.05 : 1.0)
+                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on color { ColorAnimation { duration: 140 } }
                         width: saveLbl.implicitWidth + 22
                         height: 34
                         radius: 10
@@ -806,6 +830,8 @@ PanelWindow {
                             font.weight: Font.Black
                         }
                         MouseArea {
+                            id: animMa_5
+                            hoverEnabled: true
                             anchors.fill: parent
                             cursorShape: Qt.PointingHandCursor
                             onClicked: root.runExport("save")
@@ -813,6 +839,9 @@ PanelWindow {
                     }
 
                     Rectangle {
+                        scale: animMa_6.pressed ? 0.93 : (animMa_6.containsMouse ? 1.05 : 1.0)
+                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on color { ColorAnimation { duration: 140 } }
                         width: 34
                         height: 34
                         radius: 10
@@ -826,6 +855,8 @@ PanelWindow {
                             font.weight: Font.Black
                         }
                         MouseArea {
+                            id: animMa_6
+                            hoverEnabled: true
                             anchors.fill: parent
                             cursorShape: Qt.PointingHandCursor
                             onClicked: root.close()
