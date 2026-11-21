@@ -31,6 +31,12 @@ ShellRoot {
     ScreenFrame {}
 
     TopBar {
+        recording: recManager.recording
+        recPaused: recManager.paused
+        recElapsed: recManager.elapsedText
+        screenSharing: recManager.screenSharing
+        onToggleRecPause: recManager.togglePause()
+        onStopRecording: recManager.stopRecording()
         onVolumeScrolled: volumeOsd.trigger()
         onToggleLauncher: {
             var next = !launcherDock.open;
@@ -59,13 +65,22 @@ ShellRoot {
         id: qsPopup
         onOpenWallpapers: wallPopup.open = true
         onOpenSettings:   settingsPopup.open = true
+        onStartCapture:   recManager.startRecording()
+        recording:        recManager.recording
     }
     NotificationsPopup { id: notifPopup }
     WallpaperPopup     { id: wallPopup }
     SettingsPopup      { id: settingsPopup }
+    ScreenshotOverlay  { id: shotOverlay }
+    RecordingManager   { id: recManager }
     LayoutOsd          { id: layoutOsd }
     VolumeOsd          { id: volumeOsd }
     LauncherDock       { id: launcherDock; pinned: qsPopup.dockPinned }
+
+    IpcHandler {
+        target: "capture"
+        function start(): void { root.closeAll(); shotOverlay.start(); }
+    }
 
     IpcHandler {
         target: "osd"

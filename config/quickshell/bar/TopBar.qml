@@ -14,6 +14,12 @@ PanelWindow {
     signal toggleLauncher()
     signal toggleAudio()
     signal toggleQuickSettings()
+    property bool recording: false
+    property bool recPaused: false
+    property string recElapsed: "00:00"
+    property bool screenSharing: false
+    signal toggleRecPause()
+    signal stopRecording()
     signal toggleNotifications()
     signal volumeScrolled()
 
@@ -300,6 +306,90 @@ PanelWindow {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             spacing: 6
+
+            // Виджет записи экрана или уведомление о трансляции перед треем
+            Item {
+                id: recCastPill
+                visible: bar.recording || bar.screenSharing
+                Layout.fillHeight: true
+                implicitWidth: recCastRow.implicitWidth + 16
+
+                Rectangle {
+                    anchors.centerIn: parent
+                    width: parent.width; height: 26
+                    radius: 13
+                    color: Theme.bgPill
+                    border.color: bar.recording ? Theme.danger : Theme.accentWarm
+                    border.width: 2
+                }
+
+                RowLayout {
+                    id: recCastRow
+                    anchors.centerIn: parent
+                    spacing: 6
+
+                    Rectangle {
+                        width: 8; height: 8; radius: 4
+                        color: bar.recording ? (bar.recPaused ? Theme.accentWarm : Theme.danger) : Theme.accentWarm
+                    }
+
+                    Text {
+                        visible: !bar.recording && bar.screenSharing
+                        text: "Трансляция"
+                        font.family: Theme.fontFamily
+                        font.pixelSize: 11
+                        font.weight: Font.Black
+                        color: Theme.fg
+                    }
+
+                    Text {
+                        visible: bar.recording
+                        text: bar.recElapsed
+                        font.family: Theme.fontFamily
+                        font.pixelSize: 11
+                        font.weight: Font.Black
+                        color: Theme.fg
+                    }
+
+                    Rectangle {
+                        visible: bar.recording
+                        width: 20; height: 20; radius: 10
+                        color: pauseM.containsMouse ? Theme.bgPillHover : "transparent"
+                        Text {
+                            anchors.centerIn: parent
+                            text: bar.recPaused ? "\uf04b" : "\uf04c"
+                            font.family: Theme.iconFont; font.pixelSize: 10
+                            color: Theme.fg
+                        }
+                        MouseArea {
+                            id: pauseM
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: bar.toggleRecPause()
+                        }
+                    }
+
+                    Rectangle {
+                        visible: bar.recording
+                        width: 20; height: 20; radius: 10
+                        color: stopM.containsMouse ? Theme.bgPillHover : "transparent"
+                        Text {
+                            anchors.centerIn: parent
+                            text: "\uf04d"
+                            font.family: Theme.iconFont; font.pixelSize: 10
+                            color: Theme.danger
+                        }
+                        MouseArea {
+                            id: stopM
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: bar.stopRecording()
+                        }
+                    }
+                }
+            }
 
             Item {
                 id: trayPill

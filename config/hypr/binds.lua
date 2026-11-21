@@ -33,3 +33,6 @@ hl.bind(mainMod .. " + mouse:274", hl.dsp.exec_cmd("touch /tmp/hypr-scroll-stop"
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+ && qs ipc call osd volume"), { locked = true, repeating = true })
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && qs ipc call osd volume"),      { locked = true, repeating = true })
 hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && qs ipc call osd volume"),     { locked = true })
+
+-- Скриншот / запись области экрана
+hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd("qs ipc call capture start"))
