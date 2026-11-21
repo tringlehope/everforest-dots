@@ -167,6 +167,16 @@ install_pkg_list \
 sudo systemctl enable --now NetworkManager.service 2>/dev/null || true
 sudo systemctl enable --now bluetooth.service 2>/dev/null || true
 
+
+sudo mkdir -p /etc/polkit-1/rules.d
+cat << 'PKRULE' | sudo tee /etc/polkit-1/rules.d/50-flatpak.rules >/dev/null
+polkit.addRule(function(action, subject) {
+    if (action.id.indexOf("org.freedesktop.Flatpak.") === 0 && subject.isInGroup("wheel")) {
+        return polkit.Result.YES;
+    }
+});
+PKRULE
+
 # Flathub и ассоциация .pkg.tar.zst для Nautilus
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo 2>/dev/null || true
 mkdir -p "$HOME/.local/share/mime/packages" "$HOME/.local/share/applications"
