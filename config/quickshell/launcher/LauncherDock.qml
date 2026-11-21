@@ -329,6 +329,9 @@ Scope {
         WlrLayershell.namespace: "qs-dock"
 
         Rectangle {
+            scale: dockItemMouse.pressed ? 0.94 : (dockItemMouse.containsMouse ? 1.04 : 1.0)
+            Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+            Behavior on color { ColorAnimation { duration: 140 } }
             id: dockCard
             anchors.fill: parent
             radius: 26

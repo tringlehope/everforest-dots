@@ -161,6 +161,8 @@ PanelWindow {
 
     // Компактный переиспользуемый тумблер
     component TogglePill: Rectangle {
+        scale: btnMa_10.pressed ? 0.94 : (btnMa_10.containsMouse ? 1.04 : 1.0)
+        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
         property bool checked: false
         signal toggled()
         implicitWidth: 44
@@ -182,6 +184,8 @@ PanelWindow {
         }
 
         MouseArea {
+            id: btnMa_10
+            hoverEnabled: true
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
             onClicked: parent.toggled()
@@ -554,6 +558,9 @@ PanelWindow {
                 spacing: 8
 
                 Rectangle {
+                    scale: netBackM.pressed ? 0.94 : (netBackM.containsMouse ? 1.04 : 1.0)
+                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on color { ColorAnimation { duration: 140 } }
                     width: 30; height: 30; radius: 15
                     color: netBackM.containsMouse ? Theme.bgPillHover : Theme.bgPill
                     Text { anchors.centerIn: parent; text: "\uf053"; font.family: Theme.iconFont; font.pixelSize: 11; color: Theme.fg }
@@ -578,6 +585,9 @@ PanelWindow {
 
             // 2 вкладки: Ethernet / Wi-Fi
             Rectangle {
+                scale: ethTabM.pressed ? 0.94 : (ethTabM.containsMouse ? 1.04 : 1.0)
+                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                Behavior on color { ColorAnimation { duration: 140 } }
                 Layout.fillWidth: true
                 implicitHeight: 36
                 radius: 12
@@ -756,6 +766,9 @@ PanelWindow {
                             color: Theme.fgDim
                         }
                         Rectangle {
+                            scale: refM.pressed ? 0.94 : (refM.containsMouse ? 1.04 : 1.0)
+                            Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                            Behavior on color { ColorAnimation { duration: 140 } }
                             implicitWidth: refRow.implicitWidth + 16
                             implicitHeight: 28
                             radius: 10
@@ -775,6 +788,9 @@ PanelWindow {
                     }
 
                     Rectangle {
+                        scale: discM.pressed ? 0.94 : (discM.containsMouse ? 1.04 : 1.0)
+                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on color { ColorAnimation { duration: 140 } }
                         visible: win.connectedWifiSsid !== ""
                         Layout.fillWidth: true
                         implicitHeight: 38
@@ -882,6 +898,9 @@ PanelWindow {
                     }
 
                     Rectangle {
+                        scale: btnMa_11.pressed ? 0.94 : (btnMa_11.containsMouse ? 1.04 : 1.0)
+                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on color { ColorAnimation { duration: 140 } }
                         visible: win.selectedWifiSsid !== ""
                         Layout.fillWidth: true
                         implicitHeight: passCol.implicitHeight + 16
@@ -927,6 +946,8 @@ PanelWindow {
                                         text: win.showPass ? "\uf070" : "\uf06e"
                                         font.family: Theme.iconFont; font.pixelSize: 12; color: Theme.fgDim
                                         MouseArea {
+                            id: btnMa_11
+                            hoverEnabled: true
                                             anchors.fill: parent; cursorShape: Qt.PointingHandCursor
                                             onClicked: win.showPass = !win.showPass
                                         }
@@ -987,6 +1008,9 @@ PanelWindow {
                 spacing: 8
 
                 Rectangle {
+                    scale: btBackM.pressed ? 0.94 : (btBackM.containsMouse ? 1.04 : 1.0)
+                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on color { ColorAnimation { duration: 140 } }
                     width: 30; height: 30; radius: 15
                     color: btBackM.containsMouse ? Theme.bgPillHover : Theme.bgPill
                     Text { anchors.centerIn: parent; text: "\uf053"; font.family: Theme.iconFont; font.pixelSize: 11; color: Theme.fg }

@@ -284,18 +284,27 @@ PanelWindow {
                     }
 
                     Rectangle {
+                        scale: prevM.pressed ? 0.94 : (prevM.containsMouse ? 1.04 : 1.0)
+                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on color { ColorAnimation { duration: 140 } }
                         implicitWidth: 30; implicitHeight: 26; radius: prevM.containsMouse ? 6 : 11
                         color: prevM.containsMouse ? Theme.bgElevated : "transparent"
                         Text { anchors.centerIn: parent; text: "\uf048"; font.family: Theme.iconFont; font.pixelSize: 11; color: Theme.fg }
                         MouseArea { cursorShape: Qt.PointingHandCursor; id: prevM; anchors.fill: parent; hoverEnabled: true; onClicked: bar.runAct(["playerctl", "previous"]) }
                     }
                     Rectangle {
+                        scale: playM.pressed ? 0.94 : (playM.containsMouse ? 1.04 : 1.0)
+                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on color { ColorAnimation { duration: 140 } }
                         implicitWidth: 32; implicitHeight: 26; radius: playM.containsMouse ? 6 : 11
                         color: playM.containsMouse ? Theme.bgElevated : "transparent"
                         Text { anchors.centerIn: parent; text: bar.isPlaying ? "\uf04c" : "\uf04b"; font.family: Theme.iconFont; font.pixelSize: 11; color: Theme.accent }
                         MouseArea { cursorShape: Qt.PointingHandCursor; id: playM; anchors.fill: parent; hoverEnabled: true; onClicked: bar.runAct(["playerctl", "play-pause"]) }
                     }
                     Rectangle {
+                        scale: nextM.pressed ? 0.94 : (nextM.containsMouse ? 1.04 : 1.0)
+                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on color { ColorAnimation { duration: 140 } }
                         implicitWidth: 30; implicitHeight: 26; radius: nextM.containsMouse ? 6 : 11
                         color: nextM.containsMouse ? Theme.bgElevated : "transparent"
                         Text { anchors.centerIn: parent; text: "\uf051"; font.family: Theme.iconFont; font.pixelSize: 11; color: Theme.fg }
@@ -357,6 +366,9 @@ PanelWindow {
                     }
 
                     Rectangle {
+                        scale: pauseM.pressed ? 0.94 : (pauseM.containsMouse ? 1.04 : 1.0)
+                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on color { ColorAnimation { duration: 140 } }
                         visible: bar.recording
                         width: 20; height: 20; radius: 10
                         color: pauseM.containsMouse ? Theme.bgPillHover : "transparent"
@@ -376,6 +388,9 @@ PanelWindow {
                     }
 
                     Rectangle {
+                        scale: stopM.pressed ? 0.94 : (stopM.containsMouse ? 1.04 : 1.0)
+                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on color { ColorAnimation { duration: 140 } }
                         visible: bar.recording
                         width: 20; height: 20; radius: 10
                         color: stopM.containsMouse ? Theme.bgPillHover : "transparent"

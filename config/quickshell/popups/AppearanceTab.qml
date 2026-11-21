@@ -26,6 +26,9 @@ Item {
 
             // Вариант 1: Панель с рамками
             Rectangle {
+                scale: btnMa_1.pressed ? 0.94 : (btnMa_1.containsMouse ? 1.04 : 1.0)
+                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                Behavior on color { ColorAnimation { duration: 140 } }
                 readonly property bool active: Theme.showFrame
                 Layout.fillWidth: true
                 implicitHeight: 190
@@ -35,6 +38,8 @@ Item {
                 border.width: active ? 3 : 1
 
                 MouseArea {
+                    id: btnMa_1
+                    hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     anchors.fill: parent
                     onClicked: root.setFrameMode(true)
@@ -77,6 +82,9 @@ Item {
 
             // Вариант 2: Только пузыри
             Rectangle {
+                scale: btnMa_2.pressed ? 0.94 : (btnMa_2.containsMouse ? 1.04 : 1.0)
+                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                Behavior on color { ColorAnimation { duration: 140 } }
                 readonly property bool active: !Theme.showFrame
                 Layout.fillWidth: true
                 implicitHeight: 190
@@ -86,6 +94,8 @@ Item {
                 border.width: active ? 3 : 1
 
                 MouseArea {
+                    id: btnMa_2
+                    hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     anchors.fill: parent
                     onClicked: root.setFrameMode(false)

@@ -158,6 +158,9 @@ Item {
             spacing: 8
 
             Rectangle {
+                scale: btnMa_3.pressed ? 0.94 : (btnMa_3.containsMouse ? 1.04 : 1.0)
+                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                Behavior on color { ColorAnimation { duration: 140 } }
                 Layout.fillWidth: true
                 implicitHeight: 34
                 radius: 12
@@ -177,6 +180,8 @@ Item {
                                 color: root.subTab === index ? Theme.accentOn : Theme.fgMuted
                             }
                             MouseArea {
+                    id: btnMa_3
+                    hoverEnabled: true
                                 cursorShape: Qt.PointingHandCursor
                                 anchors.fill: parent
                                 onClicked: {
@@ -196,6 +201,9 @@ Item {
                 spacing: 6
                 Text { text: "Системные"; font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 11; color: Theme.fgMuted }
                 Rectangle {
+                    scale: btnMa_4.pressed ? 0.94 : (btnMa_4.containsMouse ? 1.04 : 1.0)
+                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on color { ColorAnimation { duration: 140 } }
                     implicitWidth: 38; implicitHeight: 22; radius: 11
                     color: root.showSystem ? Theme.accent : Theme.bgPill
                     Rectangle {
@@ -206,6 +214,8 @@ Item {
                         Behavior on x { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                     }
                     MouseArea {
+                        id: btnMa_4
+                        hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
                         anchors.fill: parent
                         onClicked: { root.closeMenus(); root.showSystem = !root.showSystem; }
@@ -287,6 +297,9 @@ Item {
                 spacing: 8
 
                 Rectangle {
+                    scale: repM.pressed ? 0.94 : (repM.containsMouse ? 1.04 : 1.0)
+                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on color { ColorAnimation { duration: 140 } }
                     Layout.fillWidth: true; implicitHeight: 34; radius: 10
                     color: repM.containsMouse ? Theme.bgPillHover : Theme.bgPill
                     RowLayout {
@@ -302,6 +315,9 @@ Item {
                 }
 
                 Rectangle {
+                    scale: sysM.pressed ? 0.94 : (sysM.containsMouse ? 1.04 : 1.0)
+                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on color { ColorAnimation { duration: 140 } }
                     Layout.fillWidth: true; implicitHeight: 34; radius: 10
                     color: sysM.containsMouse ? Theme.accentWarm : Theme.accent
                     RowLayout {
@@ -323,6 +339,9 @@ Item {
                 spacing: 8
 
                 Rectangle {
+                    scale: btnMa_5.pressed ? 0.94 : (btnMa_5.containsMouse ? 1.04 : 1.0)
+                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on color { ColorAnimation { duration: 140 } }
                     implicitWidth: 105; implicitHeight: 36; radius: 10
                     color: Theme.bgFrame
                     border.color: root.sourceMenuOpen ? Theme.accent : Theme.borderSubtle
@@ -337,16 +356,19 @@ Item {
                         }
                         Text { text: root.sourceMenuOpen ? "\uf077" : "\uf078"; font.family: Theme.iconFont; font.pixelSize: 10; color: Theme.fgMuted }
                     }
-                    MouseArea { cursorShape: Qt.PointingHandCursor; anchors.fill: parent; onClicked: root.sourceMenuOpen = !root.sourceMenuOpen }
+                    MouseArea { hoverEnabled: true; id: btnMa_5; cursorShape: Qt.PointingHandCursor; anchors.fill: parent; onClicked: root.sourceMenuOpen = !root.sourceMenuOpen }
                 }
 
                 Rectangle {
+                    scale: btnMa_6.pressed ? 0.94 : (btnMa_6.containsMouse ? 1.04 : 1.0)
+                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on color { ColorAnimation { duration: 140 } }
                     Layout.fillWidth: true; implicitHeight: 36; radius: 10
                     color: Theme.bgPill
                     border.color: pkgSearch.activeFocus ? Theme.accent : "transparent"
                     border.width: 1
 
-                    MouseArea { cursorShape: Qt.PointingHandCursor; anchors.fill: parent; onClicked: { root.closeMenus(); pkgSearch.forceActiveFocus(); } }
+                    MouseArea { hoverEnabled: true; id: btnMa_6; cursorShape: Qt.PointingHandCursor; anchors.fill: parent; onClicked: { root.closeMenus(); pkgSearch.forceActiveFocus(); } }
 
                     RowLayout {
                         anchors.fill: parent; anchors.leftMargin: 10; anchors.rightMargin: 10; spacing: 8
@@ -371,6 +393,9 @@ Item {
                 }
 
                 Rectangle {
+                    scale: findBtnM.pressed ? 0.94 : (findBtnM.containsMouse ? 1.04 : 1.0)
+                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on color { ColorAnimation { duration: 140 } }
                     implicitWidth: 74; implicitHeight: 36; radius: 10
                     color: findBtnM.containsMouse ? Theme.accentWarm : Theme.bgPill
                     Text {
@@ -438,6 +463,9 @@ Item {
                             }
 
                             Rectangle {
+                                scale: instM.pressed ? 0.94 : (instM.containsMouse ? 1.04 : 1.0)
+                                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                                Behavior on color { ColorAnimation { duration: 140 } }
                                 implicitWidth: 92; implicitHeight: 32; radius: 9
                                 color: modelData.installed ? Theme.bgFrame : (instM.containsMouse ? Theme.accentWarm : Theme.accent)
                                 Text {
@@ -466,6 +494,9 @@ Item {
 
             // Встроенное окно логов терминала (ввод пароля, y, Enter)
             Rectangle {
+                scale: backM.pressed ? 0.94 : (backM.containsMouse ? 1.04 : 1.0)
+                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                Behavior on color { ColorAnimation { duration: 140 } }
                 visible: root.termMode
                 Layout.fillWidth: true
                 Layout.fillHeight: true
@@ -581,6 +612,9 @@ Item {
                             elide: Text.ElideRight
                         }
                         Rectangle {
+                            scale: btnMa_7.pressed ? 0.94 : (btnMa_7.containsMouse ? 1.04 : 1.0)
+                            Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                            Behavior on color { ColorAnimation { duration: 140 } }
                             implicitWidth: 40; implicitHeight: 22; radius: 11
                             color: modelData.autostart ? Theme.accent : Theme.bgFrame
                             Rectangle {
@@ -590,6 +624,8 @@ Item {
                                 color: modelData.autostart ? Theme.accentOn : Theme.fgMuted
                             }
                             MouseArea {
+                                id: btnMa_7
+                                hoverEnabled: true
                                 cursorShape: Qt.PointingHandCursor
                                 anchors.fill: parent
                                 onClicked: {
@@ -607,6 +643,9 @@ Item {
     }
 
     Rectangle {
+        scale: sm.pressed ? 0.94 : (sm.containsMouse ? 1.04 : 1.0)
+        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+        Behavior on color { ColorAnimation { duration: 140 } }
         visible: root.sourceMenuOpen
         x: 0; y: 128
         width: 105; height: 108
@@ -644,6 +683,9 @@ Item {
     }
 
     Rectangle {
+        scale: delBtnM.pressed ? 0.94 : (delBtnM.containsMouse ? 1.04 : 1.0)
+        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+        Behavior on color { ColorAnimation { duration: 140 } }
         visible: root.ctxOpen
         x: root.ctxX; y: root.ctxY
         width: 200; height: 84
@@ -682,6 +724,9 @@ Item {
     }
 
     Rectangle {
+        scale: dAllM.pressed ? 0.94 : (dAllM.containsMouse ? 1.04 : 1.0)
+        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+        Behavior on color { ColorAnimation { duration: 140 } }
         visible: root.confirmDeleteOpen
         anchors.fill: parent
         radius: 14

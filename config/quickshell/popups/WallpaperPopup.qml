@@ -68,6 +68,9 @@ PanelWindow {
                     font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Black; color: Theme.fg
                 }
                 Rectangle {
+                    scale: closeW.pressed ? 0.94 : (closeW.containsMouse ? 1.04 : 1.0)
+                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on color { ColorAnimation { duration: 140 } }
                     implicitWidth: 30; implicitHeight: 30; radius: closeW.containsMouse ? 8 : 15
                     color: closeW.containsMouse ? Theme.bgPillHover : Theme.bgPill
                     Text { anchors.centerIn: parent; text: "\uf00d"; font.family: Theme.iconFont; font.pixelSize: 12; color: Theme.fgMuted }
@@ -99,6 +102,9 @@ PanelWindow {
                     width: 158; height: 104
 
                     Rectangle {
+                        scale: wM.pressed ? 0.94 : (wM.containsMouse ? 1.04 : 1.0)
+                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on color { ColorAnimation { duration: 140 } }
                         anchors.fill: parent; anchors.margins: 4
                         radius: wM.containsMouse ? 10 : 14
                         color: Theme.bgPill

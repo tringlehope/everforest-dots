@@ -167,6 +167,9 @@ Scope {
         color: "transparent"
 
         Rectangle {
+            scale: delM.pressed ? 0.94 : (delM.containsMouse ? 1.04 : 1.0)
+            Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+            Behavior on color { ColorAnimation { duration: 140 } }
             anchors.centerIn: parent
             width: 340
             height: dlgCol.implicitHeight + 36

@@ -85,6 +85,9 @@ PanelWindow {
                         Layout.fillWidth: true
                     }
                     Rectangle {
+                        scale: btnMa_9.pressed ? 0.94 : (btnMa_9.containsMouse ? 1.04 : 1.0)
+                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on color { ColorAnimation { duration: 140 } }
                         implicitWidth: 42; implicitHeight: 22
                         radius: Theme.radiusPill
                         color: win.dnd ? Theme.accent : Theme.bgPill
@@ -95,7 +98,7 @@ PanelWindow {
                             color: win.dnd ? Theme.accentOn : Theme.fgMuted
                             Behavior on x { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
                         }
-                        MouseArea { cursorShape: Qt.PointingHandCursor; anchors.fill: parent; onClicked: win.dnd = !win.dnd }
+                        MouseArea { hoverEnabled: true; id: btnMa_9; cursorShape: Qt.PointingHandCursor; anchors.fill: parent; onClicked: win.dnd = !win.dnd }
                     }
                 }
 
@@ -129,6 +132,9 @@ PanelWindow {
                 }
 
                 Rectangle {
+                    scale: clearMouse.pressed ? 0.94 : (clearMouse.containsMouse ? 1.04 : 1.0)
+                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on color { ColorAnimation { duration: 140 } }
                     Layout.fillWidth: true
                     implicitHeight: 34
                     radius: clearMouse.containsMouse ? 10 : 17

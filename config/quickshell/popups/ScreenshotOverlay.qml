@@ -493,6 +493,9 @@ PanelWindow {
 
             // Дополнительная панель: цвета + размер 1:1 (для кисти/ластика) или формат (для пипетки)
             Rectangle {
+                scale: btnMa_12.pressed ? 0.94 : (btnMa_12.containsMouse ? 1.04 : 1.0)
+                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                Behavior on color { ColorAnimation { duration: 140 } }
                 id: subBar
                 visible: root.activeTool === "draw" || root.activeTool === "eraser" || root.activeTool === "pipette"
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -523,6 +526,8 @@ PanelWindow {
                                 border.color: root.brushColor.toString() === modelData ? "#d3c6aa" : "#232a2e"
                                 border.width: root.brushColor.toString() === modelData ? 3 : 2
                                 MouseArea {
+                    id: btnMa_12
+                    hoverEnabled: true
                                     anchors.fill: parent
                                     cursorShape: Qt.PointingHandCursor
                                     onClicked: root.brushColor = modelData
@@ -699,6 +704,9 @@ PanelWindow {
 
             // Главная панель кнопок (без записи экрана)
             Rectangle {
+                scale: btnMa_13.pressed ? 0.94 : (btnMa_13.containsMouse ? 1.04 : 1.0)
+                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                Behavior on color { ColorAnimation { duration: 140 } }
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: mainRow.implicitWidth + 20
                 height: 48
@@ -731,6 +739,8 @@ PanelWindow {
                                 font.pixelSize: 16
                             }
                             MouseArea {
+                    id: btnMa_13
+                    hoverEnabled: true
                                 anchors.fill: parent
                                 cursorShape: Qt.PointingHandCursor
                                 onClicked: root.activeTool = (root.activeTool === modelData.id ? "none" : modelData.id)

@@ -142,6 +142,9 @@ PanelWindow {
 
             // --- ЛЕВЫЙ САЙДБАР ---
             Rectangle {
+                scale: tabM.pressed ? 0.94 : (tabM.containsMouse ? 1.04 : 1.0)
+                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                Behavior on color { ColorAnimation { duration: 140 } }
                 Layout.preferredWidth: 195
                 Layout.fillHeight: true
                 color: Theme.bgFrame
@@ -222,6 +225,9 @@ PanelWindow {
                             font.family: Theme.fontFamily; font.pixelSize: 16; font.weight: Font.Black; color: Theme.fg
                         }
                         Rectangle {
+                            scale: closeS.pressed ? 0.94 : (closeS.containsMouse ? 1.04 : 1.0)
+                            Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                            Behavior on color { ColorAnimation { duration: 140 } }
                             implicitWidth: 30; implicitHeight: 30
                             radius: closeS.containsMouse ? 8 : 15
                             color: closeS.containsMouse ? Theme.bgPillHover : Theme.bgPill
@@ -345,6 +351,9 @@ PanelWindow {
                         visible: win.currentTab === 0 && win.monitors.length > 0
 
                         component DropRow: Rectangle {
+                            scale: dm.pressed ? 0.94 : (dm.containsMouse ? 1.04 : 1.0)
+                            Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                            Behavior on color { ColorAnimation { duration: 140 } }
                             property string label: ""
                             property string valueText: ""
                             property bool isOpen: false
@@ -421,6 +430,9 @@ PanelWindow {
                         Layout.fillWidth: true
                         Item { Layout.fillWidth: true }
                         Rectangle {
+                            scale: appBtnM.pressed ? 0.94 : (appBtnM.containsMouse ? 1.04 : 1.0)
+                            Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                            Behavior on color { ColorAnimation { duration: 140 } }
                             implicitWidth: 140; implicitHeight: 38
                             radius: appBtnM.containsMouse ? 10 : 19
                             color: appBtnM.containsMouse ? Theme.accentWarm : Theme.accent
@@ -445,6 +457,9 @@ PanelWindow {
 
                 // Всплывающий выпадающий список поверх правой панели
                 Rectangle {
+                    scale: dItemM.pressed ? 0.94 : (dItemM.containsMouse ? 1.04 : 1.0)
+                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on color { ColorAnimation { duration: 140 } }
                     visible: win.activeDropdown !== ""
                     anchors.right: parent.right
                     anchors.rightMargin: 26

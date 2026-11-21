@@ -70,6 +70,8 @@ PanelWindow {
             spacing: 10
 
             Rectangle {
+                scale: btnMa_8.pressed ? 0.94 : (btnMa_8.containsMouse ? 1.04 : 1.0)
+                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                 Layout.fillWidth: true
                 implicitHeight: 34
                 radius: 14
@@ -91,7 +93,7 @@ PanelWindow {
                                 font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black
                                 color: win.tabIndex === index ? Theme.accentOn : Theme.fgMuted
                             }
-                            MouseArea { cursorShape: Qt.PointingHandCursor; anchors.fill: parent; onClicked: win.tabIndex = index }
+                            MouseArea { hoverEnabled: true; id: btnMa_8; cursorShape: Qt.PointingHandCursor; anchors.fill: parent; onClicked: win.tabIndex = index }
                         }
                     }
                 }
