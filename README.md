@@ -4,7 +4,7 @@
 
 ## Установка на чистый Arch Linux
 
-    git clone <URL_ТВОЕГО_РЕПОЗИТОРИЯ> ~/everforest-dots
+    git clone https://github.com/tringlehope/everforest-dots ~/everforest-dots
     cd ~/everforest-dots
     ./install.sh
 
