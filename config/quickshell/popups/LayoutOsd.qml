@@ -11,12 +11,12 @@ PanelWindow {
     property string currentLayout: "EN"
     property bool initialized: false
 
-    visible: card.scale > 0.05 || showing
+    visible: card.opacity > 0.01 || showing
     exclusiveZone: -1
     anchors { bottom: true }
-    margins.bottom: 120
-    implicitWidth: 196
-    implicitHeight: 68
+    margins.bottom: 40
+    implicitWidth: 210
+    implicitHeight: 150
     color: "transparent"
     WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.namespace: "qs-osd"
@@ -53,7 +53,9 @@ PanelWindow {
 
     Rectangle {
         id: card
-        anchors.centerIn: parent
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: 8
         width: 184
         height: 56
         radius: 20
@@ -61,12 +63,27 @@ PanelWindow {
         border.color: Theme.accent
         border.width: 3
 
-        transformOrigin: Item.Bottom
-        scale: osd.showing ? 1.0 : 0.0
+        opacity: osd.showing ? 1.0 : 0.0
+        scale: osd.showing ? 1.0 : 0.92
+        Behavior on opacity {
+            NumberAnimation {
+                duration: osd.showing ? 240 : 150
+                easing.type: osd.showing ? Easing.OutQuint : Easing.InQuad
+            }
+        }
         Behavior on scale {
             NumberAnimation {
-                duration: osd.showing ? 260 : 160
+                duration: osd.showing ? 280 : 160
                 easing.type: osd.showing ? Easing.OutQuint : Easing.InQuad
+            }
+        }
+        transform: Translate {
+            y: osd.showing ? 0 : 84
+            Behavior on y {
+                NumberAnimation {
+                    duration: osd.showing ? 300 : 180
+                    easing.type: osd.showing ? Easing.OutQuint : Easing.InQuad
+                }
             }
         }
 
