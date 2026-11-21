@@ -58,6 +58,7 @@ Scope {
         }
 
         Canvas {
+            Connections { target: Theme; function onBgFrameChanged() { requestPaint() } }
             anchors.fill: parent
             onPaint: {
                 var ctx = getContext("2d");
