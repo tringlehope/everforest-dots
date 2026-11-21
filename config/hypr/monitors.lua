@@ -1,1 +1,1 @@
-hl.monitor({ output = "Virtual-1", mode = "2048x1152@60", position = "0x0", scale = 1 })
+hl.monitor({ output = "HDMI-A-2", mode = "2560x1440@144", position = "0x0", scale = 1 })

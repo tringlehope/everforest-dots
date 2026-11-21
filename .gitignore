@@ -1,0 +1,5 @@
+config/gtk-3.0/bookmarks
+*.bak
+*.log
+*history*
+*token*
