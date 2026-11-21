@@ -58,13 +58,18 @@ Scope {
         }
 
         Canvas {
-            Connections { target: Theme; function onBgFrameChanged() { requestPaint() } }
+            id: cornerCanvas
+            Connections {
+                target: Theme
+                function onBgFrameChanged() { cornerCanvas.requestPaint() }
+                function onCurrentThemeChanged() { cornerCanvas.requestPaint() }
+            }
             anchors.fill: parent
             onPaint: {
                 var ctx = getContext("2d");
                 ctx.reset();
                 var r = root.cornerR;
-                ctx.fillStyle = Theme.bgFrame;
+                ctx.fillStyle = Theme.bgFrame.toString();
                 ctx.beginPath();
                 if (isLeft && isTop) {
                     ctx.moveTo(0, 0); ctx.lineTo(r, 0);
