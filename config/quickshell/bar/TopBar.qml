@@ -187,11 +187,13 @@ PanelWindow {
                                 anchors.centerIn: parent
                                 width: parent.width
                                 height: 20
-                                radius: parent.isActive ? 7 : (wsItemMouse.containsMouse ? 6 : 10)
-                                color: parent.isActive ? Theme.accentWarm : (parent.hasWindows ? Theme.bgPillHover : "transparent")
+                                radius: wsItemMouse.pressed ? 5 : (parent.isActive ? 7 : (wsItemMouse.containsMouse ? 6 : 10))
+                                scale: wsItemMouse.pressed ? 0.88 : (wsItemMouse.containsMouse ? 1.14 : 1.0)
+                                color: parent.isActive ? Theme.accentWarm : (wsItemMouse.containsMouse ? Theme.bgElevated : (parent.hasWindows ? Theme.bgPillHover : "transparent"))
 
                                 Behavior on width { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
                                 Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                                 Behavior on color { ColorAnimation { duration: Theme.animFast } }
 
                                 Text {
