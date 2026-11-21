@@ -11,7 +11,7 @@ PanelWindow {
     property string currentLayout: "EN"
     property bool initialized: false
 
-    visible: card.opacity > 0.01 || showing
+    visible: osdTrans.y < 148 || showing
     exclusiveZone: -1
     anchors { bottom: true }
     margins.bottom: 40
@@ -63,25 +63,19 @@ PanelWindow {
         border.color: Theme.accent
         border.width: 3
 
-        opacity: osd.showing ? 1.0 : 0.0
         scale: osd.showing ? 1.0 : 0.92
-        Behavior on opacity {
-            NumberAnimation {
-                duration: osd.showing ? 240 : 150
-                easing.type: osd.showing ? Easing.OutQuint : Easing.InQuad
-            }
-        }
         Behavior on scale {
             NumberAnimation {
-                duration: osd.showing ? 280 : 160
+                duration: osd.showing ? 180 : 120
                 easing.type: osd.showing ? Easing.OutQuint : Easing.InQuad
             }
         }
         transform: Translate {
-            y: osd.showing ? 0 : 84
+            id: osdTrans
+            y: osd.showing ? 0 : 150
             Behavior on y {
                 NumberAnimation {
-                    duration: osd.showing ? 300 : 180
+                    duration: osd.showing ? 180 : 120
                     easing.type: osd.showing ? Easing.OutQuint : Easing.InQuad
                 }
             }

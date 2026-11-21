@@ -40,7 +40,7 @@ PanelWindow {
     signal startCapture()
     signal openPowerMenu()
 
-    visible: card.opacity > 0.01 || open
+    visible: topTrans.y > -(card.height + 46) || open
     exclusiveZone: -1
     anchors { top: true; bottom: true; left: true; right: true }
     color: "transparent"
@@ -204,25 +204,19 @@ PanelWindow {
         Behavior on height { NumberAnimation { duration: 200; easing.type: Easing.OutQuint } }
 
         transformOrigin: Item.Top
-        opacity: win.open ? 1.0 : 0.0
         scale: win.open ? 1.0 : 0.94
-        Behavior on opacity {
-            NumberAnimation {
-                duration: win.open ? 240 : 150
-                easing.type: win.open ? Easing.OutQuint : Easing.InQuad
-            }
-        }
         Behavior on scale {
             NumberAnimation {
-                duration: win.open ? 280 : 160
+                duration: win.open ? 180 : 120
                 easing.type: win.open ? Easing.OutQuint : Easing.InQuad
             }
         }
         transform: Translate {
-            y: win.open ? 0 : -56
+            id: topTrans
+            y: win.open ? 0 : -(card.height + 48)
             Behavior on y {
                 NumberAnimation {
-                    duration: win.open ? 300 : 180
+                    duration: win.open ? 180 : 120
                     easing.type: win.open ? Easing.OutQuint : Easing.InQuad
                 }
             }

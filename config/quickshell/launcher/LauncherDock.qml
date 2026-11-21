@@ -105,7 +105,7 @@ Scope {
 
     // Меню приложений
     PanelWindow {
-        visible: menuCard.opacity > 0.01 || launcherRoot.open
+        visible: menuCard.anchors.verticalCenterOffset < 640 || launcherRoot.open
         exclusiveZone: -1
         anchors { top: true; bottom: true; left: true; right: true }
         margins.bottom: dockWin.shouldShow ? (dockWin.implicitHeight + Theme.frameThickness + 10) : 0
@@ -119,7 +119,7 @@ Scope {
         Rectangle {
             id: menuCard
             anchors.centerIn: parent
-            anchors.verticalCenterOffset: launcherRoot.open ? 0 : 280
+            anchors.verticalCenterOffset: launcherRoot.open ? 0 : 650
             width: 390
             height: 430
             radius: Theme.radiusCard
@@ -127,23 +127,16 @@ Scope {
             border.color: Theme.accent
             border.width: 3
 
-            opacity: launcherRoot.open ? 1.0 : 0.0
-            scale: launcherRoot.open ? 1.0 : 0.92
+            scale: launcherRoot.open ? 1.0 : 0.94
             Behavior on anchors.verticalCenterOffset {
                 NumberAnimation {
-                    duration: launcherRoot.open ? 300 : 180
-                    easing.type: launcherRoot.open ? Easing.OutQuint : Easing.InQuad
-                }
-            }
-            Behavior on opacity {
-                NumberAnimation {
-                    duration: launcherRoot.open ? 240 : 150
+                    duration: launcherRoot.open ? 180 : 120
                     easing.type: launcherRoot.open ? Easing.OutQuint : Easing.InQuad
                 }
             }
             Behavior on scale {
                 NumberAnimation {
-                    duration: launcherRoot.open ? 280 : 160
+                    duration: launcherRoot.open ? 180 : 120
                     easing.type: launcherRoot.open ? Easing.OutQuint : Easing.InQuad
                 }
             }
@@ -343,19 +336,12 @@ Scope {
             border.color: Theme.accent
             border.width: 3
 
-            opacity: dockWin.shouldShow ? 1.0 : 0.0
-            Behavior on opacity {
-                NumberAnimation {
-                    duration: dockWin.shouldShow ? 220 : 140
-                    easing.type: dockWin.shouldShow ? Easing.OutQuint : Easing.InQuad
-                }
-            }
             transform: Translate {
                 id: dockTrans
                 y: dockWin.shouldShow ? 0 : 110
                 Behavior on y {
                     NumberAnimation {
-                        duration: dockWin.shouldShow ? 300 : 180
+                        duration: dockWin.shouldShow ? 180 : 120
                         easing.type: dockWin.shouldShow ? Easing.OutQuint : Easing.InQuad
                     }
                 }
