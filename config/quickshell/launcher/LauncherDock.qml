@@ -119,7 +119,7 @@ Scope {
         Rectangle {
             id: menuCard
             anchors.centerIn: parent
-            anchors.verticalCenterOffset: launcherRoot.runningClients.length > 0 ? -62 : 0
+            anchors.verticalCenterOffset: 0
             width: 390
             height: 430
             radius: Theme.radiusCard
@@ -177,9 +177,12 @@ Scope {
 
                     Rectangle {
                         implicitWidth: 34; implicitHeight: 34
-                        radius: closeMouse.containsMouse ? 8 : 12
+                        radius: closeMouse.pressed ? 6 : (closeMouse.containsMouse ? 8 : 12)
+                        scale: closeMouse.pressed ? 0.92 : (closeMouse.containsMouse ? 1.06 : 1.0)
                         color: closeMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
                         Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                        Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                        Behavior on color { ColorAnimation { duration: 150 } }
                         Text { anchors.centerIn: parent; text: "\uf00d"; font.family: Theme.iconFont; font.pixelSize: 13; color: Theme.fgMuted }
                         MouseArea { id: closeMouse; anchors.fill: parent; hoverEnabled: true; onClicked: launcherRoot.open = false }
                     }
@@ -217,9 +220,12 @@ Scope {
                             required property var modelData
                             width: appList.width
                             implicitHeight: 44
-                            radius: appMouse.containsMouse ? 8 : 14
+                            radius: appMouse.pressed ? 6 : (appMouse.containsMouse ? 9 : 14)
+                            scale: appMouse.pressed ? 0.97 : (appMouse.containsMouse ? 1.02 : 1.0)
                             color: appMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
                             Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                            Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                            Behavior on color { ColorAnimation { duration: 150 } }
 
                             RowLayout {
                                 anchors.fill: parent; anchors.leftMargin: 6; anchors.rightMargin: 12; spacing: 10
@@ -283,11 +289,14 @@ Scope {
                 Rectangle {
                     Layout.fillWidth: true
                     implicitHeight: 36
-                    radius: updMouse.containsMouse ? 8 : 14
+                    radius: updMouse.pressed ? 6 : (updMouse.containsMouse ? 9 : 14)
+                    scale: updMouse.pressed ? 0.96 : (updMouse.containsMouse ? 1.02 : 1.0)
                     color: updMouse.containsMouse ? Theme.bgPillHover : Theme.bgElevated
                     border.color: Theme.borderSubtle
                     border.width: 1
                     Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on color { ColorAnimation { duration: 150 } }
 
                     RowLayout {
                         anchors.centerIn: parent; spacing: 8

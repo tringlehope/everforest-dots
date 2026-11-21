@@ -121,9 +121,12 @@ PanelWindow {
                 Rectangle {
                     anchors.centerIn: parent
                     width: 28; height: 26
-                    radius: menuMouse.containsMouse ? 8 : 13
+                    radius: menuMouse.pressed ? 6 : (menuMouse.containsMouse ? 8 : 13)
+                    scale: menuMouse.pressed ? 0.92 : (menuMouse.containsMouse ? 1.08 : 1.0)
                     color: menuMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
                     Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on color { ColorAnimation { duration: 150 } }
 
                     Text {
                         anchors.centerIn: parent
@@ -402,9 +405,12 @@ PanelWindow {
                     anchors.centerIn: parent
                     width: parent.width; height: 26
                     radius: trayHover.hovered ? 8 : 13
+                    scale: trayHover.hovered ? 1.03 : 1.0
                     color: trayHover.hovered ? Theme.bgPillHover : Theme.bgPill
                     Behavior on width { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
                     Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on color { ColorAnimation { duration: 150 } }
                 }
 
                 HoverHandler { id: trayHover }
@@ -473,9 +479,12 @@ PanelWindow {
                 Rectangle {
                     anchors.centerIn: parent
                     width: parent.width; height: 26
-                    radius: qsMouse.containsMouse ? 8 : 13
+                    radius: qsMouse.pressed ? 6 : (qsMouse.containsMouse ? 8 : 13)
+                    scale: qsMouse.pressed ? 0.94 : (qsMouse.containsMouse ? 1.05 : 1.0)
                     color: qsMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
                     Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on color { ColorAnimation { duration: 150 } }
                 }
 
                 RowLayout {
@@ -503,9 +512,12 @@ PanelWindow {
                 Rectangle {
                     anchors.centerIn: parent
                     width: parent.width; height: 26
-                    radius: timeMouse.containsMouse ? 8 : 13
+                    radius: timeMouse.pressed ? 6 : (timeMouse.containsMouse ? 8 : 13)
+                    scale: timeMouse.pressed ? 0.94 : (timeMouse.containsMouse ? 1.05 : 1.0)
                     color: timeMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
                     Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on color { ColorAnimation { duration: 150 } }
                 }
 
                 Text {
