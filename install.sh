@@ -74,7 +74,7 @@ backup_and_copy_configs() {
                 backed_up=1
             fi
             mkdir -p "$HOME/.config/$d"
-            cp -af "$REPO_DIR/config/$d/." "$HOME/.config/$d/"
+            rm -rf "$HOME/.config/gtk-4.0"/{assets,gtk.css,gtk-dark.css}; cp -af "$REPO_DIR/config/$d/." "$HOME/.config/$d/"
         fi
     done
     if [ "$backed_up" -eq 0 ]; then

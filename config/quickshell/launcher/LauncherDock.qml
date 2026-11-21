@@ -318,12 +318,12 @@ Scope {
     PanelWindow {
         id: dockWin
         readonly property bool shouldShow: (launcherRoot.open || launcherRoot.pinned) && launcherRoot.runningClients.length > 0
-        visible: dockTrans.y < 108 || shouldShow
+        visible: dockTrans.y < 94 || shouldShow
         exclusiveZone: (launcherRoot.pinned && launcherRoot.runningClients.length > 0) ? (implicitHeight + 8) : -1
         anchors { bottom: true }
         margins.bottom: (Theme.showFrame ? Theme.frameThickness : 0) + 8
-        implicitWidth: Math.max(104, dockRow.implicitWidth + 32)
-        implicitHeight: 112
+        implicitWidth: Math.max(76, dockRow.implicitWidth + 24)
+        implicitHeight: 96
         color: "transparent"
         WlrLayershell.layer: WlrLayer.Overlay
         WlrLayershell.namespace: "qs-dock"
@@ -334,14 +334,14 @@ Scope {
             Behavior on color { ColorAnimation { duration: 140 } }
             id: dockCard
             anchors.fill: parent
-            radius: Theme.r(26)
+            radius: Theme.r(22)
             color: Theme.bgSurface
             border.color: Theme.accent
             border.width: 3
 
             transform: Translate {
                 id: dockTrans
-                y: dockWin.shouldShow ? 0 : 110
+                y: dockWin.shouldShow ? 0 : 98
                 Behavior on y {
                     NumberAnimation {
                         duration: dockWin.shouldShow ? 180 : 120
@@ -353,14 +353,14 @@ Scope {
             RowLayout {
                 id: dockRow
                 anchors.centerIn: parent
-                spacing: 12
+                spacing: 8
 
                 Repeater {
                     model: launcherRoot.runningClients
                     delegate: Rectangle {
                         required property var modelData
                         readonly property bool isFocused: (modelData.focusHistoryID ?? 99) === 0
-                        width: 68; height: 68
+                        width: 60; height: 60
                         radius: Theme.r(dockItemMouse.pressed ? 10 : (dockItemMouse.containsMouse ? 14 : 18))
                         z: dockItemMouse.containsMouse ? 10 : 0
                         color: isFocused ? Theme.bgElevated : (dockItemMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill)
@@ -373,8 +373,8 @@ Scope {
                         IconImage {
                             anchors.centerIn: parent
                             source: launcherRoot.iconForClient(modelData.class)
-                            implicitSize: 54
-                            width: 54; height: 54
+                            implicitSize: 48
+                            width: 48; height: 48
                             scale: dockItemMouse.pressed ? 0.92 : (dockItemMouse.containsMouse ? 1.26 : 1.0)
                             Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                             transform: Translate {

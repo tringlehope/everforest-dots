@@ -115,12 +115,12 @@ PanelWindow {
             spacing: 6
 
             Item {
-                implicitWidth: 28
+                implicitWidth: 31
                 Layout.fillHeight: true
 
                 Rectangle {
                     anchors.centerIn: parent
-                    width: 28; height: 26
+                    width: 31; height: 29
                     radius: Theme.r(menuMouse.pressed ? 6 : (menuMouse.containsMouse ? 8 : 13))
                     scale: menuMouse.pressed ? 0.92 : (menuMouse.containsMouse ? 1.08 : 1.0)
                     color: menuMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
@@ -131,7 +131,7 @@ PanelWindow {
                     Text {
                         anchors.centerIn: parent
                         text: "\uf303"
-                        font.family: Theme.iconFont; font.pixelSize: 15; color: Theme.accent
+                        font.family: Theme.iconFont; font.pixelSize: 16; color: Theme.accent
                     }
                 }
 
@@ -150,7 +150,7 @@ PanelWindow {
 
                 Rectangle {
                     anchors.centerIn: parent
-                    width: parent.width; height: 26
+                    width: parent.width; height: 29
                     radius: Theme.r(wsHover.hovered ? 9 : 13)
                     color: Theme.bgPill
                     Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
@@ -180,13 +180,13 @@ PanelWindow {
                             readonly property bool isActive: bar.activeWsId === wsId
                             readonly property bool hasWindows: bar.occupiedWs[String(wsId)] === true
 
-                            implicitWidth: isActive ? 26 : 21
+                            implicitWidth: isActive ? 29 : 23
                             Layout.fillHeight: true
 
                             Rectangle {
                                 anchors.centerIn: parent
                                 width: parent.width
-                                height: 20
+                                height: 23
                                 radius: Theme.r(wsItemMouse.pressed ? 5 : (parent.isActive ? 7 : (wsItemMouse.containsMouse ? 6 : 10)))
                                 scale: wsItemMouse.pressed ? 0.88 : (wsItemMouse.containsMouse ? 1.14 : 1.0)
                                 color: parent.isActive ? Theme.accentWarm : (wsItemMouse.containsMouse ? Theme.bgElevated : (parent.hasWindows ? Theme.bgPillHover : "transparent"))
@@ -200,7 +200,7 @@ PanelWindow {
                                     anchors.centerIn: parent
                                     text: wsId
                                     font.family: Theme.fontFamily
-                                    font.pixelSize: 11
+                                    font.pixelSize: 13
                                     font.weight: isActive ? Font.Black : (hasWindows ? Font.Black : Font.Black)
                                     color: isActive ? Theme.accentOn : (hasWindows ? Theme.fg : Theme.fgDim)
                                 }
@@ -232,7 +232,7 @@ PanelWindow {
             Rectangle {
                 anchors.centerIn: parent
                 width: parent.width
-                height: 26
+                height: 29
                 radius: Theme.r(centerMouse.containsMouse ? 8 : 13)
                 color: centerMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
 
@@ -263,7 +263,7 @@ PanelWindow {
                 Text {
                     visible: !bar.showPlayer
                     text: "Звук"
-                    font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: Theme.fg
+                    font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.Black; color: Theme.fg
                 }
 
                 RowLayout {
@@ -278,7 +278,7 @@ PanelWindow {
 
                     Text {
                         text: bar.playerTitle || "Музыка"
-                        font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.Black; color: Theme.fg
+                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Black; color: Theme.fg
                         elide: Text.ElideRight; Layout.maximumWidth: 140
                         Layout.rightMargin: 4
                     }
@@ -287,27 +287,27 @@ PanelWindow {
                         scale: prevM.pressed ? 0.94 : (prevM.containsMouse ? 1.04 : 1.0)
                         Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                         Behavior on color { ColorAnimation { duration: 140 } }
-                        implicitWidth: 30; implicitHeight: 26; radius: Theme.r(prevM.containsMouse ? 6 : 11)
+                        implicitWidth: 30; implicitHeight: 29; radius: Theme.r(prevM.containsMouse ? 6 : 11)
                         color: prevM.containsMouse ? Theme.bgElevated : "transparent"
-                        Text { anchors.centerIn: parent; text: "\uf048"; font.family: Theme.iconFont; font.pixelSize: 11; color: Theme.fg }
+                        Text { anchors.centerIn: parent; text: "\uf048"; font.family: Theme.iconFont; font.pixelSize: 13; color: Theme.fg }
                         MouseArea { cursorShape: Qt.PointingHandCursor; id: prevM; anchors.fill: parent; hoverEnabled: true; onClicked: bar.runAct(["playerctl", "previous"]) }
                     }
                     Rectangle {
                         scale: playM.pressed ? 0.94 : (playM.containsMouse ? 1.04 : 1.0)
                         Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                         Behavior on color { ColorAnimation { duration: 140 } }
-                        implicitWidth: 32; implicitHeight: 26; radius: Theme.r(playM.containsMouse ? 6 : 11)
+                        implicitWidth: 32; implicitHeight: 29; radius: Theme.r(playM.containsMouse ? 6 : 11)
                         color: playM.containsMouse ? Theme.bgElevated : "transparent"
-                        Text { anchors.centerIn: parent; text: bar.isPlaying ? "\uf04c" : "\uf04b"; font.family: Theme.iconFont; font.pixelSize: 11; color: Theme.accent }
+                        Text { anchors.centerIn: parent; text: bar.isPlaying ? "\uf04c" : "\uf04b"; font.family: Theme.iconFont; font.pixelSize: 13; color: Theme.accent }
                         MouseArea { cursorShape: Qt.PointingHandCursor; id: playM; anchors.fill: parent; hoverEnabled: true; onClicked: bar.runAct(["playerctl", "play-pause"]) }
                     }
                     Rectangle {
                         scale: nextM.pressed ? 0.94 : (nextM.containsMouse ? 1.04 : 1.0)
                         Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                         Behavior on color { ColorAnimation { duration: 140 } }
-                        implicitWidth: 30; implicitHeight: 26; radius: Theme.r(nextM.containsMouse ? 6 : 11)
+                        implicitWidth: 30; implicitHeight: 29; radius: Theme.r(nextM.containsMouse ? 6 : 11)
                         color: nextM.containsMouse ? Theme.bgElevated : "transparent"
-                        Text { anchors.centerIn: parent; text: "\uf051"; font.family: Theme.iconFont; font.pixelSize: 11; color: Theme.fg }
+                        Text { anchors.centerIn: parent; text: "\uf051"; font.family: Theme.iconFont; font.pixelSize: 13; color: Theme.fg }
                         MouseArea { cursorShape: Qt.PointingHandCursor; id: nextM; anchors.fill: parent; hoverEnabled: true; onClicked: bar.runAct(["playerctl", "next"]) }
                     }
                 }
@@ -330,7 +330,7 @@ PanelWindow {
 
                 Rectangle {
                     anchors.centerIn: parent
-                    width: parent.width; height: 26
+                    width: parent.width; height: 29
                     radius: Theme.r(13)
                     color: Theme.bgPill
                     border.color: bar.recording ? Theme.danger : Theme.accentWarm
@@ -351,7 +351,7 @@ PanelWindow {
                         visible: !bar.recording && bar.screenSharing
                         text: "Трансляция"
                         font.family: Theme.fontFamily
-                        font.pixelSize: 11
+                        font.pixelSize: 13
                         font.weight: Font.Black
                         color: Theme.fg
                     }
@@ -360,7 +360,7 @@ PanelWindow {
                         visible: bar.recording
                         text: bar.recElapsed
                         font.family: Theme.fontFamily
-                        font.pixelSize: 11
+                        font.pixelSize: 13
                         font.weight: Font.Black
                         color: Theme.fg
                     }
@@ -375,7 +375,7 @@ PanelWindow {
                         Text {
                             anchors.centerIn: parent
                             text: bar.recPaused ? "\uf04b" : "\uf04c"
-                            font.family: Theme.iconFont; font.pixelSize: 10
+                            font.family: Theme.iconFont; font.pixelSize: 13
                             color: Theme.fg
                         }
                         MouseArea {
@@ -397,7 +397,7 @@ PanelWindow {
                         Text {
                             anchors.centerIn: parent
                             text: "\uf04d"
-                            font.family: Theme.iconFont; font.pixelSize: 10
+                            font.family: Theme.iconFont; font.pixelSize: 13
                             color: Theme.danger
                         }
                         MouseArea {
@@ -420,7 +420,7 @@ PanelWindow {
 
                 Rectangle {
                     anchors.centerIn: parent
-                    width: parent.width; height: 26
+                    width: parent.width; height: 29
                     radius: Theme.r(trayHover.hovered ? 8 : 13)
                     scale: trayHover.hovered ? 1.03 : 1.0
                     color: trayHover.hovered ? Theme.bgPillHover : Theme.bgPill
@@ -444,7 +444,7 @@ PanelWindow {
                             model: SystemTray.items
                             delegate: Item {
                                 required property var modelData
-                                implicitWidth: 16; implicitHeight: 26
+                                implicitWidth: 16; implicitHeight: 29
                                 Image {
                                     anchors.centerIn: parent
                                     source: modelData.icon
@@ -467,7 +467,7 @@ PanelWindow {
                     Text {
                         visible: !trayPill.expanded
                         text: "\uf053"
-                        font.family: Theme.iconFont; font.pixelSize: 10
+                        font.family: Theme.iconFont; font.pixelSize: 13
                         color: trayPill.hasTray ? Theme.fg : Theme.fgDim
                     }
 
@@ -478,7 +478,7 @@ PanelWindow {
                             id: kbTxt
                             anchors.centerIn: parent
                             text: bar.kbLayout
-                            font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.Black; color: Theme.fg
+                            font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Black; color: Theme.fg
                         }
                         MouseArea {
                             cursorShape: Qt.PointingHandCursor
@@ -495,7 +495,7 @@ PanelWindow {
 
                 Rectangle {
                     anchors.centerIn: parent
-                    width: parent.width; height: 26
+                    width: parent.width; height: 29
                     radius: Theme.r(qsMouse.pressed ? 6 : (qsMouse.containsMouse ? 8 : 13))
                     scale: qsMouse.pressed ? 0.94 : (qsMouse.containsMouse ? 1.05 : 1.0)
                     color: qsMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
@@ -508,9 +508,9 @@ PanelWindow {
                     id: qsIcons
                     anchors.centerIn: parent
                     spacing: 8
-                    Text { text: "\uf0e8"; font.family: Theme.iconFont; font.pixelSize: 12; color: Theme.fg }
-                    Text { text: "\uf013"; font.family: Theme.iconFont; font.pixelSize: 12; color: Theme.fg }
-                    Text { text: "\uf011"; font.family: Theme.iconFont; font.pixelSize: 12; color: Theme.fg }
+                    Text { text: "\uf0e8"; font.family: Theme.iconFont; font.pixelSize: 14; color: Theme.fg }
+                    Text { text: "\uf013"; font.family: Theme.iconFont; font.pixelSize: 14; color: Theme.fg }
+                    Text { text: "\uf011"; font.family: Theme.iconFont; font.pixelSize: 14; color: Theme.fg }
                 }
 
                 MouseArea {
@@ -528,7 +528,7 @@ PanelWindow {
 
                 Rectangle {
                     anchors.centerIn: parent
-                    width: parent.width; height: 26
+                    width: parent.width; height: 29
                     radius: Theme.r(timeMouse.pressed ? 6 : (timeMouse.containsMouse ? 8 : 13))
                     scale: timeMouse.pressed ? 0.94 : (timeMouse.containsMouse ? 1.05 : 1.0)
                     color: timeMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
@@ -541,7 +541,7 @@ PanelWindow {
                     id: timeText
                     anchors.centerIn: parent
                     text: Qt.formatDateTime(clock.date, "HH:mm")
-                    font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: Theme.fg
+                    font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.Black; color: Theme.fg
                 }
 
                 MouseArea {

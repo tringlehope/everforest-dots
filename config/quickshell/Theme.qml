@@ -63,7 +63,7 @@ QtObject {
     readonly property string iconFont:    "JetBrainsMono Nerd Font"
 
     readonly property int frameThickness: isWin7 ? 0 : 6
-    readonly property int topBarHeight:   34
+    readonly property int topBarHeight:   38
     readonly property int radiusWindow:   isWin7 ? 0 : 12
     readonly property int radiusCard:     isWin7 ? 0 : 18
     readonly property int radiusPill:     isWin7 ? 0 : 999
