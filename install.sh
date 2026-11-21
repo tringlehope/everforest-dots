@@ -62,7 +62,8 @@ install_pkg_list() {
 }
 
 backup_and_copy_configs() {
-    info "Копирую конфиги (существующие сохраняю в $BACKUP_DIR)..."
+    info "Копирую конфиги (сохраняю 1 последнюю резервную копию в $BACKUP_DIR)..."
+    rm -rf "$HOME"/.config-backup-* 2>/dev/null || true
     mkdir -p "$HOME/.config" "$HOME/Pictures/Wallpapers" "$HOME/Pictures/Screenshots"
     local backed_up=0
     for d in hypr quickshell gtk-3.0 gtk-4.0 qt6ct ghostty fontconfig; do
