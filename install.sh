@@ -134,7 +134,7 @@ if [ "$MODE" = "2" ]; then
     install_pkg_list \
         adw-gtk-theme qt6ct nwg-look \
         noto-fonts noto-fonts-emoji ttf-nunito ttf-jetbrains-mono-nerd \
-        gruvbox-plus-icon-theme ttf-material-symbols-variable-git
+        gruvbox-plus-icon-theme ttf-material-symbols-variable-git bauh
     backup_and_copy_configs
     if [ -d /usr/share/sddm/themes/everforest-m3 ] && [ -d "$REPO_DIR/sddm-theme/everforest-m3" ]; then
         read -rp "Обновить тему SDDM (everforest-m3)? [y/N]: " sddm_upd
@@ -160,12 +160,42 @@ install_pkg_list \
     pipewire pipewire-pulse wireplumber playerctl \
     networkmanager bluez bluez-utils brightnessctl \
     grim slurp wl-clipboard cliphist wf-recorder ffmpeg \
-    flatpak adw-gtk-theme qt6ct nwg-look \
+    flatpak fuse2 adw-gtk-theme qt6ct nwg-look \
     noto-fonts noto-fonts-emoji ttf-nunito ttf-jetbrains-mono-nerd \
     gruvbox-plus-icon-theme ttf-material-symbols-variable-git
 
 sudo systemctl enable --now NetworkManager.service 2>/dev/null || true
 sudo systemctl enable --now bluetooth.service 2>/dev/null || true
+
+# Flathub и ассоциация .pkg.tar.zst для Nautilus
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo 2>/dev/null || true
+mkdir -p "$HOME/.local/share/mime/packages" "$HOME/.local/share/applications"
+cat << 'MIME' > "$HOME/.local/share/mime/packages/alpm-pkg.xml"
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="application/x-alpm-package">
+    <comment>Arch Linux package</comment>
+    <glob pattern="*.pkg.tar.zst" weight="100"/>
+    <glob pattern="*.pkg.tar.xz" weight="100"/>
+  </mime-type>
+</mime-info>
+MIME
+cat << 'DESK' > "$HOME/.local/share/applications/pkg-installer.desktop"
+[Desktop Entry]
+Name=Установить пакет (.pkg.tar.zst)
+Comment=Установка локального пакета Arch Linux
+Exec=ghostty -e bash -c 'sudo pacman -U "$1"; echo ""; read -rp "Нажмите Enter для закрытия..."' _ %f
+Icon=system-software-install
+Terminal=false
+Type=Application
+Categories=System;PackageManager;
+MimeType=application/x-alpm-package;
+NoDisplay=true
+DESK
+update-mime-database "$HOME/.local/share/mime" 2>/dev/null || true
+update-desktop-database "$HOME/.local/share/applications" 2>/dev/null || true
+xdg-mime default pkg-installer.desktop application/x-alpm-package 2>/dev/null || true
+
 
 # Выбор браузера (можно ввести несколько цифр подряд, например 234)
 echo ""

@@ -166,7 +166,7 @@ Item {
                 RowLayout {
                     anchors.fill: parent; anchors.margins: 3; spacing: 4
                     Repeater {
-                        model: ["Список", "Установить", "Автозапуск"]
+                        model: ["Список", "Автозапуск"]
                         delegate: Rectangle {
                             Layout.fillWidth: true; Layout.fillHeight: true
                             radius: 9
@@ -184,7 +184,6 @@ Item {
                                     root.termMode = false;
                                     root.closeMenus();
                                     root.refreshAll();
-                                    if (index === 1 && pkgSearch.text.trim()) root.runSearch();
                                 }
                             }
                         }
@@ -193,7 +192,7 @@ Item {
             }
 
             RowLayout {
-                visible: root.subTab !== 1
+                visible: !root.termMode
                 spacing: 6
                 Text { text: "Системные"; font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 11; color: Theme.fgMuted }
                 Rectangle {
@@ -217,7 +216,7 @@ Item {
 
         // --- 1. СПИСОК ПРИЛОЖЕНИЙ ---
         Item {
-            visible: root.subTab === 0
+            visible: root.subTab === 0 && !root.termMode
             Layout.fillWidth: true
             Layout.fillHeight: true
 
@@ -276,9 +275,9 @@ Item {
             WaveScrollBar { anchors { right: parent.right; top: parent.top; bottom: parent.bottom } target: installedList }
         }
 
-        // --- 2. УСТАНОВИТЬ ПРИЛОЖЕНИЯ ---
+        // --- 2. ТЕРМИНАЛ УДАЛЕНИЯ ---
         ColumnLayout {
-            visible: root.subTab === 1
+            visible: root.termMode
             Layout.fillWidth: true
             Layout.fillHeight: true
             spacing: 8
@@ -548,9 +547,9 @@ Item {
             }
         }
 
-        // --- 3. АВТОЗАПУСК ---
+        // --- 2. АВТОЗАПУСК ---
         Item {
-            visible: root.subTab === 2
+            visible: root.subTab === 1 && !root.termMode
             Layout.fillWidth: true
             Layout.fillHeight: true
 
@@ -717,10 +716,8 @@ Item {
                         var appDir = p.toLowerCase();
                         root.confirmDeleteOpen = false;
                         if (root.ctxSource === "Flatpak") {
-                            root.subTab = 1;
                             root.runInTerm(["flatpak", "uninstall", "-y", "--delete-data", p]);
                         } else {
-                            root.subTab = 1;
                             root.runInTerm(["sh", "-c", "sudo pacman -Rns " + p + " && rm -rf ~/.config/" + appDir + " ~/.local/share/" + appDir + " ~/.cache/" + appDir]);
                         }
                     }
@@ -737,7 +734,6 @@ Item {
                     onClicked: {
                         var p = root.ctxPkg;
                         root.confirmDeleteOpen = false;
-                        root.subTab = 1;
                         if (root.ctxSource === "Flatpak") root.runInTerm(["flatpak", "uninstall", "-y", p]);
                         else root.runInTerm(["sudo", "pacman", "-Rns", p]);
                     }

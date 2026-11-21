@@ -303,7 +303,7 @@ Scope {
                         Text { text: "\uf021"; font.family: Theme.iconFont; font.pixelSize: 12; color: Theme.accent }
                         Text { text: "Обновить софт"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: Theme.fg }
                     }
-                    MouseArea { cursorShape: Qt.PointingHandCursor; id: updMouse; anchors.fill: parent; hoverEnabled: true; onClicked: console.log("Update stub") }
+                    MouseArea { cursorShape: Qt.PointingHandCursor; id: updMouse; anchors.fill: parent; hoverEnabled: true; onClicked: { launcherRoot.open = false; Quickshell.execDetached(["bauh"]); } }
                 }
             }
         }
