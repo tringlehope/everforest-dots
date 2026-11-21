@@ -115,7 +115,7 @@ PanelWindow {
             anchors.topMargin: 28
             anchors.rightMargin: 28
             width: 44; height: 44
-            radius: closeM.pressed ? 10 : (closeM.containsMouse ? 14 : 22)
+            radius: Theme.r(closeM.pressed ? 10 : (closeM.containsMouse ? 14 : 22))
             scale: closeM.pressed ? 0.94 : (closeM.containsMouse ? 1.06 : 1.0)
             color: closeM.containsMouse ? Theme.bgPillHover : Theme.bgSurface
 
@@ -157,7 +157,7 @@ PanelWindow {
                 implicitHeight: 152
                 Layout.preferredWidth: 152
                 Layout.preferredHeight: 152
-                radius: tileM.pressed ? 14 : (tileM.containsMouse ? 20 : 32)
+                radius: Theme.r(tileM.pressed ? 14 : (tileM.containsMouse ? 20 : 32))
                 scale: tileM.pressed ? 0.95 : (tileM.containsMouse ? 1.05 : 1.0)
                 color: tileM.containsMouse ? Theme.bgPillHover : Theme.bgSurface
                 border.color: tileM.containsMouse ? Theme.accent : Theme.bgPill
@@ -254,7 +254,7 @@ PanelWindow {
             anchors.centerIn: parent
             width: Math.min(740, parent.width - 48)
             height: Math.min(460, parent.height - 48)
-            radius: 22
+            radius: Theme.r(22)
             color: Theme.bgSurface
             border.color: Theme.accent
             border.width: 3
@@ -289,7 +289,7 @@ PanelWindow {
                 Rectangle {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    radius: 14
+                    radius: Theme.r(14)
                     color: Theme.bgFrame
 
                     Flickable {
@@ -317,7 +317,7 @@ PanelWindow {
                     Layout.alignment: Qt.AlignHCenter
                     implicitWidth: cancelTxt.implicitWidth + 44
                     implicitHeight: 42
-                    radius: cancelM.pressed ? 10 : (cancelM.containsMouse ? 14 : 21)
+                    radius: Theme.r(cancelM.pressed ? 10 : (cancelM.containsMouse ? 14 : 21))
                     scale: cancelM.pressed ? 0.96 : (cancelM.containsMouse ? 1.03 : 1.0)
                     color: cancelM.containsMouse ? Theme.bgPillHover : Theme.bgPill
 

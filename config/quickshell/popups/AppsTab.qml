@@ -163,7 +163,7 @@ Item {
                 Behavior on color { ColorAnimation { duration: 140 } }
                 Layout.fillWidth: true
                 implicitHeight: 34
-                radius: 12
+                radius: Theme.r(12)
                 color: Theme.bgFrame
 
                 RowLayout {
@@ -172,7 +172,7 @@ Item {
                         model: ["Список", "Автозапуск"]
                         delegate: Rectangle {
                             Layout.fillWidth: true; Layout.fillHeight: true
-                            radius: 9
+                            radius: Theme.r(9)
                             color: root.subTab === index ? Theme.accentWarm : "transparent"
                             Text {
                                 anchors.centerIn: parent; text: modelData
@@ -204,10 +204,10 @@ Item {
                     scale: btnMa_4.pressed ? 0.94 : (btnMa_4.containsMouse ? 1.04 : 1.0)
                     Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                     Behavior on color { ColorAnimation { duration: 140 } }
-                    implicitWidth: 38; implicitHeight: 22; radius: 11
+                    implicitWidth: 38; implicitHeight: 22; radius: Theme.r(11)
                     color: root.showSystem ? Theme.accent : Theme.bgPill
                     Rectangle {
-                        width: 16; height: 16; radius: 8
+                        width: 16; height: 16; radius: Theme.r(8)
                         anchors.verticalCenter: parent.verticalCenter
                         x: root.showSystem ? 19 : 3
                         color: root.showSystem ? Theme.accentOn : Theme.fgMuted
@@ -241,7 +241,7 @@ Item {
                     required property var modelData
                     width: installedList.width
                     implicitHeight: 42
-                    radius: 12
+                    radius: Theme.r(12)
                     color: itemM.containsMouse ? Theme.bgPillHover : Theme.bgPill
 
                     RowLayout {
@@ -300,7 +300,7 @@ Item {
                     scale: repM.pressed ? 0.94 : (repM.containsMouse ? 1.04 : 1.0)
                     Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                     Behavior on color { ColorAnimation { duration: 140 } }
-                    Layout.fillWidth: true; implicitHeight: 34; radius: 10
+                    Layout.fillWidth: true; implicitHeight: 34; radius: Theme.r(10)
                     color: repM.containsMouse ? Theme.bgPillHover : Theme.bgPill
                     RowLayout {
                         anchors.centerIn: parent; spacing: 6
@@ -318,7 +318,7 @@ Item {
                     scale: sysM.pressed ? 0.94 : (sysM.containsMouse ? 1.04 : 1.0)
                     Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                     Behavior on color { ColorAnimation { duration: 140 } }
-                    Layout.fillWidth: true; implicitHeight: 34; radius: 10
+                    Layout.fillWidth: true; implicitHeight: 34; radius: Theme.r(10)
                     color: sysM.containsMouse ? Theme.accentWarm : Theme.accent
                     RowLayout {
                         anchors.centerIn: parent; spacing: 6
@@ -342,7 +342,7 @@ Item {
                     scale: btnMa_5.pressed ? 0.94 : (btnMa_5.containsMouse ? 1.04 : 1.0)
                     Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                     Behavior on color { ColorAnimation { duration: 140 } }
-                    implicitWidth: 105; implicitHeight: 36; radius: 10
+                    implicitWidth: 105; implicitHeight: 36; radius: Theme.r(10)
                     color: Theme.bgFrame
                     border.color: root.sourceMenuOpen ? Theme.accent : Theme.borderSubtle
                     border.width: 1
@@ -363,7 +363,7 @@ Item {
                     scale: btnMa_6.pressed ? 0.94 : (btnMa_6.containsMouse ? 1.04 : 1.0)
                     Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                     Behavior on color { ColorAnimation { duration: 140 } }
-                    Layout.fillWidth: true; implicitHeight: 36; radius: 10
+                    Layout.fillWidth: true; implicitHeight: 36; radius: Theme.r(10)
                     color: Theme.bgPill
                     border.color: pkgSearch.activeFocus ? Theme.accent : "transparent"
                     border.width: 1
@@ -396,7 +396,7 @@ Item {
                     scale: findBtnM.pressed ? 0.94 : (findBtnM.containsMouse ? 1.04 : 1.0)
                     Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                     Behavior on color { ColorAnimation { duration: 140 } }
-                    implicitWidth: 74; implicitHeight: 36; radius: 10
+                    implicitWidth: 74; implicitHeight: 36; radius: Theme.r(10)
                     color: findBtnM.containsMouse ? Theme.accentWarm : Theme.bgPill
                     Text {
                         anchors.centerIn: parent; text: "Найти"
@@ -435,7 +435,7 @@ Item {
                         required property var modelData
                         width: pkgResultsList.width
                         implicitHeight: 54
-                        radius: 12
+                        radius: Theme.r(12)
                         color: Theme.bgPill
 
                         RowLayout {
@@ -466,7 +466,7 @@ Item {
                                 scale: instM.pressed ? 0.94 : (instM.containsMouse ? 1.04 : 1.0)
                                 Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                                 Behavior on color { ColorAnimation { duration: 140 } }
-                                implicitWidth: 92; implicitHeight: 32; radius: 9
+                                implicitWidth: 92; implicitHeight: 32; radius: Theme.r(9)
                                 color: modelData.installed ? Theme.bgFrame : (instM.containsMouse ? Theme.accentWarm : Theme.accent)
                                 Text {
                                     anchors.centerIn: parent
@@ -500,7 +500,7 @@ Item {
                 visible: root.termMode
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                radius: 12
+                radius: Theme.r(12)
                 color: Theme.bgFrame
                 border.color: Theme.borderSubtle
                 border.width: 1
@@ -511,7 +511,7 @@ Item {
                     RowLayout {
                         Layout.fillWidth: true
                         Rectangle {
-                            implicitWidth: 82; implicitHeight: 26; radius: 8
+                            implicitWidth: 82; implicitHeight: 26; radius: Theme.r(8)
                             color: backM.containsMouse ? Theme.bgPillHover : Theme.bgPill
                             Text { anchors.centerIn: parent; text: "← Назад"; font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 11; color: Theme.fg }
                             MouseArea { cursorShape: Qt.PointingHandCursor; id: backM; anchors.fill: parent; hoverEnabled: true; onClicked: { root.termMode = false; root.refreshAll(); if (pkgSearch.text.trim()) root.runSearch(); } }
@@ -545,7 +545,7 @@ Item {
                     }
 
                     Rectangle {
-                        Layout.fillWidth: true; implicitHeight: 34; radius: 9
+                        Layout.fillWidth: true; implicitHeight: 34; radius: Theme.r(9)
                         color: Theme.bgSurface
                         border.color: termInput.activeFocus ? Theme.accent : Theme.borderSubtle
                         border.width: 1
@@ -595,7 +595,7 @@ Item {
                     required property var modelData
                     width: autoListView.width
                     implicitHeight: 42
-                    radius: 12
+                    radius: Theme.r(12)
                     color: Theme.bgPill
 
                     RowLayout {
@@ -615,10 +615,10 @@ Item {
                             scale: btnMa_7.pressed ? 0.94 : (btnMa_7.containsMouse ? 1.04 : 1.0)
                             Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                             Behavior on color { ColorAnimation { duration: 140 } }
-                            implicitWidth: 40; implicitHeight: 22; radius: 11
+                            implicitWidth: 40; implicitHeight: 22; radius: Theme.r(11)
                             color: modelData.autostart ? Theme.accent : Theme.bgFrame
                             Rectangle {
-                                width: 16; height: 16; radius: 8
+                                width: 16; height: 16; radius: Theme.r(8)
                                 anchors.verticalCenter: parent.verticalCenter
                                 x: modelData.autostart ? 21 : 3
                                 color: modelData.autostart ? Theme.accentOn : Theme.fgMuted
@@ -649,7 +649,7 @@ Item {
         visible: root.sourceMenuOpen
         x: 0; y: 128
         width: 105; height: 108
-        radius: 12
+        radius: Theme.r(12)
         color: Theme.bgElevated
         border.color: Theme.accent; border.width: 2
         z: 20
@@ -661,7 +661,7 @@ Item {
             Repeater {
                 model: [{ id: "pacman", name: "Pacman" }, { id: "aur", name: "AUR" }, { id: "flatpak", name: "Flatpak" }]
                 delegate: Rectangle {
-                    Layout.fillWidth: true; Layout.fillHeight: true; radius: 8
+                    Layout.fillWidth: true; Layout.fillHeight: true; radius: Theme.r(8)
                     color: root.installSource === modelData.id ? Theme.accentWarm : (sm.containsMouse ? Theme.bgPillHover : "transparent")
                     Text {
                         anchors.centerIn: parent; text: modelData.name
@@ -689,7 +689,7 @@ Item {
         visible: root.ctxOpen
         x: root.ctxX; y: root.ctxY
         width: 200; height: 84
-        radius: 14
+        radius: Theme.r(14)
         color: Theme.bgElevated
         border.color: Theme.accent; border.width: 2
         z: 30
@@ -708,7 +708,7 @@ Item {
                 scale: delBtnM.pressed ? 0.93 : (delBtnM.containsMouse ? 1.05 : 1.0)
                 Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                 Behavior on color { ColorAnimation { duration: 140 } }
-                Layout.fillWidth: true; implicitHeight: 34; radius: 10
+                Layout.fillWidth: true; implicitHeight: 34; radius: Theme.r(10)
                 color: delBtnM.containsMouse ? Theme.danger : Theme.bgPill
                 enabled: root.ctxPkg !== ""
                 Text {
@@ -732,7 +732,7 @@ Item {
         Behavior on color { ColorAnimation { duration: 140 } }
         visible: root.confirmDeleteOpen
         anchors.fill: parent
-        radius: 14
+        radius: Theme.r(14)
         color: Theme.bgFrame
         border.color: Theme.danger; border.width: 2
         z: 40
@@ -756,7 +756,7 @@ Item {
                 scale: dAllM.pressed ? 0.93 : (dAllM.containsMouse ? 1.05 : 1.0)
                 Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                 Behavior on color { ColorAnimation { duration: 140 } }
-                Layout.fillWidth: true; implicitHeight: 38; radius: 12
+                Layout.fillWidth: true; implicitHeight: 38; radius: Theme.r(12)
                 color: dAllM.containsMouse ? Theme.danger : Theme.bgPill
                 Text { anchors.centerIn: parent; text: "Удалить целиком (вместе с данными)"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: dAllM.containsMouse ? Theme.accentOn : Theme.danger }
                 MouseArea {
@@ -779,7 +779,7 @@ Item {
                 scale: dKeepM.pressed ? 0.93 : (dKeepM.containsMouse ? 1.05 : 1.0)
                 Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                 Behavior on color { ColorAnimation { duration: 140 } }
-                Layout.fillWidth: true; implicitHeight: 38; radius: 12
+                Layout.fillWidth: true; implicitHeight: 38; radius: Theme.r(12)
                 color: dKeepM.containsMouse ? Theme.accentWarm : Theme.bgPill
                 Text { anchors.centerIn: parent; text: "Удалить, но оставить данные"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Black; color: dKeepM.containsMouse ? Theme.accentOn : Theme.fg }
                 MouseArea {
@@ -795,7 +795,7 @@ Item {
             }
 
             Rectangle {
-                Layout.fillWidth: true; implicitHeight: 34; radius: 12
+                Layout.fillWidth: true; implicitHeight: 34; radius: Theme.r(12)
                 color: dCanM.containsMouse ? Theme.bgPillHover : Theme.bgSurface
                 Text { anchors.centerIn: parent; text: "Отмена"; font.family: Theme.fontFamily; font.weight: Font.Black; font.pixelSize: 12; color: Theme.fgMuted }
                 MouseArea { cursorShape: Qt.PointingHandCursor; id: dCanM; anchors.fill: parent; hoverEnabled: true; onClicked: root.confirmDeleteOpen = false }

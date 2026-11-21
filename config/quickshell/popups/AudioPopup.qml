@@ -74,7 +74,7 @@ PanelWindow {
                 Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                 Layout.fillWidth: true
                 implicitHeight: 34
-                radius: 14
+                radius: Theme.r(14)
                 color: Theme.bgFrame
 
                 RowLayout {
@@ -83,7 +83,7 @@ PanelWindow {
                         model: ["Микшер", "Источники"]
                         delegate: Rectangle {
                             Layout.fillWidth: true; Layout.fillHeight: true
-                            radius: 11
+                            radius: Theme.r(11)
                             color: win.tabIndex === index ? Theme.accentWarm : "transparent"
                             Behavior on color { ColorAnimation { duration: Theme.animFast } }
 
@@ -111,7 +111,7 @@ PanelWindow {
                         property real localVol: modelData.vol
                         Layout.fillWidth: true
                         implicitHeight: 58
-                        radius: 14
+                        radius: Theme.r(14)
                         color: appHover.hovered ? Theme.bgPillHover : Theme.bgPill
 
                         HoverHandler { id: appHover }
@@ -171,7 +171,7 @@ PanelWindow {
                         required property var modelData
                         Layout.fillWidth: true
                         implicitHeight: 38
-                        radius: 12
+                        radius: Theme.r(12)
                         color: modelData.def ? Theme.accent : (sinkM.containsMouse ? Theme.bgPillHover : Theme.bgPill)
 
                         Text {

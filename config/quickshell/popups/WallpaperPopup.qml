@@ -71,7 +71,7 @@ PanelWindow {
                     scale: closeW.pressed ? 0.94 : (closeW.containsMouse ? 1.04 : 1.0)
                     Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                     Behavior on color { ColorAnimation { duration: 140 } }
-                    implicitWidth: 30; implicitHeight: 30; radius: closeW.containsMouse ? 8 : 15
+                    implicitWidth: 30; implicitHeight: 30; radius: Theme.r(closeW.containsMouse ? 8 : 15)
                     color: closeW.containsMouse ? Theme.bgPillHover : Theme.bgPill
                     Text { anchors.centerIn: parent; text: "\uf00d"; font.family: Theme.iconFont; font.pixelSize: 12; color: Theme.fgMuted }
                     MouseArea { id: closeW; anchors.fill: parent; hoverEnabled: true; onClicked: win.open = false }
@@ -106,7 +106,7 @@ PanelWindow {
                         Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                         Behavior on color { ColorAnimation { duration: 140 } }
                         anchors.fill: parent; anchors.margins: 4
-                        radius: wM.containsMouse ? 10 : 14
+                        radius: Theme.r(wM.containsMouse ? 10 : 14)
                         color: Theme.bgPill
                         border.color: wM.containsMouse ? Theme.accentWarm : Theme.borderSubtle
                         border.width: 2

@@ -92,7 +92,7 @@ PanelWindow {
                         radius: Theme.radiusPill
                         color: win.dnd ? Theme.accent : Theme.bgPill
                         Rectangle {
-                            width: 16; height: 16; radius: 8
+                            width: 16; height: 16; radius: Theme.r(8)
                             anchors.verticalCenter: parent.verticalCenter
                             x: win.dnd ? 23 : 3
                             color: win.dnd ? Theme.accentOn : Theme.fgMuted
@@ -112,7 +112,7 @@ PanelWindow {
                         required property var modelData
                         width: ListView.view.width
                         implicitHeight: 50
-                        radius: 14
+                        radius: Theme.r(14)
                         color: Theme.bgPill
 
                         ColumnLayout {
@@ -137,7 +137,7 @@ PanelWindow {
                     Behavior on color { ColorAnimation { duration: 140 } }
                     Layout.fillWidth: true
                     implicitHeight: 34
-                    radius: clearMouse.containsMouse ? 10 : 17
+                    radius: Theme.r(clearMouse.containsMouse ? 10 : 17)
                     color: clearMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
                     Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
                     Text {

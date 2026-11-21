@@ -155,7 +155,7 @@ Scope {
                     Rectangle {
                         Layout.fillWidth: true
                         implicitHeight: 38
-                        radius: 14
+                        radius: Theme.r(14)
                         color: Theme.bgPill
 
                         RowLayout {
@@ -182,7 +182,7 @@ Scope {
 
                     Rectangle {
                         implicitWidth: 34; implicitHeight: 34
-                        radius: closeMouse.pressed ? 6 : (closeMouse.containsMouse ? 8 : 12)
+                        radius: Theme.r(closeMouse.pressed ? 6 : (closeMouse.containsMouse ? 8 : 12))
                         scale: closeMouse.pressed ? 0.92 : (closeMouse.containsMouse ? 1.06 : 1.0)
                         color: closeMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
                         Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
@@ -225,7 +225,7 @@ Scope {
                             required property var modelData
                             width: appList.width
                             implicitHeight: 44
-                            radius: appMouse.pressed ? 6 : (appMouse.containsMouse ? 9 : 14)
+                            radius: Theme.r(appMouse.pressed ? 6 : (appMouse.containsMouse ? 9 : 14))
                             scale: appMouse.pressed ? 0.97 : (appMouse.containsMouse ? 1.02 : 1.0)
                             color: appMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
                             Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
@@ -294,7 +294,7 @@ Scope {
                 Rectangle {
                     Layout.fillWidth: true
                     implicitHeight: 36
-                    radius: updMouse.pressed ? 6 : (updMouse.containsMouse ? 9 : 14)
+                    radius: Theme.r(updMouse.pressed ? 6 : (updMouse.containsMouse ? 9 : 14))
                     scale: updMouse.pressed ? 0.96 : (updMouse.containsMouse ? 1.02 : 1.0)
                     color: updMouse.containsMouse ? Theme.bgPillHover : Theme.bgElevated
                     border.color: Theme.borderSubtle
@@ -334,7 +334,7 @@ Scope {
             Behavior on color { ColorAnimation { duration: 140 } }
             id: dockCard
             anchors.fill: parent
-            radius: 26
+            radius: Theme.r(26)
             color: Theme.bgSurface
             border.color: Theme.accent
             border.width: 3
@@ -361,7 +361,7 @@ Scope {
                         required property var modelData
                         readonly property bool isFocused: (modelData.focusHistoryID ?? 99) === 0
                         width: 68; height: 68
-                        radius: dockItemMouse.pressed ? 10 : (dockItemMouse.containsMouse ? 14 : 18)
+                        radius: Theme.r(dockItemMouse.pressed ? 10 : (dockItemMouse.containsMouse ? 14 : 18))
                         z: dockItemMouse.containsMouse ? 10 : 0
                         color: isFocused ? Theme.bgElevated : (dockItemMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill)
                         border.color: isFocused ? Theme.accent : "transparent"

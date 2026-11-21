@@ -169,14 +169,14 @@ PanelWindow {
         implicitHeight: 24
         width: 44
         height: 24
-        radius: 12
+        radius: Theme.r(12)
         color: checked ? Theme.accent : Theme.bgFrame
         border.color: checked ? Theme.accent : Theme.bgPillHover
         border.width: 2
         Behavior on color { ColorAnimation { duration: 150 } }
 
         Rectangle {
-            width: 16; height: 16; radius: 8
+            width: 16; height: 16; radius: Theme.r(8)
             anchors.verticalCenter: parent.verticalCenter
             x: checked ? parent.width - width - 4 : 4
             color: checked ? Theme.accentOn : Theme.fgDim
@@ -245,7 +245,7 @@ PanelWindow {
                     signal clicked()
                     Layout.fillWidth: true
                     implicitHeight: 36
-                    radius: m.pressed ? 8 : (m.containsMouse ? 12 : 18)
+                    radius: Theme.r(m.pressed ? 8 : (m.containsMouse ? 12 : 18))
                     scale: m.pressed ? 0.94 : (m.containsMouse ? 1.04 : 1.0)
                     color: active ? Theme.danger : (m.containsMouse ? Theme.bgPillHover : Theme.bgPill)
                     Behavior on color { ColorAnimation { duration: Theme.animFast } }
@@ -282,7 +282,7 @@ PanelWindow {
             Rectangle {
                 Layout.fillWidth: true
                 implicitHeight: 36
-                radius: 14
+                radius: Theme.r(14)
                 color: Theme.bgPill
 
                 RowLayout {
@@ -315,7 +315,7 @@ PanelWindow {
                     readonly property bool netActive: win.ethConnected || win.connectedWifiSsid !== ""
                     Layout.fillWidth: true
                     implicitHeight: 42
-                    radius: netM.pressed ? 8 : (netM.containsMouse ? 12 : 21)
+                    radius: Theme.r(netM.pressed ? 8 : (netM.containsMouse ? 12 : 21))
                     scale: netM.pressed ? 0.95 : (netM.containsMouse ? 1.03 : 1.0)
                     Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
                     color: netActive ? Theme.accent : Theme.bgPill
@@ -347,7 +347,7 @@ PanelWindow {
 
                         // Круглая кнопка-стрелка
                         Rectangle {
-                            width: 28; height: 28; radius: netArrowM.containsMouse ? 10 : 14
+                            width: 28; height: 28; radius: Theme.r(netArrowM.containsMouse ? 10 : 14)
                             scale: netArrowM.pressed ? 0.9 : (netArrowM.containsMouse ? 1.1 : 1.0)
                             Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
                             Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
@@ -380,7 +380,7 @@ PanelWindow {
                     readonly property bool btOn: Bluetooth.defaultAdapter?.enabled ?? false
                     Layout.fillWidth: true
                     implicitHeight: 42
-                    radius: btM.pressed ? 8 : (btM.containsMouse ? 12 : 21)
+                    radius: Theme.r(btM.pressed ? 8 : (btM.containsMouse ? 12 : 21))
                     scale: btM.pressed ? 0.95 : (btM.containsMouse ? 1.03 : 1.0)
                     Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
                     color: btOn ? Theme.accent : Theme.bgPill
@@ -408,7 +408,7 @@ PanelWindow {
                         }
 
                         Rectangle {
-                            width: 28; height: 28; radius: btArrowM.containsMouse ? 10 : 14
+                            width: 28; height: 28; radius: Theme.r(btArrowM.containsMouse ? 10 : 14)
                             scale: btArrowM.pressed ? 0.9 : (btArrowM.containsMouse ? 1.1 : 1.0)
                             Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
                             Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
@@ -435,7 +435,7 @@ PanelWindow {
                 Rectangle {
                     Layout.fillWidth: true
                     implicitHeight: 40
-                    radius: layM.pressed ? 8 : (layM.containsMouse ? 12 : 20)
+                    radius: Theme.r(layM.pressed ? 8 : (layM.containsMouse ? 12 : 20))
                     scale: layM.pressed ? 0.95 : (layM.containsMouse ? 1.03 : 1.0)
                     Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
                     color: win.scrollingLayout ? Theme.accentWarm : (layM.containsMouse ? Theme.bgPillHover : Theme.bgPill)
@@ -466,7 +466,7 @@ PanelWindow {
                 Rectangle {
                     Layout.fillWidth: true
                     implicitHeight: 40
-                    radius: wallM.pressed ? 8 : (wallM.containsMouse ? 12 : 20)
+                    radius: Theme.r(wallM.pressed ? 8 : (wallM.containsMouse ? 12 : 20))
                     scale: wallM.pressed ? 0.95 : (wallM.containsMouse ? 1.03 : 1.0)
                     Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
                     color: wallM.containsMouse ? Theme.bgPillHover : Theme.bgPill
@@ -492,7 +492,7 @@ PanelWindow {
                 Rectangle {
                     Layout.fillWidth: true
                     implicitHeight: 40
-                    radius: pinM.pressed ? 8 : (pinM.containsMouse ? 12 : 20)
+                    radius: Theme.r(pinM.pressed ? 8 : (pinM.containsMouse ? 12 : 20))
                     scale: pinM.pressed ? 0.95 : (pinM.containsMouse ? 1.03 : 1.0)
                     Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
                     color: win.dockPinned ? Theme.accent : (pinM.containsMouse ? Theme.bgPillHover : Theme.bgPill)
@@ -520,7 +520,7 @@ PanelWindow {
                 Rectangle {
                     Layout.fillWidth: true
                     implicitHeight: 40
-                    radius: setM.pressed ? 8 : (setM.containsMouse ? 12 : 20)
+                    radius: Theme.r(setM.pressed ? 8 : (setM.containsMouse ? 12 : 20))
                     scale: setM.pressed ? 0.95 : (setM.containsMouse ? 1.03 : 1.0)
                     Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
                     color: setM.containsMouse ? Theme.bgPillHover : Theme.bgPill
@@ -561,7 +561,7 @@ PanelWindow {
                     scale: netBackM.pressed ? 0.94 : (netBackM.containsMouse ? 1.04 : 1.0)
                     Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                     Behavior on color { ColorAnimation { duration: 140 } }
-                    width: 30; height: 30; radius: 15
+                    width: 30; height: 30; radius: Theme.r(15)
                     color: netBackM.containsMouse ? Theme.bgPillHover : Theme.bgPill
                     Text { anchors.centerIn: parent; text: "\uf053"; font.family: Theme.iconFont; font.pixelSize: 11; color: Theme.fg }
                     MouseArea {
@@ -590,7 +590,7 @@ PanelWindow {
                 Behavior on color { ColorAnimation { duration: 140 } }
                 Layout.fillWidth: true
                 implicitHeight: 36
-                radius: 12
+                radius: Theme.r(12)
                 color: Theme.bgFrame
 
                 RowLayout {
@@ -602,7 +602,7 @@ PanelWindow {
                         scale: ethTabM.pressed ? 0.93 : (ethTabM.containsMouse ? 1.05 : 1.0)
                         Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                         Behavior on color { ColorAnimation { duration: 140 } }
-                        Layout.fillWidth: true; Layout.fillHeight: true; radius: 9
+                        Layout.fillWidth: true; Layout.fillHeight: true; radius: Theme.r(9)
                         color: win.netTab === "eth" ? Theme.accent : (ethTabM.containsMouse ? Theme.bgPill : "transparent")
                         RowLayout {
                             anchors.centerIn: parent; spacing: 6
@@ -620,7 +620,7 @@ PanelWindow {
                         scale: wifiTabM.pressed ? 0.93 : (wifiTabM.containsMouse ? 1.05 : 1.0)
                         Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                         Behavior on color { ColorAnimation { duration: 140 } }
-                        Layout.fillWidth: true; Layout.fillHeight: true; radius: 9
+                        Layout.fillWidth: true; Layout.fillHeight: true; radius: Theme.r(9)
                         color: win.netTab === "wifi" ? Theme.accent : (wifiTabM.containsMouse ? Theme.bgPill : "transparent")
                         RowLayout {
                             anchors.centerIn: parent; spacing: 6
@@ -648,7 +648,7 @@ PanelWindow {
                 Rectangle {
                     Layout.fillWidth: true
                     implicitHeight: 42
-                    radius: 14
+                    radius: Theme.r(14)
                     color: Theme.bgPill
 
                     RowLayout {
@@ -673,7 +673,7 @@ PanelWindow {
                     visible: win.ethConnected
                     Layout.fillWidth: true
                     implicitHeight: ethInfoCol.implicitHeight + 18
-                    radius: 14
+                    radius: Theme.r(14)
                     color: Theme.bgFrame
 
                     ColumnLayout {
@@ -732,7 +732,7 @@ PanelWindow {
                 Rectangle {
                     Layout.fillWidth: true
                     implicitHeight: 42
-                    radius: 14
+                    radius: Theme.r(14)
                     color: Theme.bgPill
 
                     RowLayout {
@@ -777,7 +777,7 @@ PanelWindow {
                             Behavior on color { ColorAnimation { duration: 140 } }
                             implicitWidth: refRow.implicitWidth + 16
                             implicitHeight: 28
-                            radius: 10
+                            radius: Theme.r(10)
                             color: refM.containsMouse ? Theme.bgPillHover : Theme.bgPill
                             RowLayout {
                                 id: refRow
@@ -800,7 +800,7 @@ PanelWindow {
                         visible: win.connectedWifiSsid !== ""
                         Layout.fillWidth: true
                         implicitHeight: 38
-                        radius: 12
+                        radius: Theme.r(12)
                         color: Theme.accent
 
                         RowLayout {
@@ -819,7 +819,7 @@ PanelWindow {
                                 Behavior on color { ColorAnimation { duration: 140 } }
                                 implicitWidth: discTxt.implicitWidth + 12
                                 implicitHeight: 24
-                                radius: 8
+                                radius: Theme.r(8)
                                 color: discM.containsMouse ? "#232a2e" : "#2d353b"
                                 Text { id: discTxt; anchors.centerIn: parent; text: "Отключить"; font.family: Theme.fontFamily; font.pixelSize: 10; font.weight: Font.Black; color: Theme.fg }
                                 MouseArea {
@@ -860,7 +860,7 @@ PanelWindow {
                                     required property var modelData
                                     Layout.fillWidth: true
                                     implicitHeight: 34
-                                    radius: 10
+                                    radius: Theme.r(10)
                                     color: (win.selectedWifiSsid === modelData.ssid) ? Theme.bgPillHover
                                            : (wM.containsMouse ? Theme.bgPill : Theme.bgFrame)
                                     border.color: (win.selectedWifiSsid === modelData.ssid) ? Theme.accent : "transparent"
@@ -913,7 +913,7 @@ PanelWindow {
                         visible: win.selectedWifiSsid !== ""
                         Layout.fillWidth: true
                         implicitHeight: passCol.implicitHeight + 16
-                        radius: 12
+                        radius: Theme.r(12)
                         color: Theme.bgFrame
                         border.color: Theme.accent
                         border.width: 2
@@ -934,7 +934,7 @@ PanelWindow {
                             Rectangle {
                                 Layout.fillWidth: true
                                 implicitHeight: 32
-                                radius: 8
+                                radius: Theme.r(8)
                                 color: Theme.bgPill
 
                                 RowLayout {
@@ -980,7 +980,7 @@ PanelWindow {
                                     scale: cancelPassM.pressed ? 0.93 : (cancelPassM.containsMouse ? 1.05 : 1.0)
                                     Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                                     Behavior on color { ColorAnimation { duration: 140 } }
-                                    Layout.fillWidth: true; implicitHeight: 28; radius: 8
+                                    Layout.fillWidth: true; implicitHeight: 28; radius: Theme.r(8)
                                     color: cancelPassM.containsMouse ? Theme.bgPillHover : Theme.bgPill
                                     Text { anchors.centerIn: parent; text: "Отмена"; font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.Black; color: Theme.fg }
                                     MouseArea {
@@ -993,7 +993,7 @@ PanelWindow {
                                     scale: animMa_1.pressed ? 0.93 : (animMa_1.containsMouse ? 1.05 : 1.0)
                                     Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                                     Behavior on color { ColorAnimation { duration: 140 } }
-                                    Layout.fillWidth: true; implicitHeight: 28; radius: 8
+                                    Layout.fillWidth: true; implicitHeight: 28; radius: Theme.r(8)
                                     color: Theme.accent
                                     Text { anchors.centerIn: parent; text: "Подключить"; font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.Black; color: Theme.accentOn }
                                     MouseArea {
@@ -1028,7 +1028,7 @@ PanelWindow {
                     scale: btBackM.pressed ? 0.94 : (btBackM.containsMouse ? 1.04 : 1.0)
                     Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                     Behavior on color { ColorAnimation { duration: 140 } }
-                    width: 30; height: 30; radius: 15
+                    width: 30; height: 30; radius: Theme.r(15)
                     color: btBackM.containsMouse ? Theme.bgPillHover : Theme.bgPill
                     Text { anchors.centerIn: parent; text: "\uf053"; font.family: Theme.iconFont; font.pixelSize: 11; color: Theme.fg }
                     MouseArea {
@@ -1058,7 +1058,7 @@ PanelWindow {
                     required property var modelData
                     Layout.fillWidth: true
                     implicitHeight: 36
-                    radius: 12
+                    radius: Theme.r(12)
                     color: modelData.connected ? Theme.accentWarm : Theme.bgPill
 
                     Text {

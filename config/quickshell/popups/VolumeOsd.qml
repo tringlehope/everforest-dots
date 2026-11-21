@@ -54,7 +54,7 @@ PanelWindow {
         anchors.centerIn: parent
         width: 256
         height: 50
-        radius: 18
+        radius: Theme.r(18)
         color: Theme.bgSurface
         border.color: osd.muted ? Theme.danger : Theme.accent
         border.width: 3

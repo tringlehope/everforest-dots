@@ -172,7 +172,7 @@ PanelWindow {
                         delegate: Rectangle {
                             Layout.fillWidth: true
                             implicitHeight: 38
-                            radius: 12
+                            radius: Theme.r(12)
                             color: win.currentTab === index ? Theme.accent : (tabM.containsMouse ? Theme.bgPillHover : "transparent")
 
                             RowLayout {
@@ -229,7 +229,7 @@ PanelWindow {
                             Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                             Behavior on color { ColorAnimation { duration: 140 } }
                             implicitWidth: 30; implicitHeight: 30
-                            radius: closeS.containsMouse ? 8 : 15
+                            radius: Theme.r(closeS.containsMouse ? 8 : 15)
                             color: closeS.containsMouse ? Theme.bgPillHover : Theme.bgPill
                             Text { anchors.centerIn: parent; text: "\uf00d"; font.family: Theme.iconFont; font.pixelSize: 12; color: Theme.fgMuted }
                             MouseArea { id: closeS; anchors.fill: parent; hoverEnabled: true; onClicked: win.open = false }
@@ -254,7 +254,7 @@ PanelWindow {
                         visible: win.currentTab === 0 && win.dirty
                         Layout.fillWidth: true
                         implicitHeight: 34
-                        radius: 12
+                        radius: Theme.r(12)
                         color: Theme.accentWarm
 
                         RowLayout {
@@ -273,7 +273,7 @@ PanelWindow {
                         visible: win.currentTab === 0
                         Layout.fillWidth: true
                         implicitHeight: 165
-                        radius: 16
+                        radius: Theme.r(16)
                         color: Theme.bgFrame
                         border.color: Theme.borderSubtle
                         border.width: 1
@@ -297,7 +297,7 @@ PanelWindow {
                                 y: 38 + modelData.y * uiScale
                                 width: Math.max(76, modelData.width * uiScale)
                                 height: Math.max(48, modelData.height * uiScale)
-                                radius: 10
+                                radius: Theme.r(10)
                                 color: isSel ? Theme.bgElevated : Theme.bgPill
                                 border.color: isSel ? Theme.accentWarm : Theme.borderSubtle
                                 border.width: 2
@@ -361,7 +361,7 @@ PanelWindow {
 
                             Layout.fillWidth: true
                             implicitHeight: 44
-                            radius: 14
+                            radius: Theme.r(14)
                             color: Theme.bgPill
 
                             RowLayout {
@@ -377,7 +377,7 @@ PanelWindow {
                                     Behavior on color { ColorAnimation { duration: 140 } }
                                     implicitWidth: valRow.implicitWidth + 22
                                     implicitHeight: 30
-                                    radius: 10
+                                    radius: Theme.r(10)
                                     color: dm.containsMouse || isOpen ? Theme.bgPillHover : Theme.bgFrame
                                     border.color: isOpen ? Theme.accent : Theme.borderSubtle
                                     border.width: 1
@@ -437,7 +437,7 @@ PanelWindow {
                             Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                             Behavior on color { ColorAnimation { duration: 140 } }
                             implicitWidth: 140; implicitHeight: 38
-                            radius: appBtnM.containsMouse ? 10 : 19
+                            radius: Theme.r(appBtnM.containsMouse ? 10 : 19)
                             color: appBtnM.containsMouse ? Theme.accentWarm : Theme.accent
                             Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
                             Text {
@@ -470,7 +470,7 @@ PanelWindow {
                     anchors.bottomMargin: 64
                     width: 190
                     height: Math.min(220, dropList.contentHeight + 12)
-                    radius: 14
+                    radius: Theme.r(14)
                     color: Theme.bgElevated
                     border.color: Theme.accent
                     border.width: 2
@@ -500,7 +500,7 @@ PanelWindow {
                             }
                             width: dropList.width
                             implicitHeight: 32
-                            radius: 8
+                            radius: Theme.r(8)
                             color: isCur ? Theme.accentWarm : (dItemM.containsMouse ? Theme.bgPillHover : "transparent")
 
                             Text {

@@ -213,7 +213,7 @@ Scope {
                         Behavior on color { ColorAnimation { duration: 140 } }
                         Layout.fillWidth: true
                         implicitHeight: 38
-                        radius: 12
+                        radius: Theme.r(12)
                         color: delM.containsMouse ? Theme.bgPillHover : Theme.bgPill
                         Text {
                             anchors.centerIn: parent
@@ -238,7 +238,7 @@ Scope {
                         Behavior on color { ColorAnimation { duration: 140 } }
                         Layout.fillWidth: true
                         implicitHeight: 38
-                        radius: 12
+                        radius: Theme.r(12)
                         color: saveM.containsMouse ? "#b8cf93" : Theme.accent
                         Text {
                             anchors.centerIn: parent

@@ -58,7 +58,7 @@ PanelWindow {
         anchors.topMargin: 8
         width: 184
         height: 56
-        radius: 20
+        radius: Theme.r(20)
         color: Theme.bgSurface
         border.color: Theme.accent
         border.width: 3
@@ -92,7 +92,7 @@ PanelWindow {
                     readonly property bool isActive: osd.currentLayout === modelData
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    radius: isActive ? 12 : 16
+                    radius: Theme.r(isActive ? 12 : 16)
                     color: isActive ? Theme.accentWarm : Theme.bgPill
                     Behavior on color { ColorAnimation { duration: 180 } }
                     Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }

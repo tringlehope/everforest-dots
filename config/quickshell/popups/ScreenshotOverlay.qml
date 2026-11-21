@@ -441,7 +441,7 @@ PanelWindow {
             anchors.centerIn: parent
             width: hintLbl.implicitWidth + 32
             height: 44
-            radius: 14
+            radius: Theme.r(14)
             color: "#2d353b"
             border.color: "#a7c080"
             border.width: 2
@@ -465,7 +465,7 @@ PanelWindow {
             anchors.topMargin: 28
             width: toastLbl.implicitWidth + 32
             height: 40
-            radius: 12
+            radius: Theme.r(12)
             color: "#2d353b"
             border.color: "#a7c080"
             border.width: 2
@@ -501,7 +501,7 @@ PanelWindow {
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: subRow.implicitWidth + 24
                 height: 56
-                radius: 14
+                radius: Theme.r(14)
                 color: "#2d353b"
                 border.color: "#a7c080"
                 border.width: 2
@@ -524,7 +524,7 @@ PanelWindow {
                                 Behavior on color { ColorAnimation { duration: 140 } }
                                 width: 24
                                 height: 24
-                                radius: 12
+                                radius: Theme.r(12)
                                 color: modelData
                                 border.color: root.brushColor.toString() === modelData ? "#d3c6aa" : "#232a2e"
                                 border.width: root.brushColor.toString() === modelData ? 3 : 2
@@ -541,7 +541,7 @@ PanelWindow {
 
                     Rectangle {
                         visible: root.activeTool === "draw"
-                        width: 2; height: 26; radius: 1
+                        width: 2; height: 26; radius: Theme.r(1)
                         color: "#323c41"
                         anchors.verticalCenter: parent.verticalCenter
                     }
@@ -571,19 +571,19 @@ PanelWindow {
                                 anchors.verticalCenter: parent.verticalCenter
                                 width: parent.width
                                 height: 6
-                                radius: 3
+                                radius: Theme.r(3)
                                 color: "#323c41"
 
                                 Rectangle {
                                     width: ((root.currentToolWidth - 2) / 38) * parent.width
                                     height: parent.height
-                                    radius: 3
+                                    radius: Theme.r(3)
                                     color: "#a7c080"
                                 }
                             }
 
                             Rectangle {
-                                width: 16; height: 16; radius: 8
+                                width: 16; height: 16; radius: Theme.r(8)
                                 color: "#d3c6aa"
                                 border.color: "#232a2e"
                                 border.width: 2
@@ -609,7 +609,7 @@ PanelWindow {
                         Rectangle {
                             width: 44
                             height: 44
-                            radius: 10
+                            radius: Theme.r(10)
                             color: "#232a2e"
                             border.color: "#323c41"
                             border.width: 1
@@ -660,7 +660,7 @@ PanelWindow {
                                 Behavior on color { ColorAnimation { duration: 140 } }
                                 width: fmtTxt.implicitWidth + 18
                                 height: 28
-                                radius: 8
+                                radius: Theme.r(8)
                                 color: root.colorFormat === modelData ? "#a7c080" : "#323c41"
                                 Text {
                                     id: fmtTxt
@@ -683,14 +683,14 @@ PanelWindow {
 
                         Rectangle {
                             visible: root.hoverColorText !== ""
-                            width: 2; height: 22; radius: 1
+                            width: 2; height: 22; radius: Theme.r(1)
                             color: "#323c41"
                             anchors.verticalCenter: parent.verticalCenter
                         }
 
                         Rectangle {
                             visible: root.hoverColorText !== ""
-                            width: 20; height: 20; radius: 6
+                            width: 20; height: 20; radius: Theme.r(6)
                             color: root.hoverColorVal
                             border.color: "#d3c6aa"
                             border.width: 2
@@ -718,7 +718,7 @@ PanelWindow {
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: mainRow.implicitWidth + 20
                 height: 48
-                radius: 14
+                radius: Theme.r(14)
                 color: "#2d353b"
                 border.color: "#a7c080"
                 border.width: 2
@@ -740,7 +740,7 @@ PanelWindow {
                             Behavior on color { ColorAnimation { duration: 140 } }
                             width: 36
                             height: 34
-                            radius: 10
+                            radius: Theme.r(10)
                             color: root.activeTool === modelData.id ? "#a7c080" : "#323c41"
                             Text {
                                 anchors.centerIn: parent
@@ -766,7 +766,7 @@ PanelWindow {
                         visible: root.strokes.length > 0
                         width: undoLbl.implicitWidth + 20
                         height: 34
-                        radius: 10
+                        radius: Theme.r(10)
                         color: "#323c41"
                         Text {
                             id: undoLbl
@@ -792,7 +792,7 @@ PanelWindow {
                         Behavior on color { ColorAnimation { duration: 140 } }
                         width: copyLbl.implicitWidth + 22
                         height: 34
-                        radius: 10
+                        radius: Theme.r(10)
                         color: "#323c41"
                         Text {
                             id: copyLbl
@@ -818,7 +818,7 @@ PanelWindow {
                         Behavior on color { ColorAnimation { duration: 140 } }
                         width: saveLbl.implicitWidth + 22
                         height: 34
-                        radius: 10
+                        radius: Theme.r(10)
                         color: "#a7c080"
                         Text {
                             id: saveLbl
@@ -844,7 +844,7 @@ PanelWindow {
                         Behavior on color { ColorAnimation { duration: 140 } }
                         width: 34
                         height: 34
-                        radius: 10
+                        radius: Theme.r(10)
                         color: "#323c41"
                         Text {
                             anchors.centerIn: parent

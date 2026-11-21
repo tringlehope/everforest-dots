@@ -4,6 +4,9 @@ import QtQuick
 QtObject {
     property bool showFrame: true
     property string currentTheme: "everforest"
+    readonly property bool isWin7: currentTheme === "win7"
+
+    function r(val) { return isWin7 ? 0 : val; }
 
     readonly property var palettes: ({
         "everforest": {
@@ -26,6 +29,13 @@ QtObject {
             fg: "#e4e4e4", fgMuted: "#9a9a9a", fgDim: "#666666",
             accent: "#d4d4d4", accentWarm: "#b4b4b4", accentOn: "#181818", borderSubtle: "#3e3e3e", danger: "#e06c75",
             hyprActive: "d4d4d4", hyprInactive: "3e3e3e", gtkTheme: "Graphite-Dark"
+        },
+        "win7": {
+            folder: "Windows 7",
+            bgFrame: "#cc162230", bgSurface: "#d81d2c3e", bgPill: "#b8283c52", bgPillHover: "#cc35506d", bgElevated: "#cc2f4761",
+            fg: "#eef6fc", fgMuted: "#a8c0d6", fgDim: "#7a96b0",
+            accent: "#6bb8ff", accentWarm: "#f5c962", accentOn: "#0e1722", borderSubtle: "#805b82a8", danger: "#ff6b7a",
+            hyprActive: "6bb8ff", hyprInactive: "4d6b88", gtkTheme: "Windows-7-2.1"
         }
     })
 
@@ -52,11 +62,11 @@ QtObject {
     readonly property string monoFont:    "JetBrainsMono Nerd Font"
     readonly property string iconFont:    "JetBrainsMono Nerd Font"
 
-    readonly property int frameThickness: 6
+    readonly property int frameThickness: isWin7 ? 0 : 6
     readonly property int topBarHeight:   34
-    readonly property int radiusWindow:   12
-    readonly property int radiusCard:     18
-    readonly property int radiusPill:     999
+    readonly property int radiusWindow:   isWin7 ? 0 : 12
+    readonly property int radiusCard:     isWin7 ? 0 : 18
+    readonly property int radiusPill:     isWin7 ? 0 : 999
 
     readonly property int animFast:       150
     readonly property int animExpressive: 240

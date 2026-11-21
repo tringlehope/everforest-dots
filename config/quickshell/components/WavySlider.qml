@@ -17,7 +17,7 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         height: 4
-        radius: 2
+        radius: Theme.r(2)
         color: root.trackColor
     }
 
@@ -72,7 +72,7 @@ Item {
         x: Math.max(0, Math.min(parent.width - width, parent.width * Math.max(0, Math.min(1, root.value)) - width / 2))
         width: 6
         height: 16
-        radius: 3
+        radius: Theme.r(3)
         color: root.activeColor
     }
 

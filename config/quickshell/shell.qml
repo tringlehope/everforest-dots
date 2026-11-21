@@ -29,7 +29,11 @@ ShellRoot {
                 if (Theme.palettes[t]) {
                     Theme.currentTheme = t;
                     var pal = Theme.palettes[t];
-                    Quickshell.execDetached(["hyprctl", "eval", "hl.config({ general = { col = { active_border = 'rgb(" + pal.hyprActive + ")', inactive_border = 'rgb(" + pal.hyprInactive + ")' } } })"]);
+                    var isW7 = (t === "win7");
+                    var hlCmd = isW7
+                        ? "hl.config({ general = { border_size = 2, col = { active_border = 'rgb(" + pal.hyprActive + ")', inactive_border = 'rgb(" + pal.hyprInactive + ")' } }, decoration = { rounding = 0, active_opacity = 0.90, inactive_opacity = 0.84, blur = { enabled = true, size = 6, passes = 2 } } })"
+                        : "hl.config({ general = { border_size = 4, col = { active_border = 'rgb(" + pal.hyprActive + ")', inactive_border = 'rgb(" + pal.hyprInactive + ")' } }, decoration = { rounding = 12, active_opacity = 1.0, inactive_opacity = 1.0, blur = { enabled = false } } })";
+                    Quickshell.execDetached(["hyprctl", "eval", hlCmd]);
                     Quickshell.execDetached([Quickshell.env("HOME") + "/.config/quickshell/scripts/set_gtk_theme.sh", pal.gtkTheme]);
                 }
             }

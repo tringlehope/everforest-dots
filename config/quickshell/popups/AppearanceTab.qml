@@ -16,7 +16,11 @@ Item {
         Theme.currentTheme = themeId;
         var pal = Theme.palettes[themeId];
         Quickshell.execDetached(["sh", "-c", "mkdir -p ~/.local/state && printf '%s' '" + themeId + "' > ~/.local/state/qs-theme"]);
-        Quickshell.execDetached(["hyprctl", "eval", "hl.config({ general = { col = { active_border = 'rgb(" + pal.hyprActive + ")', inactive_border = 'rgb(" + pal.hyprInactive + ")' } } })"]);
+        var isW7 = (themeId === "win7");
+        var hlCmd = isW7
+            ? "hl.config({ general = { border_size = 2, col = { active_border = 'rgb(" + pal.hyprActive + ")', inactive_border = 'rgb(" + pal.hyprInactive + ")' } }, decoration = { rounding = 0, active_opacity = 0.90, inactive_opacity = 0.84, blur = { enabled = true, size = 6, passes = 2 } } })"
+            : "hl.config({ general = { border_size = 4, col = { active_border = 'rgb(" + pal.hyprActive + ")', inactive_border = 'rgb(" + pal.hyprInactive + ")' } }, decoration = { rounding = 12, active_opacity = 1.0, inactive_opacity = 1.0, blur = { enabled = false } } })";
+        Quickshell.execDetached(["hyprctl", "eval", hlCmd]);
         Quickshell.execDetached([Quickshell.env("HOME") + "/.config/quickshell/scripts/set_gtk_theme.sh", pal.gtkTheme]);
 
         var folder = pal.folder.replace(/'/g, "'\\''");
@@ -40,7 +44,8 @@ Item {
                 model: [
                     { id: "everforest",       name: "Everforest",       bg: "#2d353b", acc: "#a7c080", warm: "#dbbc7f" },
                     { id: "catppuccin-macchiato", name: "Catppuccin Macchiato", bg: "#24273a", acc: "#c6a0f6", warm: "#8aadf4" },
-                    { id: "graphite",         name: "Graphite",         bg: "#222222", acc: "#d4d4d4", warm: "#9a9a9a" }
+                    { id: "graphite",         name: "Graphite",         bg: "#222222", acc: "#d4d4d4", warm: "#9a9a9a" },
+                    { id: "win7",             name: "Windows 7",        bg: "#1d2c3e", acc: "#6bb8ff", warm: "#f5c962" }
                 ]
 
                 delegate: Rectangle {
@@ -200,7 +205,7 @@ Item {
 
                     Text {
                         Layout.alignment: Qt.AlignHCenter
-                        text: "Только пузыри"
+                        text: Theme.isWin7 ? "Квадратная панель" : "Только пузыри"
                         font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Black
                         color: cardBubbles.isActive ? Theme.accent : Theme.fg
                     }
