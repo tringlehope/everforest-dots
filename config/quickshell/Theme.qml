@@ -13,12 +13,12 @@ QtObject {
             accent: "#a7c080", accentWarm: "#dbbc7f", accentOn: "#232a2e", borderSubtle: "#475258", danger: "#e67e80",
             hyprActive: "a7c080", hyprInactive: "475258"
         },
-        "catppuccin-mocha": {
-            folder: "Catppuccin Mocha",
-            bgFrame: "#11111b", bgSurface: "#1e1e2e", bgPill: "#313244", bgPillHover: "#45475a", bgElevated: "#36384d",
-            fg: "#cdd6f4", fgMuted: "#a6adc8", fgDim: "#6c7086",
-            accent: "#cba6f7", accentWarm: "#f9e2af", accentOn: "#11111b", borderSubtle: "#45475a", danger: "#f38ba8",
-            hyprActive: "cba6f7", hyprInactive: "45475a"
+        "catppuccin-macchiato": {
+            folder: "Catppuccin Macchiato",
+            bgFrame: "#181926", bgSurface: "#24273a", bgPill: "#363a4f", bgPillHover: "#494d64", bgElevated: "#3e4259",
+            fg: "#cad3f5", fgMuted: "#a5adcb", fgDim: "#6e738d",
+            accent: "#c6a0f6", accentWarm: "#eed49f", accentOn: "#181926", borderSubtle: "#494d64", danger: "#ed8796",
+            hyprActive: "c6a0f6", hyprInactive: "494d64"
         },
         "graphite": {
             folder: "Graphite",

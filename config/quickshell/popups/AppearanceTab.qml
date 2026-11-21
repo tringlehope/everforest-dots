@@ -38,7 +38,7 @@ Item {
             Repeater {
                 model: [
                     { id: "everforest",       name: "Everforest",       bg: "#2d353b", acc: "#a7c080", warm: "#dbbc7f" },
-                    { id: "catppuccin-mocha", name: "Catppuccin Mocha", bg: "#1e1e2e", acc: "#cba6f7", warm: "#f9e2af" },
+                    { id: "catppuccin-macchiato", name: "Catppuccin Macchiato", bg: "#24273a", acc: "#c6a0f6", warm: "#eed49f" },
                     { id: "graphite",         name: "Graphite",         bg: "#222222", acc: "#d4d4d4", warm: "#9a9a9a" }
                 ]
 
