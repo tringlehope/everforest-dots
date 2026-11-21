@@ -142,7 +142,6 @@ PanelWindow {
 
             // --- ЛЕВЫЙ САЙДБАР ---
             Rectangle {
-                scale: tabM.pressed ? 0.94 : (tabM.containsMouse ? 1.04 : 1.0)
                 Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                 Behavior on color { ColorAnimation { duration: 140 } }
                 Layout.preferredWidth: 195
@@ -460,7 +459,6 @@ PanelWindow {
 
                 // Всплывающий выпадающий список поверх правой панели
                 Rectangle {
-                    scale: dItemM.pressed ? 0.94 : (dItemM.containsMouse ? 1.04 : 1.0)
                     Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                     Behavior on color { ColorAnimation { duration: 140 } }
                     visible: win.activeDropdown !== ""

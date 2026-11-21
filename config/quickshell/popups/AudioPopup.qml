@@ -70,7 +70,6 @@ PanelWindow {
             spacing: 10
 
             Rectangle {
-                scale: btnMa_8.pressed ? 0.94 : (btnMa_8.containsMouse ? 1.04 : 1.0)
                 Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                 Layout.fillWidth: true
                 implicitHeight: 34

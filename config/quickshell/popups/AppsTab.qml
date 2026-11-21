@@ -158,7 +158,6 @@ Item {
             spacing: 8
 
             Rectangle {
-                scale: btnMa_3.pressed ? 0.94 : (btnMa_3.containsMouse ? 1.04 : 1.0)
                 Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                 Behavior on color { ColorAnimation { duration: 140 } }
                 Layout.fillWidth: true
@@ -643,7 +642,6 @@ Item {
     }
 
     Rectangle {
-        scale: sm.pressed ? 0.94 : (sm.containsMouse ? 1.04 : 1.0)
         Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
         Behavior on color { ColorAnimation { duration: 140 } }
         visible: root.sourceMenuOpen

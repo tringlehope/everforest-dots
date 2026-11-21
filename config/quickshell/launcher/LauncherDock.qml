@@ -79,10 +79,17 @@ Scope {
         for (var i = 0; i < list.length; i++) {
             var a = list[i];
             if (a.id.toLowerCase() === low || (a.startupClass && a.startupClass.toLowerCase() === low)) {
-                return Quickshell.iconPath(a.icon, "application-x-executable");
+                return Quickshell.iconPath(a.icon || "application-x-executable", "application-x-executable");
             }
         }
-        return Quickshell.iconPath(cls, Quickshell.iconPath(low, "application-x-executable"));
+        for (var j = 0; j < list.length; j++) {
+            var b = list[j];
+            var bid = b.id.toLowerCase();
+            if (bid.indexOf(low) !== -1 || low.indexOf(bid) !== -1) {
+                return Quickshell.iconPath(b.icon || "application-x-executable", "application-x-executable");
+            }
+        }
+        return Quickshell.iconPath(low, "application-x-executable");
     }
 
     function recordLaunch(appId) {
@@ -318,30 +325,28 @@ Scope {
     PanelWindow {
         id: dockWin
         readonly property bool shouldShow: (launcherRoot.open || launcherRoot.pinned) && launcherRoot.runningClients.length > 0
-        visible: dockTrans.y < 94 || shouldShow
-        exclusiveZone: (launcherRoot.pinned && launcherRoot.runningClients.length > 0) ? (implicitHeight + 8) : -1
+        visible: dockTrans.y < 72 || shouldShow
+        exclusiveZone: (launcherRoot.pinned && launcherRoot.runningClients.length > 0) ? 70 : -1
         anchors { bottom: true }
-        margins.bottom: (Theme.showFrame ? Theme.frameThickness : 0) + 8
-        implicitWidth: Math.max(76, dockRow.implicitWidth + 24)
-        implicitHeight: 96
+        margins.bottom: (Theme.showFrame && !Theme.isWin7 ? Theme.frameThickness : 0) + 8
+        implicitWidth: Math.max(96, dockRow.implicitWidth + 28)
+        implicitHeight: 74
         color: "transparent"
         WlrLayershell.layer: WlrLayer.Overlay
         WlrLayershell.namespace: "qs-dock"
 
         Rectangle {
-            scale: dockItemMouse.pressed ? 0.94 : (dockItemMouse.containsMouse ? 1.04 : 1.0)
-            Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
-            Behavior on color { ColorAnimation { duration: 140 } }
             id: dockCard
-            anchors.fill: parent
-            radius: Theme.r(22)
+            anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
+            height: 60
+            radius: Theme.r(18)
             color: Theme.bgSurface
             border.color: Theme.accent
             border.width: 3
 
             transform: Translate {
                 id: dockTrans
-                y: dockWin.shouldShow ? 0 : 98
+                y: dockWin.shouldShow ? 0 : 76
                 Behavior on y {
                     NumberAnimation {
                         duration: dockWin.shouldShow ? 180 : 120
@@ -358,37 +363,55 @@ Scope {
                 Repeater {
                     model: launcherRoot.runningClients
                     delegate: Rectangle {
+                        id: dockTile
                         required property var modelData
                         readonly property bool isFocused: (modelData.focusHistoryID ?? 99) === 0
-                        width: 60; height: 60
-                        radius: Theme.r(dockItemMouse.pressed ? 10 : (dockItemMouse.containsMouse ? 14 : 18))
+                        implicitWidth: 50
+                        implicitHeight: 46
+                        width: 50; height: 46
+                        radius: dockItemMouse.pressed ? Theme.r(8) : (dockItemMouse.containsMouse ? Theme.r(11) : Theme.r(13))
                         z: dockItemMouse.containsMouse ? 10 : 0
-                        color: isFocused ? Theme.bgElevated : (dockItemMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill)
-                        border.color: isFocused ? Theme.accent : "transparent"
-                        border.width: isFocused ? 2 : 0
+                        color: isFocused ? Theme.bgFrame : (dockItemMouse.containsMouse ? Theme.bgPillHover : "transparent")
                         Behavior on color { ColorAnimation { duration: 140 } }
                         Behavior on radius { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
-                        Behavior on border.color { ColorAnimation { duration: 140 } }
 
-                        IconImage {
+                        Item {
                             anchors.centerIn: parent
-                            source: launcherRoot.iconForClient(modelData.class)
-                            implicitSize: 48
-                            width: 48; height: 48
-                            scale: dockItemMouse.pressed ? 0.92 : (dockItemMouse.containsMouse ? 1.26 : 1.0)
+                            width: 38; height: 38
+                            scale: dockItemMouse.pressed ? 0.92 : (dockItemMouse.containsMouse ? 1.24 : 1.0)
                             Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                             transform: Translate {
-                                y: dockItemMouse.containsMouse ? -7 : 0
+                                y: dockItemMouse.containsMouse ? -6 : 0
                                 Behavior on y { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                            }
+
+                            Image {
+                                id: dockIconImg
+                                anchors.fill: parent
+                                source: launcherRoot.iconForClient(dockTile.modelData.class)
+                                sourceSize: Qt.size(48, 48)
+                                asynchronous: true
+                                smooth: true
+                                visible: status === Image.Ready
+                            }
+
+                            Text {
+                                anchors.centerIn: parent
+                                visible: dockIconImg.status !== Image.Ready
+                                text: "\uf2d0"
+                                font.family: Theme.iconFont
+                                font.pixelSize: 22
+                                color: Theme.fg
                             }
                         }
 
                         MouseArea {
                             id: dockItemMouse
                             cursorShape: Qt.PointingHandCursor
-                            anchors.fill: parent; hoverEnabled: true
+                            anchors.fill: parent
+                            hoverEnabled: true
                             onClicked: {
-                                var addr = modelData.address || "";
+                                var addr = dockTile.modelData.address || "";
                                 if (addr !== "") {
                                     Quickshell.execDetached(["sh", "-c", "hyprctl dispatch \"hl.dsp.focus({ window = 'address:" + addr + "' })\" 2>/dev/null || hyprctl dispatch \"hl.dsp.focuswindow('address:" + addr + "')\""]);
                                 }

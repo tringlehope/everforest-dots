@@ -493,7 +493,6 @@ PanelWindow {
 
             // Дополнительная панель: цвета + размер 1:1 (для кисти/ластика) или формат (для пипетки)
             Rectangle {
-                scale: btnMa_12.pressed ? 0.94 : (btnMa_12.containsMouse ? 1.04 : 1.0)
                 Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                 Behavior on color { ColorAnimation { duration: 140 } }
                 id: subBar
@@ -519,7 +518,6 @@ PanelWindow {
                         Repeater {
                             model: root.paletteColors
                             Rectangle {
-                                scale: btnMa_12.pressed ? 0.93 : (btnMa_12.containsMouse ? 1.05 : 1.0)
                                 Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                                 Behavior on color { ColorAnimation { duration: 140 } }
                                 width: 24
@@ -712,7 +710,6 @@ PanelWindow {
 
             // Главная панель кнопок (без записи экрана)
             Rectangle {
-                scale: btnMa_13.pressed ? 0.94 : (btnMa_13.containsMouse ? 1.04 : 1.0)
                 Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                 Behavior on color { ColorAnimation { duration: 140 } }
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -735,7 +732,6 @@ PanelWindow {
                             { id: "pipette", icon: "\uf1fb" }
                         ]
                         Rectangle {
-                            scale: btnMa_13.pressed ? 0.93 : (btnMa_13.containsMouse ? 1.05 : 1.0)
                             Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                             Behavior on color { ColorAnimation { duration: 140 } }
                             width: 36
