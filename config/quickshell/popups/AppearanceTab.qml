@@ -17,6 +17,7 @@ Item {
         var pal = Theme.palettes[themeId];
         Quickshell.execDetached(["sh", "-c", "mkdir -p ~/.local/state && printf '%s' '" + themeId + "' > ~/.local/state/qs-theme"]);
         Quickshell.execDetached(["hyprctl", "eval", "hl.config({ general = { col = { active_border = 'rgb(" + pal.hyprActive + ")', inactive_border = 'rgb(" + pal.hyprInactive + ")' } } })"]);
+        Quickshell.execDetached([Quickshell.env("HOME") + "/.config/quickshell/scripts/set_gtk_theme.sh", pal.gtkTheme]);
 
         var folder = pal.folder.replace(/'/g, "'\\''");
         Quickshell.execDetached(["sh", "-c", "w=$(find \"$HOME/Pictures/Wallpapers/" + folder + "\" -maxdepth 2 -type f \\( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \\) | sort | head -n1); if [ -n \"$w\" ]; then printf '%s' \"$w\" > ~/.local/state/qs-wallpaper && pkill swaybg; swaybg -i \"$w\" -m fill >/dev/null 2>&1 & fi"]);
@@ -38,7 +39,7 @@ Item {
             Repeater {
                 model: [
                     { id: "everforest",       name: "Everforest",       bg: "#2d353b", acc: "#a7c080", warm: "#dbbc7f" },
-                    { id: "catppuccin-macchiato", name: "Catppuccin Macchiato", bg: "#24273a", acc: "#c6a0f6", warm: "#eed49f" },
+                    { id: "catppuccin-macchiato", name: "Catppuccin Macchiato", bg: "#24273a", acc: "#c6a0f6", warm: "#8aadf4" },
                     { id: "graphite",         name: "Graphite",         bg: "#222222", acc: "#d4d4d4", warm: "#9a9a9a" }
                 ]
 

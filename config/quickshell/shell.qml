@@ -30,6 +30,7 @@ ShellRoot {
                     Theme.currentTheme = t;
                     var pal = Theme.palettes[t];
                     Quickshell.execDetached(["hyprctl", "eval", "hl.config({ general = { col = { active_border = 'rgb(" + pal.hyprActive + ")', inactive_border = 'rgb(" + pal.hyprInactive + ")' } } })"]);
+                    Quickshell.execDetached([Quickshell.env("HOME") + "/.config/quickshell/scripts/set_gtk_theme.sh", pal.gtkTheme]);
                 }
             }
         }
