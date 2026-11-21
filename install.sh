@@ -72,8 +72,8 @@ backup_and_copy_configs() {
                 cp -a "$HOME/.config/$d" "$BACKUP_DIR/$d"
                 backed_up=1
             fi
-            rm -rf "$HOME/.config/$d"
-            cp -a "$REPO_DIR/config/$d" "$HOME/.config/$d"
+            mkdir -p "$HOME/.config/$d"
+            cp -af "$REPO_DIR/config/$d/." "$HOME/.config/$d/"
         fi
     done
     if [ "$backed_up" -eq 0 ]; then
@@ -223,4 +223,6 @@ read -rp "Выбор [0]: " BYPASS_ANS
 backup_and_copy_configs
 setup_sddm
 
+echo "$USER ALL=(ALL) NOPASSWD: /usr/bin/pacman" | sudo tee /etc/sudoers.d/everforest-update >/dev/null
+sudo chmod 440 /etc/sudoers.d/everforest-update
 info "Готово! Все файлы и настройки установлены безопасно."
