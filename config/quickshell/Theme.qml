@@ -35,7 +35,7 @@ QtObject {
             bgFrame: "#99dceeff", bgSurface: "#b8eaf4fc", bgPill: "#99c4e0f7", bgPillHover: "#cc96cbf5", bgElevated: "#cc7cbcf2",
             fg: "#101c28", fgMuted: "#344e68", fgDim: "#56728d",
             accent: "#2b8ae6", accentWarm: "#3399ff", accentOn: "#ffffff", borderSubtle: "#ccffffff", danger: "#d9384a",
-            hyprActive: "66b8ff", hyprInactive: "aacce6", gtkTheme: "Windows-7-2.1"
+            hyprActive: "66b8ff", hyprInactive: "aacce6", gtkTheme: "GTKAero"
         }
     })
 
