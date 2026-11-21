@@ -38,6 +38,7 @@ PanelWindow {
     signal openWallpapers()
     signal openSettings()
     signal startCapture()
+    signal openPowerMenu()
 
     visible: card.scale > 0.05 || open
     exclusiveZone: -1
@@ -240,7 +241,7 @@ PanelWindow {
                         font.family: Theme.iconFont; font.pixelSize: 14
                         color: active ? Theme.accentOn : Theme.fg
                     }
-                    MouseArea { cursorShape: Qt.PointingHandCursor; id: m; anchors.fill: parent; hoverEnabled: true; onClicked: parent.clicked() }
+                    MouseArea { cursorShape: Qt.PointingHandCursor; id: m; anchors.fill: parent; z: 10; hoverEnabled: true; onClicked: parent.clicked() }
                 }
 
                 ActionBtn {
@@ -253,9 +254,13 @@ PanelWindow {
                         }
                     }
                 }
-                ActionBtn { icon: "\uf021"; onClicked: Quickshell.execDetached(["systemctl", "reboot"]) }
-                ActionBtn { icon: "\uf186"; onClicked: Quickshell.execDetached(["systemctl", "suspend"]) }
-                ActionBtn { icon: "\uf011"; onClicked: Quickshell.execDetached(["systemctl", "poweroff"]) }
+                ActionBtn {
+                    icon: "\uf011"
+                    onClicked: {
+                        win.open = false;
+                        win.openPowerMenu();
+                    }
+                }
             }
 
             Rectangle {

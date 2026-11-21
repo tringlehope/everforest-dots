@@ -65,11 +65,13 @@ ShellRoot {
         id: qsPopup
         onOpenWallpapers: wallPopup.open = true
         onOpenSettings:   settingsPopup.open = true
+        onOpenPowerMenu:  powerMenu.open()
         onStartCapture:   recManager.startRecording()
         recording:        recManager.recording
     }
     NotificationsPopup { id: notifPopup }
     WallpaperPopup     { id: wallPopup }
+    PowerMenu          { id: powerMenu }
     SettingsPopup      { id: settingsPopup }
     ScreenshotOverlay  { id: shotOverlay }
     RecordingManager   { id: recManager }
