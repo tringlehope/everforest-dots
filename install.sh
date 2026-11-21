@@ -155,7 +155,7 @@ fi
 info "Режим полной установки. Устанавливаю базовые пакеты и окружение..."
 install_pkg_list \
     hyprland quickshell-git swaybg xdg-desktop-portal-hyprland hyprpolkitagent \
-    ghostty nautilus file-roller unzip 7zip unrar \
+    ghostty nautilus nemo file-roller unzip 7zip unrar \
     loupe showtime papers gst-libav gst-plugins-good \
     pipewire pipewire-pulse wireplumber playerctl \
     networkmanager bluez bluez-utils brightnessctl \

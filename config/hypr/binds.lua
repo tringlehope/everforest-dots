@@ -1,6 +1,6 @@
 local mainMod     = "SUPER"
 local terminal    = "ghostty"
-local fileManager = "nautilus"
+local fileManager = "~/.config/quickshell/scripts/open_files.sh"
 
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + C", hl.dsp.window.close())
