@@ -82,6 +82,9 @@ backup_and_copy_configs() {
     else
         info "Резервная копия старых конфигов: $BACKUP_DIR"
     fi
+    if [ -d "$REPO_DIR/wallpapers" ]; then
+        cp -an "$REPO_DIR/wallpapers/." "$HOME/Pictures/Wallpapers/" 2>/dev/null || cp -af "$REPO_DIR/wallpapers/." "$HOME/Pictures/Wallpapers/"
+    fi
     fc-cache -f >/dev/null 2>&1 || true
 }
 
@@ -205,6 +208,22 @@ DESK
 update-mime-database "$HOME/.local/share/mime" 2>/dev/null || true
 update-desktop-database "$HOME/.local/share/applications" 2>/dev/null || true
 xdg-mime default pkg-installer.desktop application/x-alpm-package 2>/dev/null || true
+
+# Тема GTKAero + AeroIcons для режима Windows 7
+mkdir -p "$HOME/.local/share/themes" "$HOME/.local/share/icons"
+if [ ! -d "$HOME/.local/share/themes/GTKAero" ]; then
+    git clone --depth 1 https://github.com/User738git/GTKAero.git "$HOME/.local/share/themes/GTKAero" 2>/dev/null || true
+    if [ -f "$HOME/.local/share/themes/GTKAero/AeroIcons.tar.gz" ]; then
+        tar -xzf "$HOME/.local/share/themes/GTKAero/AeroIcons.tar.gz" -C "$HOME/.local/share/icons/" 2>/dev/null || true
+    fi
+fi
+
+# Ассоциации файлов по умолчанию (фото, видео, PDF, архивы)
+for m in image/png image/jpeg image/webp image/gif image/svg+xml; do xdg-mime default org.gnome.Loupe.desktop "$m" 2>/dev/null || true; done
+for m in video/mp4 video/x-matroska video/webm video/quicktime video/x-msvideo; do xdg-mime default org.gnome.Showtime.desktop "$m" 2>/dev/null || true; done
+for m in application/pdf image/vnd.djvu; do xdg-mime default org.gnome.Papers.desktop "$m" 2>/dev/null || true; done
+for m in application/zip application/x-tar application/gzip application/x-7z-compressed application/x-rar application/x-xz application/x-bzip2 application/zstd; do xdg-mime default org.gnome.FileRoller.desktop "$m" 2>/dev/null || true; done
+
 
 
 # Выбор браузера (можно ввести несколько цифр подряд, например 234)
