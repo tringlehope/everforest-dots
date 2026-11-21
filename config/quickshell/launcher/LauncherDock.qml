@@ -105,7 +105,7 @@ Scope {
 
     // Меню приложений
     PanelWindow {
-        visible: menuCard.scale > 0.05 || launcherRoot.open
+        visible: menuCard.opacity > 0.01 || launcherRoot.open
         exclusiveZone: -1
         anchors { top: true; bottom: true; left: true; right: true }
         margins.bottom: dockWin.shouldShow ? (dockWin.implicitHeight + Theme.frameThickness + 10) : 0
@@ -119,7 +119,7 @@ Scope {
         Rectangle {
             id: menuCard
             anchors.centerIn: parent
-            anchors.verticalCenterOffset: 0
+            anchors.verticalCenterOffset: launcherRoot.open ? 0 : 280
             width: 390
             height: 430
             radius: Theme.radiusCard
@@ -127,11 +127,23 @@ Scope {
             border.color: Theme.accent
             border.width: 3
 
-            transformOrigin: Item.Center
-            scale: launcherRoot.open ? 1.0 : 0.0
+            opacity: launcherRoot.open ? 1.0 : 0.0
+            scale: launcherRoot.open ? 1.0 : 0.92
+            Behavior on anchors.verticalCenterOffset {
+                NumberAnimation {
+                    duration: launcherRoot.open ? 300 : 180
+                    easing.type: launcherRoot.open ? Easing.OutQuint : Easing.InQuad
+                }
+            }
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: launcherRoot.open ? 240 : 150
+                    easing.type: launcherRoot.open ? Easing.OutQuint : Easing.InQuad
+                }
+            }
             Behavior on scale {
                 NumberAnimation {
-                    duration: launcherRoot.open ? 260 : 160
+                    duration: launcherRoot.open ? 280 : 160
                     easing.type: launcherRoot.open ? Easing.OutQuint : Easing.InQuad
                 }
             }
@@ -313,7 +325,7 @@ Scope {
     PanelWindow {
         id: dockWin
         readonly property bool shouldShow: (launcherRoot.open || launcherRoot.pinned) && launcherRoot.runningClients.length > 0
-        visible: dockCard.scale > 0.05 || shouldShow
+        visible: dockTrans.y < 108 || shouldShow
         exclusiveZone: (launcherRoot.pinned && launcherRoot.runningClients.length > 0) ? (implicitHeight + 8) : -1
         anchors { bottom: true }
         margins.bottom: (Theme.showFrame ? Theme.frameThickness : 0) + 8
@@ -331,12 +343,21 @@ Scope {
             border.color: Theme.accent
             border.width: 3
 
-            transformOrigin: Item.Bottom
-            scale: dockWin.shouldShow ? 1.0 : 0.0
-            Behavior on scale {
+            opacity: dockWin.shouldShow ? 1.0 : 0.0
+            Behavior on opacity {
                 NumberAnimation {
-                    duration: dockWin.shouldShow ? 280 : 160
+                    duration: dockWin.shouldShow ? 220 : 140
                     easing.type: dockWin.shouldShow ? Easing.OutQuint : Easing.InQuad
+                }
+            }
+            transform: Translate {
+                id: dockTrans
+                y: dockWin.shouldShow ? 0 : 110
+                Behavior on y {
+                    NumberAnimation {
+                        duration: dockWin.shouldShow ? 300 : 180
+                        easing.type: dockWin.shouldShow ? Easing.OutQuint : Easing.InQuad
+                    }
                 }
             }
 
