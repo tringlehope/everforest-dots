@@ -325,12 +325,12 @@ Scope {
     PanelWindow {
         id: dockWin
         readonly property bool shouldShow: (launcherRoot.open || launcherRoot.pinned) && launcherRoot.runningClients.length > 0
-        visible: dockTrans.y < 72 || shouldShow
-        exclusiveZone: (launcherRoot.pinned && launcherRoot.runningClients.length > 0) ? 70 : -1
+        visible: dockTrans.y < 94 || shouldShow
+        exclusiveZone: (launcherRoot.pinned && launcherRoot.runningClients.length > 0) ? 90 : -1
         anchors { bottom: true }
         margins.bottom: (Theme.showFrame && !Theme.isWin7 ? Theme.frameThickness : 0) + 8
-        implicitWidth: Math.max(96, dockRow.implicitWidth + 28)
-        implicitHeight: 74
+        implicitWidth: launcherRoot.runningClients.length <= 1 ? 82 : Math.max(82, dockRow.implicitWidth + 24)
+        implicitHeight: 96
         color: "transparent"
         WlrLayershell.layer: WlrLayer.Overlay
         WlrLayershell.namespace: "qs-dock"
@@ -338,15 +338,15 @@ Scope {
         Rectangle {
             id: dockCard
             anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
-            height: 60
-            radius: Theme.r(18)
+            height: 82
+            radius: Theme.r(22)
             color: Theme.bgSurface
             border.color: Theme.accent
             border.width: 3
 
             transform: Translate {
                 id: dockTrans
-                y: dockWin.shouldShow ? 0 : 76
+                y: dockWin.shouldShow ? 0 : 98
                 Behavior on y {
                     NumberAnimation {
                         duration: dockWin.shouldShow ? 180 : 120
@@ -366,9 +366,9 @@ Scope {
                         id: dockTile
                         required property var modelData
                         readonly property bool isFocused: (modelData.focusHistoryID ?? 99) === 0
-                        implicitWidth: 50
-                        implicitHeight: 46
-                        width: 50; height: 46
+                        implicitWidth: 60
+                        implicitHeight: 60
+                        width: 60; height: 60
                         radius: dockItemMouse.pressed ? Theme.r(8) : (dockItemMouse.containsMouse ? Theme.r(11) : Theme.r(13))
                         z: dockItemMouse.containsMouse ? 10 : 0
                         color: isFocused ? Theme.bgFrame : (dockItemMouse.containsMouse ? Theme.bgPillHover : "transparent")
@@ -377,7 +377,7 @@ Scope {
 
                         Item {
                             anchors.centerIn: parent
-                            width: 38; height: 38
+                            width: 46; height: 46
                             scale: dockItemMouse.pressed ? 0.92 : (dockItemMouse.containsMouse ? 1.24 : 1.0)
                             Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                             transform: Translate {
