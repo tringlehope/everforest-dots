@@ -37,8 +37,8 @@ PanelWindow {
     Rectangle {
         id: card
         anchors.centerIn: parent
-        width: 520
-        height: 360
+        width: 720
+        height: 500
         radius: Theme.radiusCard
         color: Theme.bgSurface
         border.color: Theme.accent
@@ -93,13 +93,13 @@ PanelWindow {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 clip: true
-                cellWidth: 158
-                cellHeight: 104
+                cellWidth: 224
+                cellHeight: 146
                 model: win.wallpapers
 
                 delegate: Item {
                     required property string modelData
-                    width: 158; height: 104
+                    width: 224; height: 146
 
                     Rectangle {
                         scale: wM.pressed ? 0.94 : (wM.containsMouse ? 1.04 : 1.0)

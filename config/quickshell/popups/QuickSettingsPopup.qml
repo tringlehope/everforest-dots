@@ -198,7 +198,7 @@ PanelWindow {
         anchors.top: parent.top
         anchors.topMargin: Theme.topBarHeight + 8
         anchors.rightMargin: Theme.frameThickness + 8
-        width: 344
+        width: 420
         height: (win.page === "main" ? mainCol.implicitHeight : (win.page === "net" ? netCol.implicitHeight : btCol.implicitHeight)) + 28
         radius: Theme.radiusCard
         color: Theme.bgSurface
@@ -244,7 +244,7 @@ PanelWindow {
                     property bool active: false
                     signal clicked()
                     Layout.fillWidth: true
-                    implicitHeight: 36
+                    implicitHeight: 48
                     radius: Theme.r(m.pressed ? 8 : (m.containsMouse ? 12 : 18))
                     scale: m.pressed ? 0.94 : (m.containsMouse ? 1.04 : 1.0)
                     color: active ? Theme.danger : (m.containsMouse ? Theme.bgPillHover : Theme.bgPill)
@@ -281,7 +281,7 @@ PanelWindow {
 
             Rectangle {
                 Layout.fillWidth: true
-                implicitHeight: 36
+                implicitHeight: 48
                 radius: Theme.r(14)
                 color: Theme.bgPill
 
@@ -314,7 +314,7 @@ PanelWindow {
                 Rectangle {
                     readonly property bool netActive: win.ethConnected || win.connectedWifiSsid !== ""
                     Layout.fillWidth: true
-                    implicitHeight: 42
+                    implicitHeight: 48
                     radius: Theme.r(netM.pressed ? 8 : (netM.containsMouse ? 12 : 21))
                     scale: netM.pressed ? 0.95 : (netM.containsMouse ? 1.03 : 1.0)
                     Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
@@ -379,7 +379,7 @@ PanelWindow {
                     id: btPill
                     readonly property bool btOn: Bluetooth.defaultAdapter?.enabled ?? false
                     Layout.fillWidth: true
-                    implicitHeight: 42
+                    implicitHeight: 48
                     radius: Theme.r(btM.pressed ? 8 : (btM.containsMouse ? 12 : 21))
                     scale: btM.pressed ? 0.95 : (btM.containsMouse ? 1.03 : 1.0)
                     Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
@@ -434,7 +434,7 @@ PanelWindow {
 
                 Rectangle {
                     Layout.fillWidth: true
-                    implicitHeight: 40
+                    implicitHeight: 46
                     radius: Theme.r(layM.pressed ? 8 : (layM.containsMouse ? 12 : 20))
                     scale: layM.pressed ? 0.95 : (layM.containsMouse ? 1.03 : 1.0)
                     Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
@@ -465,7 +465,7 @@ PanelWindow {
 
                 Rectangle {
                     Layout.fillWidth: true
-                    implicitHeight: 40
+                    implicitHeight: 46
                     radius: Theme.r(wallM.pressed ? 8 : (wallM.containsMouse ? 12 : 20))
                     scale: wallM.pressed ? 0.95 : (wallM.containsMouse ? 1.03 : 1.0)
                     Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
@@ -491,7 +491,7 @@ PanelWindow {
 
                 Rectangle {
                     Layout.fillWidth: true
-                    implicitHeight: 40
+                    implicitHeight: 46
                     radius: Theme.r(pinM.pressed ? 8 : (pinM.containsMouse ? 12 : 20))
                     scale: pinM.pressed ? 0.95 : (pinM.containsMouse ? 1.03 : 1.0)
                     Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
@@ -519,7 +519,7 @@ PanelWindow {
 
                 Rectangle {
                     Layout.fillWidth: true
-                    implicitHeight: 40
+                    implicitHeight: 46
                     radius: Theme.r(setM.pressed ? 8 : (setM.containsMouse ? 12 : 20))
                     scale: setM.pressed ? 0.95 : (setM.containsMouse ? 1.03 : 1.0)
                     Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
@@ -647,7 +647,7 @@ PanelWindow {
 
                 Rectangle {
                     Layout.fillWidth: true
-                    implicitHeight: 42
+                    implicitHeight: 48
                     radius: Theme.r(14)
                     color: Theme.bgPill
 
@@ -731,7 +731,7 @@ PanelWindow {
 
                 Rectangle {
                     Layout.fillWidth: true
-                    implicitHeight: 42
+                    implicitHeight: 48
                     radius: Theme.r(14)
                     color: Theme.bgPill
 

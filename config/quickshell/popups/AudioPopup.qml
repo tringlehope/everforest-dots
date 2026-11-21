@@ -46,7 +46,7 @@ PanelWindow {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: Theme.topBarHeight + 8
-        width: 376
+        width: 440
         height: Math.min(440, contentCol.implicitHeight + 28)
         radius: Theme.radiusCard
         color: Theme.bgSurface

@@ -115,8 +115,8 @@ PanelWindow {
     Rectangle {
         id: card
         anchors.centerIn: parent
-        width: 880
-        height: 560
+        width: Math.min(1060, parent.width - 80)
+        height: Math.min(680, parent.height - 80)
         radius: Theme.radiusCard
         color: Theme.bgSurface
         border.color: Theme.accent

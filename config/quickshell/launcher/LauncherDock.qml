@@ -127,8 +127,8 @@ Scope {
             id: menuCard
             anchors.centerIn: parent
             anchors.verticalCenterOffset: launcherRoot.open ? 0 : 650
-            width: 390
-            height: 430
+            width: 490
+            height: 540
             radius: Theme.radiusCard
             color: Theme.bgSurface
             border.color: Theme.accent
@@ -231,7 +231,7 @@ Scope {
                         delegate: Rectangle {
                             required property var modelData
                             width: appList.width
-                            implicitHeight: 44
+                            implicitHeight: 50
                             radius: Theme.r(appMouse.pressed ? 6 : (appMouse.containsMouse ? 9 : 14))
                             scale: appMouse.pressed ? 0.97 : (appMouse.containsMouse ? 1.02 : 1.0)
                             color: appMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill

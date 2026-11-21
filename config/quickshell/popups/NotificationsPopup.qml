@@ -39,7 +39,7 @@ PanelWindow {
         anchors.top: parent.top
         anchors.topMargin: Theme.topBarHeight + 8
         anchors.rightMargin: Theme.frameThickness + 8
-        width: 530
+        width: 430
         height: contentRow.implicitHeight + 28
         radius: Theme.radiusCard
         color: Theme.bgSurface
