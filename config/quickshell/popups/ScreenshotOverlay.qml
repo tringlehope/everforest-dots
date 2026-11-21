@@ -453,7 +453,7 @@ PanelWindow {
                 color: "#d3c6aa"
                 font.family: Theme.fontFamily
                 font.pixelSize: 14
-                font.weight: Font.ExtraBold
+                font.weight: Font.Bold
             }
         }
 
@@ -477,7 +477,7 @@ PanelWindow {
                 color: "#a7c080"
                 font.family: Theme.fontFamily
                 font.pixelSize: 14
-                font.weight: Font.ExtraBold
+                font.weight: Font.Bold
             }
         }
 
@@ -557,7 +557,7 @@ PanelWindow {
                             color: "#d3c6aa"
                             font.family: Theme.fontFamily
                             font.pixelSize: 13
-                            font.weight: Font.ExtraBold
+                            font.weight: Font.Bold
                             anchors.verticalCenter: parent.verticalCenter
                         }
 
@@ -631,7 +631,7 @@ PanelWindow {
                             color: "#dbbc7f"
                             font.family: Theme.fontFamily
                             font.pixelSize: 13
-                            font.weight: Font.ExtraBold
+                            font.weight: Font.Bold
                             width: 38
                             anchors.verticalCenter: parent.verticalCenter
                         }
@@ -648,7 +648,7 @@ PanelWindow {
                             color: "#d3c6aa"
                             font.family: Theme.fontFamily
                             font.pixelSize: 13
-                            font.weight: Font.ExtraBold
+                            font.weight: Font.Bold
                             anchors.verticalCenter: parent.verticalCenter
                         }
 
@@ -669,7 +669,7 @@ PanelWindow {
                                     color: root.colorFormat === modelData ? "#232a2e" : "#d3c6aa"
                                     font.family: Theme.fontFamily
                                     font.pixelSize: 12
-                                    font.weight: Font.ExtraBold
+                                    font.weight: Font.Bold
                                 }
                                 MouseArea {
                                     id: animMa_2
@@ -703,7 +703,7 @@ PanelWindow {
                             color: "#d3c6aa"
                             font.family: Theme.fontFamily
                             font.pixelSize: 13
-                            font.weight: Font.ExtraBold
+                            font.weight: Font.Bold
                             anchors.verticalCenter: parent.verticalCenter
                         }
                     }
@@ -775,7 +775,7 @@ PanelWindow {
                             color: "#dbbc7f"
                             font.family: Theme.fontFamily
                             font.pixelSize: 13
-                            font.weight: Font.ExtraBold
+                            font.weight: Font.Bold
                         }
                         MouseArea {
                             id: animMa_3
@@ -801,7 +801,7 @@ PanelWindow {
                             color: "#d3c6aa"
                             font.family: Theme.fontFamily
                             font.pixelSize: 13
-                            font.weight: Font.ExtraBold
+                            font.weight: Font.Bold
                         }
                         MouseArea {
                             id: animMa_4
@@ -827,7 +827,7 @@ PanelWindow {
                             color: "#232a2e"
                             font.family: Theme.fontFamily
                             font.pixelSize: 13
-                            font.weight: Font.ExtraBold
+                            font.weight: Font.Bold
                         }
                         MouseArea {
                             id: animMa_5
@@ -852,7 +852,7 @@ PanelWindow {
                             color: "#e67e80"
                             font.family: Theme.fontFamily
                             font.pixelSize: 14
-                            font.weight: Font.ExtraBold
+                            font.weight: Font.Bold
                         }
                         MouseArea {
                             id: animMa_6

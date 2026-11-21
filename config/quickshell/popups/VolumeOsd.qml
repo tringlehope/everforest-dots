@@ -91,7 +91,7 @@ PanelWindow {
                 text: osd.muted ? "Mute" : Math.round(osd.volume * 100) + "%"
                 font.family: Theme.fontFamily
                 font.pixelSize: 12
-                font.weight: Font.ExtraBold
+                font.weight: Font.Bold
                 color: osd.muted ? Theme.danger : Theme.fg
                 Layout.minimumWidth: 34
                 horizontalAlignment: Text.AlignRight

@@ -65,7 +65,7 @@ PanelWindow {
                 Text {
                     Layout.fillWidth: true
                     text: "Обои (" + Theme.wallpaperFolder + ")"
-                    font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.ExtraBold; color: Theme.fg
+                    font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Bold; color: Theme.fg
                 }
                 Rectangle {
                     scale: closeW.pressed ? 0.94 : (closeW.containsMouse ? 1.04 : 1.0)
@@ -85,7 +85,7 @@ PanelWindow {
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
                 text: "Положи картинки (.png / .jpg / .webp)\nв папку ~/Pictures/Wallpapers/" + Theme.wallpaperFolder
-                font.family: Theme.fontFamily; font.weight: Font.ExtraBold; font.pixelSize: 13; color: Theme.fgMuted
+                font.family: Theme.fontFamily; font.weight: Font.Bold; font.pixelSize: 13; color: Theme.fgMuted
             }
 
             GridView {
