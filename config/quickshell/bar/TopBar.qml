@@ -487,26 +487,41 @@ PanelWindow {
                             Repeater {
                                 model: SystemTray.items
                                 delegate: Item {
+                                    id: trayItemBox
                                     required property var modelData
                                     implicitWidth: 20; implicitHeight: 29
+
+                                    QsMenuAnchor {
+                                        id: trayMenu
+                                        menu: trayItemBox.modelData.menu
+                                        anchor.window: bar
+                                        anchor.item: trayItemBox
+                                        anchor.edges: Edges.Bottom
+                                        anchor.gravity: Edges.Bottom
+                                    }
+
                                     Image {
                                         anchors.centerIn: parent
-                                        source: modelData.icon
+                                        source: trayItemBox.modelData.icon
                                         sourceSize: Qt.size(16, 16)
                                         width: 16; height: 16
                                     }
+
                                     MouseArea {
                                         cursorShape: Qt.PointingHandCursor
                                         anchors.fill: parent
                                         acceptedButtons: Qt.LeftButton | Qt.RightButton
                                         onClicked: mouse => {
                                             if (mouse.button === Qt.LeftButton) {
-                                                modelData.activate();
-                                            } else if (modelData.hasMenu) {
-                                                var pt = mapToItem(null, mouse.x, mouse.y);
-                                                modelData.display(bar, Math.round(pt.x), Math.round(pt.y));
+                                                trayItemBox.modelData.activate();
+                                            } else if (trayItemBox.modelData.hasMenu && trayItemBox.modelData.menu) {
+                                                trayCloseTimer.stop();
+                                                trayMenu.open();
+                                            } else if (trayItemBox.modelData.hasMenu) {
+                                                var pt = trayItemBox.mapToItem(null, mouse.x, mouse.y);
+                                                trayItemBox.modelData.display(bar, Math.round(pt.x), Math.round(pt.y));
                                             } else {
-                                                modelData.secondaryActivate();
+                                                trayItemBox.modelData.secondaryActivate();
                                             }
                                         }
                                     }
