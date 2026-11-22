@@ -611,7 +611,11 @@ PanelWindow {
                     cursorShape: Qt.PointingHandCursor
                     anchors.fill: parent
                     hoverEnabled: true
-                    onClicked: bar.runAct(["hyprctl", "switchxkblayout", "all", "next"])
+                    onClicked: Quickshell.execDetached(["hyprctl", "switchxkblayout", "all", "next"])
+                    onWheel: wheel => {
+                        var dy = wheel.angleDelta.y !== 0 ? wheel.angleDelta.y : wheel.pixelDelta.y;
+                        if (dy !== 0) Quickshell.execDetached(["hyprctl", "switchxkblayout", "all", "next"]);
+                    }
                 }
             }
 

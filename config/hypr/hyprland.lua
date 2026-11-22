@@ -12,7 +12,7 @@ hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 hl.on("hyprland.start", function ()
     hl.exec_cmd("systemctl --user start hyprpolkitagent")
     hl.exec_cmd("sh -c '[ -f ~/.local/state/qs-wallpaper ] && swaybg -i \"$(cat ~/.local/state/qs-wallpaper)\" -m fill'")
-    hl.exec_cmd("qs")
+    hl.exec_cmd("~/.config/quickshell/scripts/qs_watchdog.sh")
 end)
 
 require("appearance")

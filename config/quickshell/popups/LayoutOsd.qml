@@ -11,12 +11,13 @@ PanelWindow {
     property string currentLayout: "EN"
     property bool initialized: false
 
-    visible: osdTrans.y < 148 || showing
+    visible: osdTrans.y > -90 || showing
     exclusiveZone: -1
-    anchors { bottom: true }
-    margins.bottom: 40
-    implicitWidth: 210
-    implicitHeight: 150
+    anchors { top: true; right: true }
+    margins.top: Theme.topBarHeight + 8
+    margins.right: (Theme.showFrame && !Theme.isWin7 && !Theme.dockPinned ? Theme.frameThickness : 0) + 125
+    implicitWidth: 196
+    implicitHeight: 72
     color: "transparent"
     WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.namespace: "qs-osd"
@@ -39,14 +40,9 @@ PanelWindow {
                     osd.initialized = true;
                     return;
                 }
-                if (next !== osd.currentLayout) {
-                    osd.currentLayout = next;
-                    osd.showing = true;
-                    hideTimer.restart();
-                } else {
-                    osd.showing = true;
-                    hideTimer.restart();
-                }
+                osd.currentLayout = next;
+                osd.showing = true;
+                hideTimer.restart();
             }
         }
     }
@@ -55,10 +51,9 @@ PanelWindow {
         id: card
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
-        anchors.topMargin: 8
         width: 184
-        height: 56
-        radius: Theme.r(20)
+        height: 54
+        radius: Theme.r(18)
         color: Theme.bgSurface
         border.color: Theme.accent
         border.width: 3
@@ -72,7 +67,7 @@ PanelWindow {
         }
         transform: Translate {
             id: osdTrans
-            y: osd.showing ? 0 : 150
+            y: osd.showing ? 0 : -96
             Behavior on y {
                 NumberAnimation {
                     duration: osd.showing ? 180 : 120
@@ -83,7 +78,7 @@ PanelWindow {
 
         RowLayout {
             anchors.fill: parent
-            anchors.margins: 8
+            anchors.margins: 7
             spacing: 6
 
             Repeater {
@@ -92,10 +87,10 @@ PanelWindow {
                     readonly property bool isActive: osd.currentLayout === modelData
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    radius: Theme.r(isActive ? 12 : 16)
+                    radius: Theme.r(isActive ? 11 : 15)
                     color: isActive ? Theme.accentWarm : Theme.bgPill
-                    Behavior on color { ColorAnimation { duration: 180 } }
-                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on color { ColorAnimation { duration: 150 } }
+                    Behavior on radius { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
 
                     Text {
                         anchors.centerIn: parent

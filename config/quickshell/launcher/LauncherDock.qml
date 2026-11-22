@@ -145,8 +145,7 @@ Scope {
             height: 540
             radius: Theme.radiusCard
             color: Theme.bgSurface
-            border.color: Theme.accent
-            border.width: 3
+            border.width: 0
 
             scale: launcherRoot.open ? 1.0 : 0.94
             Behavior on anchors.verticalCenterOffset {
@@ -356,7 +355,7 @@ Scope {
             radius: Theme.r(22)
             color: Theme.bgSurface
             border.color: Theme.accent
-            border.width: 3
+            border.width: 0
 
             transform: Translate {
                 id: dockTrans

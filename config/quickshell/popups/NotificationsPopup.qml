@@ -39,8 +39,8 @@ PanelWindow {
         anchors.top: parent.top
         anchors.topMargin: Theme.topBarHeight + 8
         anchors.rightMargin: Theme.frameThickness + 8
-        width: 430
-        height: contentRow.implicitHeight + 28
+        width: 660
+        height: Math.max(360, contentRow.implicitHeight + 32)
         radius: Theme.radiusCard
         color: Theme.bgSurface
         border.color: Theme.accent
@@ -69,30 +69,31 @@ PanelWindow {
 
         RowLayout {
             id: contentRow
-            anchors { left: parent.left; right: parent.right; top: parent.top; margins: 14 }
-            spacing: 14
+            anchors { left: parent.left; right: parent.right; top: parent.top; bottom: parent.bottom; margins: 16 }
+            spacing: 16
 
+            // Левая колонка: Уведомления
             ColumnLayout {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                spacing: 8
+                spacing: 10
 
                 RowLayout {
                     Layout.fillWidth: true
                     Text {
                         text: "Не беспокоить"
-                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Bold; color: Theme.fg
+                        font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.Bold; color: Theme.fg
                         Layout.fillWidth: true
                     }
                     Rectangle {
                         scale: btnMa_9.pressed ? 0.94 : (btnMa_9.containsMouse ? 1.04 : 1.0)
                         Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                         Behavior on color { ColorAnimation { duration: 140 } }
-                        implicitWidth: 42; implicitHeight: 22
+                        implicitWidth: 44; implicitHeight: 24
                         radius: Theme.radiusPill
                         color: win.dnd ? Theme.accent : Theme.bgPill
                         Rectangle {
-                            width: 16; height: 16; radius: Theme.r(8)
+                            width: 18; height: 18; radius: Theme.r(9)
                             anchors.verticalCenter: parent.verticalCenter
                             x: win.dnd ? 23 : 3
                             color: win.dnd ? Theme.accentOn : Theme.fgMuted
@@ -102,48 +103,77 @@ PanelWindow {
                     }
                 }
 
-                ListView {
+                Item {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    clip: true
-                    spacing: 6
-                    model: notifServer.trackedNotifications
-                    delegate: Rectangle {
-                        required property var modelData
-                        width: ListView.view.width
-                        implicitHeight: 50
-                        radius: Theme.r(14)
-                        color: Theme.bgPill
 
-                        ColumnLayout {
-                            anchors.fill: parent; anchors.margins: 10; spacing: 2
-                            Text {
-                                text: modelData.appName + (modelData.summary ? " — " + modelData.summary : "")
-                                font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Bold; color: Theme.accentWarm
-                                elide: Text.ElideRight; Layout.fillWidth: true
+                    Text {
+                        visible: notifServer.trackedNotifications.values.length === 0
+                        anchors.centerIn: parent
+                        text: "Нет новых уведомлений"
+                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Bold
+                        color: Theme.fgDim
+                    }
+
+                    ListView {
+                        anchors.fill: parent
+                        clip: true
+                        spacing: 8
+                        model: notifServer.trackedNotifications
+                        delegate: Rectangle {
+                            id: notifCard
+                            required property var modelData
+                            width: ListView.view.width
+                            implicitHeight: Math.max(56, notifCol.implicitHeight + 18)
+                            radius: Theme.r(nM.containsMouse ? 10 : 14)
+                            scale: nM.pressed ? 0.97 : (nM.containsMouse ? 1.02 : 1.0)
+                            color: nM.containsMouse ? Theme.bgPillHover : Theme.bgPill
+                            Behavior on color { ColorAnimation { duration: 140 } }
+                            Behavior on radius { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                            Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+
+                            ColumnLayout {
+                                id: notifCol
+                                anchors.fill: parent; anchors.margins: 10; spacing: 3
+                                Text {
+                                    text: notifCard.modelData.appName + (notifCard.modelData.summary ? " — " + notifCard.modelData.summary : "")
+                                    font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Bold; color: Theme.accentWarm
+                                    elide: Text.ElideRight; Layout.fillWidth: true
+                                }
+                                Text {
+                                    text: notifCard.modelData.body || ""
+                                    font.family: Theme.fontFamily; font.weight: Font.Bold; font.pixelSize: 12; color: Theme.fg
+                                    wrapMode: Text.Wrap
+                                    maximumLineCount: 3
+                                    elide: Text.ElideRight
+                                    Layout.fillWidth: true
+                                }
                             }
-                            Text {
-                                text: modelData.body || ""
-                                font.family: Theme.fontFamily; font.weight: Font.Bold; font.pixelSize: 11; color: Theme.fg
-                                elide: Text.ElideRight; Layout.fillWidth: true
+
+                            MouseArea {
+                                id: nM
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: notifCard.modelData.dismiss()
                             }
                         }
                     }
                 }
 
                 Rectangle {
-                    scale: clearMouse.pressed ? 0.94 : (clearMouse.containsMouse ? 1.04 : 1.0)
+                    scale: clearMouse.pressed ? 0.94 : (clearMouse.containsMouse ? 1.03 : 1.0)
                     Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
                     Behavior on color { ColorAnimation { duration: 140 } }
                     Layout.fillWidth: true
-                    implicitHeight: 34
-                    radius: Theme.r(clearMouse.containsMouse ? 10 : 17)
+                    implicitHeight: 38
+                    radius: Theme.r(clearMouse.containsMouse ? 10 : 19)
                     color: clearMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
                     Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
                     Text {
                         anchors.centerIn: parent
                         text: "Очистить"
-                        font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Bold; color: Theme.fg
+                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Bold; color: Theme.fg
                     }
                     MouseArea {
                         cursorShape: Qt.PointingHandCursor
@@ -159,31 +189,51 @@ PanelWindow {
 
             Rectangle { Layout.fillHeight: true; implicitWidth: 1; color: Theme.borderSubtle }
 
+            // Правая колонка: Крупный календарь
             ColumnLayout {
-                Layout.preferredWidth: 235
-                spacing: 8
+                Layout.preferredWidth: 290
+                Layout.fillHeight: true
+                spacing: 10
 
                 RowLayout {
                     Layout.fillWidth: true
-                    Text {
-                        text: "\uf053"; font.family: Theme.iconFont; font.pixelSize: 13; color: Theme.fgMuted
+                    spacing: 6
+
+                    Rectangle {
+                        width: 30; height: 30; radius: Theme.r(prevM.containsMouse ? 10 : 15)
+                        scale: prevM.pressed ? 0.9 : (prevM.containsMouse ? 1.08 : 1.0)
+                        color: prevM.containsMouse ? Theme.bgPillHover : Theme.bgPill
+                        Behavior on color { ColorAnimation { duration: 140 } }
+                        Behavior on radius { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Text { anchors.centerIn: parent; text: "\uf053"; font.family: Theme.iconFont; font.pixelSize: 12; color: Theme.fg }
                         MouseArea {
+                            id: prevM
                             cursorShape: Qt.PointingHandCursor
-                            anchors.fill: parent; anchors.margins: -6
+                            anchors.fill: parent; hoverEnabled: true
                             onClicked: win.viewDate = new Date(win.viewDate.getFullYear(), win.viewDate.getMonth() - 1, 1)
                         }
                     }
+
                     Text {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignHCenter
                         text: win.ruMonths[win.viewDate.getMonth()] + " " + win.viewDate.getFullYear()
-                        font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.Bold; color: Theme.fg
+                        font.family: Theme.fontFamily; font.pixelSize: 16; font.weight: Font.Bold; color: Theme.fg
                     }
-                    Text {
-                        text: "\uf054"; font.family: Theme.iconFont; font.pixelSize: 13; color: Theme.fgMuted
+
+                    Rectangle {
+                        width: 30; height: 30; radius: Theme.r(nextM.containsMouse ? 10 : 15)
+                        scale: nextM.pressed ? 0.9 : (nextM.containsMouse ? 1.08 : 1.0)
+                        color: nextM.containsMouse ? Theme.bgPillHover : Theme.bgPill
+                        Behavior on color { ColorAnimation { duration: 140 } }
+                        Behavior on radius { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Text { anchors.centerIn: parent; text: "\uf054"; font.family: Theme.iconFont; font.pixelSize: 12; color: Theme.fg }
                         MouseArea {
+                            id: nextM
                             cursorShape: Qt.PointingHandCursor
-                            anchors.fill: parent; anchors.margins: -6
+                            anchors.fill: parent; hoverEnabled: true
                             onClicked: win.viewDate = new Date(win.viewDate.getFullYear(), win.viewDate.getMonth() + 1, 1)
                         }
                     }
@@ -192,8 +242,8 @@ PanelWindow {
                 GridLayout {
                     Layout.fillWidth: true
                     columns: 7
-                    rowSpacing: 4
-                    columnSpacing: 4
+                    rowSpacing: 5
+                    columnSpacing: 5
 
                     Repeater {
                         model: ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"]
@@ -201,7 +251,7 @@ PanelWindow {
                             Layout.fillWidth: true
                             horizontalAlignment: Text.AlignHCenter
                             text: modelData
-                            font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.Bold; color: Theme.fgMuted
+                            font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Bold; color: Theme.fgMuted
                         }
                     }
 
@@ -223,20 +273,31 @@ PanelWindow {
                                 && win.viewDate.getMonth() === nowDate.getMonth()
                                 && win.viewDate.getFullYear() === nowDate.getFullYear()
                             Layout.fillWidth: true
-                            implicitHeight: 28
+                            implicitHeight: 36
                             radius: Theme.radiusPill
-                            color: isToday ? Theme.accentWarm : "transparent"
+                            scale: (modelData > 0 && dayM.containsMouse) ? 1.12 : 1.0
+                            color: isToday ? Theme.accentWarm : ((modelData > 0 && dayM.containsMouse) ? Theme.bgPillHover : "transparent")
+                            Behavior on color { ColorAnimation { duration: 140 } }
+                            Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
 
                             Text {
                                 anchors.centerIn: parent
                                 text: modelData > 0 ? modelData : ""
-                                font.family: Theme.fontFamily; font.pixelSize: 13
-                                font.weight: isToday ? Font.Bold : Font.Bold
+                                font.family: Theme.fontFamily; font.pixelSize: 14
+                                font.weight: Font.Bold
                                 color: isToday ? Theme.accentOn : Theme.fg
+                            }
+
+                            MouseArea {
+                                id: dayM
+                                anchors.fill: parent
+                                hoverEnabled: modelData > 0
                             }
                         }
                     }
                 }
+
+                Item { Layout.fillHeight: true }
             }
         }
     }
