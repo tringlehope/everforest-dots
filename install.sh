@@ -66,7 +66,7 @@ backup_and_copy_configs() {
     rm -rf "$HOME"/.config-backup-* 2>/dev/null || true
     mkdir -p "$HOME/.config" "$HOME/Pictures/Wallpapers/Everforest" "$HOME/Pictures/Wallpapers/Catppuccin Macchiato" "$HOME/Pictures/Wallpapers/Graphite" "$HOME/Pictures/Wallpapers/Windows 7" "$HOME/Pictures/Screenshots"
     local backed_up=0
-    for d in hypr quickshell gtk-3.0 gtk-4.0 qt6ct ghostty fish fontconfig; do
+    for d in hypr quickshell gtk-3.0 gtk-4.0 qt6ct kitty fish fontconfig; do
         if [ -e "$REPO_DIR/config/$d" ]; then
             if [ -e "$HOME/.config/$d" ]; then
                 mkdir -p "$BACKUP_DIR"
@@ -158,7 +158,7 @@ fi
 info "Режим полной установки. Устанавливаю базовые пакеты и окружение..."
 install_pkg_list \
     hyprland quickshell-git swaybg xdg-desktop-portal-hyprland hyprpolkitagent \
-    ghostty nautilus nemo file-roller unzip 7zip unrar \
+    kitty nautilus nemo file-roller unzip 7zip unrar \
     loupe showtime papers gst-libav gst-plugins-good \
     pipewire pipewire-pulse wireplumber playerctl \
     networkmanager bluez bluez-utils brightnessctl \
@@ -197,7 +197,7 @@ cat << 'DESK' > "$HOME/.local/share/applications/pkg-installer.desktop"
 [Desktop Entry]
 Name=Установить пакет (.pkg.tar.zst)
 Comment=Установка локального пакета Arch Linux
-Exec=ghostty -e bash -c 'sudo pacman -U "$1"; echo ""; read -rp "Нажмите Enter для закрытия..."' _ %f
+Exec=kitty -e bash -c 'sudo pacman -U "$1"; echo ""; read -rp "Нажмите Enter для закрытия..."' _ %f
 Icon=system-software-install
 Terminal=false
 Type=Application
@@ -290,14 +290,4 @@ info "Готово! Все файлы и настройки установлен
 # Starship prompt
 if [ -f "$SCRIPT_DIR/config/starship.toml" ]; then
     cp -af "$SCRIPT_DIR/config/starship.toml" ~/.config/starship.toml
-fi
-
-# Ghostty Pixel Scroll (prebuilt release)
-if [ ! -x "$HOME/.local/bin/ghostty-pixel-scroll" ]; then
-    mkdir -p "$HOME/.local/share/ghostty-pixel-scroll" "$HOME/.local/bin"
-    GHOSTTY_URL=$(curl -fsSL "https://api.github.com/repos/parkers0405/ghostty-pixel-scroll/releases?per_page=1" | python3 -c "import sys, json; r = json.load(sys.stdin)[0]; print(next(a['browser_download_url'] for a in r['assets'] if a['name'] == 'ghostty-linux-x86_64.tar.gz'))")
-    curl -fsSL "$GHOSTTY_URL" -o /tmp/ghostty-linux-x86_64.tar.gz
-    tar -xzf /tmp/ghostty-linux-x86_64.tar.gz -C "$HOME/.local/share/ghostty-pixel-scroll"
-    ln -sf "$HOME/.local/share/ghostty-pixel-scroll/bin/ghostty" "$HOME/.local/bin/ghostty-pixel-scroll"
-    rm -f /tmp/ghostty-linux-x86_64.tar.gz
 fi
