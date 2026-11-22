@@ -168,12 +168,15 @@ PanelWindow {
                 }
 
                 HoverHandler { id: wsHover }
-                WheelHandler {
-                    onWheel: event => {
-                        var dir = event.angleDelta.y > 0 ? "r-1" : "r+1";
-                        wsDispatch.command = ["hyprctl", "dispatch", "hl.dsp.focus({ workspace = '" + dir + "' })"];
-                        wsDispatch.running = false;
-                        wsDispatch.running = true;
+                MouseArea {
+                    z: 50
+                    anchors.fill: parent
+                    acceptedButtons: Qt.NoButton
+                    onWheel: wheel => {
+                        var dy = wheel.angleDelta.y !== 0 ? wheel.angleDelta.y : wheel.pixelDelta.y;
+                        if (dy === 0) return;
+                        var dir = dy > 0 ? "r-1" : "r+1";
+                        Quickshell.execDetached(["hyprctl", "dispatch", "hl.dsp.focus({ workspace = '" + dir + "' })"]);
                     }
                 }
 
@@ -251,10 +254,16 @@ PanelWindow {
                 Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
             }
 
-            WheelHandler {
-                onWheel: event => {
-                    var step = event.angleDelta.y > 0 ? "5%+" : "5%-";
-                    bar.runAct(["wpctl", "set-volume", "-l", "1.0", "@DEFAULT_AUDIO_SINK@", step]);
+            MouseArea {
+                z: 50
+                anchors.fill: parent
+                acceptedButtons: Qt.NoButton
+                onWheel: wheel => {
+                    var dy = wheel.angleDelta.y !== 0 ? wheel.angleDelta.y : wheel.pixelDelta.y;
+                    if (dy === 0) return;
+                    var step = dy > 0 ? "5%+" : "5%-";
+                    Quickshell.execDetached(["wpctl", "set-volume", "-l", "1.0", "@DEFAULT_AUDIO_SINK@", step]);
+                    bar.volumeScrolled();
                 }
             }
 
@@ -271,10 +280,17 @@ PanelWindow {
                 anchors.centerIn: parent
                 spacing: 6
 
-                Text {
+                RowLayout {
                     visible: !bar.showPlayer
-                    text: "Звук"
-                    font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.Bold; color: Theme.fg
+                    spacing: 6
+                    Text {
+                        text: "\uf028"
+                        font.family: Theme.iconFont; font.pixelSize: 13; color: Theme.accent
+                    }
+                    Text {
+                        text: "Звук"
+                        font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.Bold; color: Theme.fg
+                    }
                 }
 
                 RowLayout {
