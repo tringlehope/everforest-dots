@@ -450,11 +450,12 @@ PanelWindow {
                 RowLayout {
                     id: trayRow
                     anchors.centerIn: parent
+                    height: 29
                     spacing: 0
 
                     Item {
                         implicitWidth: 16
-                        Layout.fillHeight: true
+                        implicitHeight: 29
                         Text {
                             anchors.centerIn: parent
                             text: "\uf053"
@@ -468,7 +469,8 @@ PanelWindow {
                     Item {
                         id: trayIconsClip
                         clip: true
-                        Layout.fillHeight: true
+                        implicitHeight: 29
+                        Layout.preferredHeight: 29
                         Layout.preferredWidth: trayPill.expanded ? (trayIconsRow.implicitWidth + 10) : 0
                         implicitWidth: Layout.preferredWidth
                         Behavior on Layout.preferredWidth {
