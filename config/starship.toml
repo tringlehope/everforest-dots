@@ -1,0 +1,51 @@
+add_newline = true
+
+format = "[](fg:#a7c080)$os[](bg:#7fbbb3 fg:#a7c080)$directory[](bg:#3a454a fg:#7fbbb3)$git_branch$git_status[](bg:#475258 fg:#3a454a)$python$nodejs$rust$cmd_duration[](fg:#475258)\n$character"
+
+[os]
+disabled = false
+style = "bg:#a7c080 fg:#2d353b bold"
+format = "[ $symbol ]($style)"
+
+[os.symbols]
+Arch = ""
+
+[directory]
+style = "bg:#7fbbb3 fg:#2d353b bold"
+format = "[  $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = ""
+style = "bg:#3a454a fg:#a7c080 bold"
+format = "[ $symbol $branch ]($style)"
+
+[git_status]
+style = "bg:#3a454a fg:#e69875 bold"
+format = "[$all_status$ahead_behind]($style)"
+
+[python]
+symbol = ""
+style = "bg:#475258 fg:#dbbc7f bold"
+format = "[ $symbol $version ]($style)"
+
+[nodejs]
+symbol = ""
+style = "bg:#475258 fg:#a7c080 bold"
+format = "[ $symbol $version ]($style)"
+
+[rust]
+symbol = ""
+style = "bg:#475258 fg:#e67e80 bold"
+format = "[ $symbol $version ]($style)"
+
+[cmd_duration]
+min_time = 1500
+style = "bg:#475258 fg:#d3c6aa"
+format = "[ 󱎫 $duration ]($style)"
+
+[character]
+success_symbol = "[❯](bold #a7c080)"
+error_symbol = "[❯](bold #e67e80)"
+vimcmd_symbol = "[❮](bold #7fbbb3)"

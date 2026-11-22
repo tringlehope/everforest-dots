@@ -1,5 +1,5 @@
 local mainMod     = "SUPER"
-local terminal    = "ghostty"
+local terminal    = os.getenv("HOME") .. "/.local/bin/ghostty-pixel-scroll"
 local fileManager = "nautilus"
 
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))

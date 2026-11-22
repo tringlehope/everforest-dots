@@ -23,7 +23,7 @@ ensure_aur_helper() {
         return 0
     fi
     info "AUR-помощник не найден. Устанавливаю yay-bin..."
-    sudo pacman -S --needed --noconfirm base-devel git
+    sudo pacman -S --needed --noconfirm base-devel git starship
     local tmpdir
     tmpdir="$(mktemp -d)"
     git clone https://aur.archlinux.org/yay-bin.git "$tmpdir/yay-bin"
@@ -66,7 +66,7 @@ backup_and_copy_configs() {
     rm -rf "$HOME"/.config-backup-* 2>/dev/null || true
     mkdir -p "$HOME/.config" "$HOME/Pictures/Wallpapers/Everforest" "$HOME/Pictures/Wallpapers/Catppuccin Macchiato" "$HOME/Pictures/Wallpapers/Graphite" "$HOME/Pictures/Wallpapers/Windows 7" "$HOME/Pictures/Screenshots"
     local backed_up=0
-    for d in hypr quickshell gtk-3.0 gtk-4.0 qt6ct ghostty fontconfig; do
+    for d in hypr quickshell gtk-3.0 gtk-4.0 qt6ct ghostty fish fontconfig; do
         if [ -e "$REPO_DIR/config/$d" ]; then
             if [ -e "$HOME/.config/$d" ]; then
                 mkdir -p "$BACKUP_DIR"
@@ -286,3 +286,18 @@ setup_sddm
 echo "$USER ALL=(ALL) NOPASSWD: /usr/bin/pacman" | sudo tee /etc/sudoers.d/everforest-update >/dev/null
 sudo chmod 440 /etc/sudoers.d/everforest-update
 info "Готово! Все файлы и настройки установлены безопасно."
+
+# Starship prompt
+if [ -f "$SCRIPT_DIR/config/starship.toml" ]; then
+    cp -af "$SCRIPT_DIR/config/starship.toml" ~/.config/starship.toml
+fi
+
+# Ghostty Pixel Scroll (prebuilt release)
+if [ ! -x "$HOME/.local/bin/ghostty-pixel-scroll" ]; then
+    mkdir -p "$HOME/.local/share/ghostty-pixel-scroll" "$HOME/.local/bin"
+    GHOSTTY_URL=$(curl -fsSL "https://api.github.com/repos/parkers0405/ghostty-pixel-scroll/releases?per_page=1" | python3 -c "import sys, json; r = json.load(sys.stdin)[0]; print(next(a['browser_download_url'] for a in r['assets'] if a['name'] == 'ghostty-linux-x86_64.tar.gz'))")
+    curl -fsSL "$GHOSTTY_URL" -o /tmp/ghostty-linux-x86_64.tar.gz
+    tar -xzf /tmp/ghostty-linux-x86_64.tar.gz -C "$HOME/.local/share/ghostty-pixel-scroll"
+    ln -sf "$HOME/.local/share/ghostty-pixel-scroll/bin/ghostty" "$HOME/.local/bin/ghostty-pixel-scroll"
+    rm -f /tmp/ghostty-linux-x86_64.tar.gz
+fi
