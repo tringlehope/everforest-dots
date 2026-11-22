@@ -416,13 +416,17 @@ PanelWindow {
                 id: trayPill
                 readonly property bool hasTray: SystemTray.items.values.length > 0
                 property bool expanded: false
+                property int openMenus: 0
                 Layout.fillHeight: true
                 implicitWidth: trayRow.implicitWidth + 18
 
                 Timer {
                     id: trayCloseTimer
                     interval: 600
-                    onTriggered: trayPill.expanded = false
+                    onTriggered: {
+                        if (!trayHover.hovered && trayPill.openMenus <= 0)
+                            trayPill.expanded = false;
+                    }
                 }
 
                 Connections {
@@ -431,7 +435,7 @@ PanelWindow {
                         if (trayHover.hovered && trayPill.hasTray) {
                             trayCloseTimer.stop();
                             trayPill.expanded = true;
-                        } else {
+                        } else if (trayPill.openMenus <= 0) {
                             trayCloseTimer.restart();
                         }
                     }
@@ -498,6 +502,15 @@ PanelWindow {
                                         anchor.item: trayItemBox
                                         anchor.edges: Edges.Bottom
                                         anchor.gravity: Edges.Bottom
+                                        onVisibleChanged: {
+                                            trayPill.openMenus = Math.max(0, trayPill.openMenus + (visible ? 1 : -1));
+                                            if (visible) {
+                                                trayCloseTimer.stop();
+                                                trayPill.expanded = true;
+                                            } else if (!trayHover.hovered && trayPill.openMenus <= 0) {
+                                                trayCloseTimer.restart();
+                                            }
+                                        }
                                     }
 
                                     Image {
