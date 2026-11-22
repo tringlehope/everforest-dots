@@ -62,3 +62,15 @@ fi
 if [ "$OLD_QT_ICON" != "$ICON_THEME" ] && pgrep -x qs >/dev/null; then
     (sleep 0.2; pkill -x qs; sleep 0.2; nohup qs > /tmp/qs.log 2>&1 &) &
 fi
+
+KITTY_THEME="everforest"
+case "$THEME" in
+    Catppuccin-*) KITTY_THEME="catppuccin-macchiato" ;;
+    Graphite-*)   KITTY_THEME="graphite" ;;
+    GTKAero)      KITTY_THEME="win7" ;;
+    *)            KITTY_THEME="everforest" ;;
+esac
+if [ -f "$HOME/.config/kitty/themes/$KITTY_THEME.conf" ]; then
+    cp -f "$HOME/.config/kitty/themes/$KITTY_THEME.conf" "$HOME/.config/kitty/current-theme.conf"
+    pkill -USR1 -x kitty 2>/dev/null || true
+fi
