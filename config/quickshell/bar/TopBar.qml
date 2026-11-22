@@ -411,81 +411,140 @@ PanelWindow {
                 }
             }
 
+            // Отдельный пузырь трея: стрелочка + плавно выезжающая строка иконок
             Item {
                 id: trayPill
                 readonly property bool hasTray: SystemTray.items.values.length > 0
-                readonly property bool expanded: trayHover.hovered && hasTray
+                property bool expanded: false
                 Layout.fillHeight: true
-                implicitWidth: trayContent.implicitWidth + 16
+                implicitWidth: trayRow.implicitWidth + 18
+
+                Timer {
+                    id: trayCloseTimer
+                    interval: 220
+                    onTriggered: trayPill.expanded = false
+                }
+
+                Connections {
+                    target: trayHover
+                    function onHoveredChanged() {
+                        if (trayHover.hovered && trayPill.hasTray) {
+                            trayCloseTimer.stop();
+                            trayPill.expanded = true;
+                        } else {
+                            trayCloseTimer.restart();
+                        }
+                    }
+                }
 
                 Rectangle {
                     anchors.centerIn: parent
                     width: parent.width; height: 29
-                    radius: Theme.r(trayHover.hovered ? 8 : 13)
-                    scale: trayHover.hovered ? 1.03 : 1.0
-                    color: trayHover.hovered ? Theme.bgPillHover : Theme.bgPill
-                    Behavior on width { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
-                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
-                    Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    radius: Theme.r(14)
+                    color: (trayHover.hovered || trayPill.expanded) ? Theme.bgPillHover : Theme.bgPill
                     Behavior on color { ColorAnimation { duration: 150 } }
                 }
 
                 HoverHandler { id: trayHover }
 
                 RowLayout {
-                    id: trayContent
+                    id: trayRow
                     anchors.centerIn: parent
-                    spacing: 8
+                    spacing: 0
 
-                    RowLayout {
-                        visible: trayPill.expanded
-                        spacing: 10
-                        Repeater {
-                            model: SystemTray.items
-                            delegate: Item {
-                                required property var modelData
-                                implicitWidth: 16; implicitHeight: 29
-                                Image {
-                                    anchors.centerIn: parent
-                                    source: modelData.icon
-                                    sourceSize: Qt.size(15, 15)
-                                    width: 15; height: 15
-                                }
-                                MouseArea {
-                                    cursorShape: Qt.PointingHandCursor
-                                    anchors.fill: parent
-                                    acceptedButtons: Qt.LeftButton | Qt.RightButton
-                                    onClicked: mouse => {
-                                        if (mouse.button === Qt.LeftButton) modelData.activate();
-                                        else modelData.secondaryActivate();
+                    Item {
+                        implicitWidth: 16
+                        Layout.fillHeight: true
+                        Text {
+                            anchors.centerIn: parent
+                            text: "\uf053"
+                            font.family: Theme.iconFont; font.pixelSize: 13
+                            color: trayPill.hasTray ? Theme.fg : Theme.fgDim
+                            rotation: trayPill.expanded ? 180 : 0
+                            Behavior on rotation { NumberAnimation { duration: 280; easing.type: Easing.OutCubic } }
+                        }
+                    }
+
+                    Item {
+                        id: trayIconsClip
+                        clip: true
+                        Layout.fillHeight: true
+                        Layout.preferredWidth: trayPill.expanded ? (trayIconsRow.implicitWidth + 10) : 0
+                        implicitWidth: Layout.preferredWidth
+                        Behavior on Layout.preferredWidth {
+                            NumberAnimation { duration: 300; easing.type: Easing.OutCubic }
+                        }
+
+                        RowLayout {
+                            id: trayIconsRow
+                            anchors.left: parent.left
+                            anchors.leftMargin: 8
+                            anchors.verticalCenter: parent.verticalCenter
+                            spacing: 14
+
+                            Repeater {
+                                model: SystemTray.items
+                                delegate: Item {
+                                    required property var modelData
+                                    implicitWidth: 20; implicitHeight: 29
+                                    Image {
+                                        anchors.centerIn: parent
+                                        source: modelData.icon
+                                        sourceSize: Qt.size(16, 16)
+                                        width: 16; height: 16
+                                    }
+                                    MouseArea {
+                                        cursorShape: Qt.PointingHandCursor
+                                        anchors.fill: parent
+                                        acceptedButtons: Qt.LeftButton | Qt.RightButton
+                                        onClicked: mouse => {
+                                            if (mouse.button === Qt.LeftButton) {
+                                                modelData.activate();
+                                            } else if (modelData.hasMenu) {
+                                                var pt = mapToItem(null, mouse.x, mouse.y);
+                                                modelData.display(bar, Math.round(pt.x), Math.round(pt.y));
+                                            } else {
+                                                modelData.secondaryActivate();
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
                     }
+                }
+            }
 
-                    Text {
-                        visible: !trayPill.expanded
-                        text: "\uf053"
-                        font.family: Theme.iconFont; font.pixelSize: 13
-                        color: trayPill.hasTray ? Theme.fg : Theme.fgDim
-                    }
+            // Отдельный пузырь раскладки (EN / RU)
+            Item {
+                id: kbPill
+                Layout.fillHeight: true
+                implicitWidth: kbTxt.implicitWidth + 20
 
-                    Item {
-                        implicitWidth: kbTxt.implicitWidth + 4
-                        Layout.fillHeight: true
-                        Text {
-                            id: kbTxt
-                            anchors.centerIn: parent
-                            text: bar.kbLayout
-                            font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Bold; color: Theme.fg
-                        }
-                        MouseArea {
-                            cursorShape: Qt.PointingHandCursor
-                            anchors.fill: parent
-                            onClicked: bar.runAct(["hyprctl", "switchxkblayout", "all", "next"])
-                        }
-                    }
+                Rectangle {
+                    anchors.centerIn: parent
+                    width: parent.width; height: 29
+                    radius: kbMouse.pressed ? Theme.r(8) : (kbMouse.containsMouse ? Theme.r(10) : Theme.r(14))
+                    scale: kbMouse.pressed ? 0.94 : (kbMouse.containsMouse ? 1.05 : 1.0)
+                    color: kbMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
+                    Behavior on color { ColorAnimation { duration: 150 } }
+                    Behavior on radius { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                }
+
+                Text {
+                    id: kbTxt
+                    anchors.centerIn: parent
+                    text: bar.kbLayout
+                    font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.Bold; color: Theme.fg
+                }
+
+                MouseArea {
+                    id: kbMouse
+                    cursorShape: Qt.PointingHandCursor
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onClicked: bar.runAct(["hyprctl", "switchxkblayout", "all", "next"])
                 }
             }
 
