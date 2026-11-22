@@ -503,7 +503,7 @@ PanelWindow {
                                         anchors.fill: trayIconImg
                                         saturation: -1.0
                                         colorization: 1.0
-                                        colorizationColor: Theme.fg
+                                        colorizationColor: Theme.accentWarm
                                     }
                                     MouseArea {
                                         cursorShape: Qt.PointingHandCursor
