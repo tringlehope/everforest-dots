@@ -94,6 +94,17 @@ PanelWindow {
     readonly property bool showPlayer: playerState === "Playing" || playerState === "Paused"
     readonly property bool isPlaying: playerState === "Playing"
 
+    Process {
+        id: sniSyncProc
+        command: ["sh", "-c", "for svc in $(busctl --user list 2>/dev/null | awk '/^org\.kde\.StatusNotifierItem-/{print $1}'); do busctl --user call org.kde.StatusNotifierWatcher /StatusNotifierWatcher org.kde.StatusNotifierWatcher RegisterStatusNotifierItem s \"$svc\" 2>/dev/null || true; done"]
+    }
+    Timer {
+        interval: 800
+        running: true
+        repeat: false
+        onTriggered: sniSyncProc.running = true
+    }
+
     SystemClock { id: clock; precision: SystemClock.Minutes }
 
     Rectangle {
@@ -514,10 +525,20 @@ PanelWindow {
                                     }
 
                                     Image {
+                                        id: trayImg
                                         anchors.centerIn: parent
                                         source: trayItemBox.modelData.icon
                                         sourceSize: Qt.size(16, 16)
                                         width: 16; height: 16
+                                        visible: status === Image.Ready
+                                    }
+                                    Text {
+                                        anchors.centerIn: parent
+                                        visible: trayImg.status !== Image.Ready
+                                        text: (trayItemBox.modelData.id || "").toLowerCase().indexOf("zed") !== -1 ? "\uf132" : "\uf2d0"
+                                        font.family: Theme.iconFont
+                                        font.pixelSize: 13
+                                        color: Theme.accent
                                     }
 
                                     MouseArea {
