@@ -345,7 +345,7 @@ Scope {
         implicitWidth: launcherRoot.runningClients.length <= 1 ? 82 : Math.max(82, dockRow.implicitWidth + 24)
         implicitHeight: 96
         color: "transparent"
-        WlrLayershell.layer: WlrLayer.Overlay
+        WlrLayershell.layer: WlrLayer.Top
         WlrLayershell.namespace: "qs-dock"
 
         Rectangle {
