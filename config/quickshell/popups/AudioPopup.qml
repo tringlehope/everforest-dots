@@ -12,6 +12,7 @@ PanelWindow {
     property int tabIndex: 0
     property var appStreams: []
     property var audioSinks: []
+    property var audioSources: []
     property bool isInteracting: false
 
     visible: card.scale > 0.05 || open
@@ -23,7 +24,7 @@ PanelWindow {
 
     Process {
         id: pactlProc
-        command: ["sh", "-c", "python3 -c \"import subprocess,json\nins=json.loads(subprocess.check_output(['pactl','-f','json','list','sink-inputs']))\nsinks=json.loads(subprocess.check_output(['pactl','-f','json','list','sinks']))\ndefault_s=subprocess.check_output(['pactl','get-default-sink']).decode().strip()\napps=[]\nfor x in ins:\n  p=x.get('properties',{})\n  v='100'\n  if x.get('volume'):\n    v=list(x['volume'].values())[0].get('value_percent','100%').replace('%','').strip()\n  apps.append({'id':x['index'],'name':p.get('application.name') or p.get('media.name') or 'App','vol':int(v)/100.0})\ndevs=[{'name':s['name'],'desc':s.get('description') or s['name'],'def':s['name']==default_s} for s in sinks]\nprint(json.dumps({'apps':apps,'devs':devs}))\""]
+        command: ["python3", "-c", "import subprocess,json\ndef out(cmd):\n  return subprocess.run(cmd,capture_output=True,text=True).stdout.strip()\nins=json.loads(out(['pactl','-f','json','list','sink-inputs']) or '[]')\nsinks=json.loads(out(['pactl','-f','json','list','sinks']) or '[]')\nsources=json.loads(out(['pactl','-f','json','list','sources']) or '[]')\ndefault_s=out(['pactl','get-default-sink'])\ndefault_src=out(['pactl','get-default-source'])\napps=[]\nfor x in ins:\n  p=x.get('properties',{})\n  v='100'\n  if x.get('volume'):\n    v=list(x['volume'].values())[0].get('value_percent','100%').replace('%','').strip()\n  apps.append({'id':x['index'],'name':p.get('application.name') or p.get('media.name') or 'App','vol':int(v)/100.0})\ndevs=[{'name':x['name'],'desc':x.get('description') or x['name'],'def':x['name']==default_s} for x in sinks]\nsrcs=[{'name':x['name'],'desc':x.get('description') or x['name'],'def':x['name']==default_src} for x in sources if not x.get('monitor_of') and not x['name'].endswith('.monitor')]\nprint(json.dumps({'apps':apps,'devs':devs,'srcs':srcs}))"]
         stdout: StdioCollector {
             onStreamFinished: {
                 if (win.isInteracting) return;
@@ -31,6 +32,7 @@ PanelWindow {
                     var data = JSON.parse(text);
                     win.appStreams = data.apps || [];
                     win.audioSinks = data.devs || [];
+                    win.audioSources = data.srcs || [];
                 } catch (e) {}
             }
         }
@@ -159,38 +161,102 @@ PanelWindow {
                 }
             }
 
-            ColumnLayout {
+            Flickable {
                 visible: win.tabIndex === 1
                 Layout.fillWidth: true
-                spacing: 6
+                Layout.preferredHeight: Math.min(368, srcCol.implicitHeight)
+                contentHeight: srcCol.implicitHeight
+                clip: true
+                interactive: contentHeight > height
+                boundsBehavior: Flickable.StopAtBounds
 
-                Repeater {
-                    model: win.audioSinks
-                    delegate: Rectangle {
-                        required property var modelData
-                        Layout.fillWidth: true
-                        implicitHeight: 38
-                        radius: Theme.r(12)
-                        color: modelData.def ? Theme.accent : (sinkM.containsMouse ? Theme.bgPillHover : Theme.bgPill)
+                ColumnLayout {
+                    id: srcCol
+                    width: parent.width
+                    spacing: 6
 
-                        Text {
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.left: parent.left; anchors.right: parent.right; anchors.margins: 12
-                            text: modelData.desc
-                            font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: modelData.def ? Font.Bold : Font.Bold
-                            color: modelData.def ? Theme.accentOn : Theme.fg
-                            elide: Text.ElideRight
-                        }
+                    Text {
+                        text: "Устройства вывода"
+                        font.family: Theme.fontFamily
+                        font.pixelSize: 11
+                        font.weight: Font.Bold
+                        color: Theme.fgMuted
+                    }
 
-                        MouseArea {
-                            cursorShape: Qt.PointingHandCursor
-                            id: sinkM
-                            anchors.fill: parent; hoverEnabled: true
-                            onClicked: {
-                                Quickshell.execDetached(["pactl", "set-default-sink", modelData.name]);
-                                pactlProc.running = true;
+                    Repeater {
+                        model: win.audioSinks
+                        delegate: Rectangle {
+                            required property var modelData
+                            Layout.fillWidth: true
+                            implicitHeight: 38
+                            radius: Theme.r(12)
+                            color: modelData.def ? Theme.accent : (sinkM.containsMouse ? Theme.bgPillHover : Theme.bgPill)
+
+                            Text {
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.left: parent.left; anchors.right: parent.right; anchors.margins: 12
+                                text: modelData.desc
+                                font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Bold
+                                color: modelData.def ? Theme.accentOn : Theme.fg
+                                elide: Text.ElideRight
+                            }
+
+                            MouseArea {
+                                cursorShape: Qt.PointingHandCursor
+                                id: sinkM
+                                anchors.fill: parent; hoverEnabled: true
+                                onClicked: {
+                                    Quickshell.execDetached(["pactl", "set-default-sink", modelData.name]);
+                                    pactlProc.running = true;
+                                }
                             }
                         }
+                    }
+
+                    Text {
+                        Layout.topMargin: 6
+                        text: "Устройства ввода"
+                        font.family: Theme.fontFamily
+                        font.pixelSize: 11
+                        font.weight: Font.Bold
+                        color: Theme.fgMuted
+                    }
+
+                    Repeater {
+                        model: win.audioSources
+                        delegate: Rectangle {
+                            required property var modelData
+                            Layout.fillWidth: true
+                            implicitHeight: 38
+                            radius: Theme.r(12)
+                            color: modelData.def ? Theme.accent : (srcM.containsMouse ? Theme.bgPillHover : Theme.bgPill)
+
+                            Text {
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.left: parent.left; anchors.right: parent.right; anchors.margins: 12
+                                text: modelData.desc
+                                font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Bold
+                                color: modelData.def ? Theme.accentOn : Theme.fg
+                                elide: Text.ElideRight
+                            }
+
+                            MouseArea {
+                                cursorShape: Qt.PointingHandCursor
+                                id: srcM
+                                anchors.fill: parent; hoverEnabled: true
+                                onClicked: {
+                                    Quickshell.execDetached(["pactl", "set-default-source", modelData.name]);
+                                    pactlProc.running = true;
+                                }
+                            }
+                        }
+                    }
+
+                    Text {
+                        Layout.alignment: Qt.AlignHCenter
+                        visible: win.audioSources.length === 0
+                        text: "Нет устройств ввода"
+                        font.family: Theme.fontFamily; font.weight: Font.Bold; font.pixelSize: 12; color: Theme.fgMuted
                     }
                 }
             }
