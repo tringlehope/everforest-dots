@@ -15,7 +15,6 @@ PanelWindow {
     property bool recording: false
     property bool scrollingLayout: false
     property bool dockPinned: false
-    property real brightness: 0.8
 
     // Состояние сети
     property bool ethConnected: false
@@ -63,17 +62,6 @@ PanelWindow {
         command: ["sh", "-c", "hyprctl getoption general:layout -j | python3 -c \"import sys,json; print(json.load(sys.stdin).get('str','dwindle'))\""]
         stdout: StdioCollector {
             onStreamFinished: win.scrollingLayout = (text.trim() === "scrolling")
-        }
-    }
-
-    Process {
-        id: brightRead
-        command: ["sh", "-c", "brightnessctl -m 2>/dev/null | cut -d, -f4 | tr -d '%'"]
-        stdout: SplitParser {
-            onRead: data => {
-                var v = parseInt(data.trim());
-                if (!isNaN(v)) win.brightness = v / 100.0;
-            }
         }
     }
 
@@ -147,7 +135,6 @@ PanelWindow {
             win.page = "main";
             win.selectedWifiSsid = "";
             win.wifiStatusMsg = "";
-            brightRead.running = true;
             stateProc.running = true;
             win.refreshNetwork();
         } else {
