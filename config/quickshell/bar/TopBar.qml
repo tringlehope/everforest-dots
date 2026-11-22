@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Effects
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
@@ -491,19 +490,10 @@ PanelWindow {
                                     required property var modelData
                                     implicitWidth: 20; implicitHeight: 29
                                     Image {
-                                        id: trayIconImg
                                         anchors.centerIn: parent
                                         source: modelData.icon
                                         sourceSize: Qt.size(16, 16)
                                         width: 16; height: 16
-                                        visible: false
-                                    }
-                                    MultiEffect {
-                                        source: trayIconImg
-                                        anchors.fill: trayIconImg
-                                        saturation: -1.0
-                                        colorization: 1.0
-                                        colorizationColor: Theme.accentWarm
                                     }
                                     MouseArea {
                                         cursorShape: Qt.PointingHandCursor
