@@ -421,7 +421,7 @@ PanelWindow {
 
                 Timer {
                     id: trayCloseTimer
-                    interval: 220
+                    interval: 900
                     onTriggered: trayPill.expanded = false
                 }
 
