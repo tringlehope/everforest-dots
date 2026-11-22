@@ -387,20 +387,6 @@ update-desktop-database "$HOME/.local/share/applications" 2>/dev/null || true
 xdg-mime default pkg-installer.desktop application/x-alpm-package 2>/dev/null || true
 
 
-# Темы Catppuccin Macchiato и Graphite Dark
-if [ ! -d "$HOME/.local/share/themes/Catppuccin-BL-MB-Dark-Macchiato" ] || [ ! -d "$HOME/.local/share/themes/Graphite-Dark" ]; then
-    install_pkg_list sassc
-    _theme_tmp="$(mktemp -d)"
-    if [ ! -d "$HOME/.local/share/themes/Catppuccin-BL-MB-Dark-Macchiato" ]; then
-        curl -fsSL "https://github.com/Fausto-Korpsvart/Catppuccin-GTK-Theme/releases/latest/download/Catppuccin-Macchiato.tar.xz" -o "$_theme_tmp/cat.tar.xz" 2>/dev/null || true
-        [ -f "$_theme_tmp/cat.tar.xz" ] && tar -xf "$_theme_tmp/cat.tar.xz" -C "$HOME/.local/share/themes/" 2>/dev/null || true
-    fi
-    if [ ! -d "$HOME/.local/share/themes/Graphite-Dark" ]; then
-        git clone --depth 1 https://github.com/vinceliuice/Graphite-gtk-theme.git "$_theme_tmp/Graphite-gtk-theme" 2>/dev/null || true
-        [ -x "$_theme_tmp/Graphite-gtk-theme/install.sh" ] && bash "$_theme_tmp/Graphite-gtk-theme/install.sh" -c dark -d "$HOME/.local/share/themes" >/dev/null 2>&1 || true
-    fi
-    rm -rf "$_theme_tmp"
-fi
 
 # Тема GTKAero + AeroIcons для режима Windows 7
 mkdir -p "$HOME/.local/share/themes" "$HOME/.local/share/icons"
