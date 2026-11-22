@@ -32,7 +32,7 @@ hl.config({
 
     cursor = {
         no_hardware_cursors = true,
-        warp_on_change_workspace = 1,
+        warp_on_change_workspace = 0,
     },
 
     misc = {

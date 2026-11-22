@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Effects
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Hyprland
@@ -18,6 +19,11 @@ Scope {
     property var groupedClients: []
     property int activeWsId: 1
     property var appFreq: ({})
+    property bool ctxOpen: false
+    property string ctxAddr: ""
+    property string ctxName: ""
+    property string ctxIcon: ""
+    property real ctxIconCenterX: 0
 
     Process {
         id: clientsProc
@@ -84,6 +90,91 @@ Scope {
                 try { launcherRoot.appFreq = JSON.parse(text); } catch (e) { launcherRoot.appFreq = {}; }
             }
         }
+    }
+
+    function swapLayout(str) {
+        var ru = "йцукенгшщзхъфывапролджэячсмитьбюё";
+        var en = "qwertyuiop[]asdfghjkl;'zxcvbnm,.`";
+        var out = "";
+        for (var i = 0; i < str.length; i++) {
+            var ch = str.charAt(i);
+            var ir = ru.indexOf(ch);
+            if (ir !== -1) { out += en.charAt(ir); continue; }
+            var ie = en.indexOf(ch);
+            if (ie !== -1) { out += ru.charAt(ie); continue; }
+            out += ch;
+        }
+        return out;
+    }
+
+    function fuzzyScore(q, target) {
+        if (!q || !target) return -1;
+        var t = target.toLowerCase();
+        var idx = t.indexOf(q);
+        if (idx === 0) return 1000 - t.length;
+        if (idx > 0) {
+            var prev = t.charAt(idx - 1);
+            if (prev === " " || prev === "-" || prev === "_") return 850 - idx;
+            return 650 - idx;
+        }
+        var qi = 0;
+        var score = 0;
+        var streak = 0;
+        for (var ti = 0; ti < t.length && qi < q.length; ti++) {
+            if (t.charAt(ti) === q.charAt(qi)) {
+                score += 10 + streak * 6;
+                if (ti === 0 || t.charAt(ti - 1) === " " || t.charAt(ti - 1) === "-" || t.charAt(ti - 1) === "_") {
+                    score += 15;
+                }
+                streak += 1;
+                qi += 1;
+            } else {
+                streak = 0;
+                score -= 1;
+            }
+        }
+        if (qi < q.length) return -1;
+        return Math.max(1, 300 + score - (t.length - q.length));
+    }
+
+    function scoreApp(app, q1, q2) {
+        var best = -1;
+        var sName = Math.max(fuzzyScore(q1, app.name), fuzzyScore(q2, app.name));
+        if (sName > 0) best = Math.max(best, sName + 200);
+        if (app.genericName) {
+            var sGen = Math.max(fuzzyScore(q1, app.genericName), fuzzyScore(q2, app.genericName));
+            if (sGen > 0) best = Math.max(best, sGen);
+        }
+        if (app.id) {
+            var sId = Math.max(fuzzyScore(q1, app.id), fuzzyScore(q2, app.id));
+            if (sId > 0) best = Math.max(best, sId - 50);
+        }
+        if (app.keywords) {
+            var kw = Array.isArray(app.keywords) ? app.keywords.join(" ") : String(app.keywords);
+            var sKw = Math.max(fuzzyScore(q1, kw), fuzzyScore(q2, kw));
+            if (sKw > 0) best = Math.max(best, sKw);
+        }
+        return best;
+    }
+
+    function appNameForClient(cls) {
+        if (!cls) return "Приложение";
+        var low = cls.toLowerCase();
+        var list = DesktopEntries.applications.values;
+        for (var i = 0; i < list.length; i++) {
+            var a = list[i];
+            if (a.id.toLowerCase() === low || (a.startupClass && a.startupClass.toLowerCase() === low)) {
+                return a.name || cls;
+            }
+        }
+        for (var j = 0; j < list.length; j++) {
+            var b = list[j];
+            var bid = b.id.toLowerCase();
+            if (bid.indexOf(low) !== -1 || low.indexOf(bid) !== -1) {
+                return b.name || cls;
+            }
+        }
+        return cls.charAt(0).toUpperCase() + cls.slice(1);
     }
 
     function iconForClient(cls) {
@@ -224,20 +315,29 @@ Scope {
                         clip: true
                         spacing: 6
                         model: {
-                            var q = launcherRoot.searchText.toLowerCase();
-                            var res = [];
+                            var q1 = launcherRoot.searchText.trim().toLowerCase();
+                            var q2 = launcherRoot.swapLayout(q1);
                             var list = DesktopEntries.applications.values;
+                            var scored = [];
                             for (var i = 0; i < list.length; i++) {
                                 var app = list[i];
                                 if (app.noDisplay) continue;
-                                if (!q || app.name.toLowerCase().indexOf(q) !== -1) res.push(app);
+                                if (!q1) {
+                                    scored.push({ app: app, score: 0 });
+                                } else {
+                                    var sc = launcherRoot.scoreApp(app, q1, q2);
+                                    if (sc > 0) scored.push({ app: app, score: sc });
+                                }
                             }
-                            res.sort((a, b) => {
-                                var fa = launcherRoot.appFreq[a.id] || 0;
-                                var fb = launcherRoot.appFreq[b.id] || 0;
+                            scored.sort((a, b) => {
+                                if (q1 && b.score !== a.score) return b.score - a.score;
+                                var fa = launcherRoot.appFreq[a.app.id] || 0;
+                                var fb = launcherRoot.appFreq[b.app.id] || 0;
                                 if (fb !== fa) return fb - fa;
-                                return a.name.localeCompare(b.name);
+                                return a.app.name.localeCompare(b.app.name);
                             });
+                            var res = [];
+                            for (var j = 0; j < scored.length; j++) res.push(scored[j].app);
                             return res;
                         }
 
@@ -434,12 +534,138 @@ Scope {
                             cursorShape: Qt.PointingHandCursor
                             anchors.fill: parent
                             hoverEnabled: true
-                            onClicked: {
+                            acceptedButtons: Qt.LeftButton | Qt.RightButton
+                            onClicked: mouse => {
                                 var addr = dockTile.modelData.address || "";
+                                if (mouse.button === Qt.RightButton) {
+                                    var pt = dockTile.mapToItem(dockWin.contentItem, dockTile.width / 2, 0);
+                                    launcherRoot.ctxAddr = addr;
+                                    launcherRoot.ctxName = launcherRoot.appNameForClient(dockTile.modelData.class);
+                                    launcherRoot.ctxIcon = launcherRoot.iconForClient(dockTile.modelData.class);
+                                    launcherRoot.ctxIconCenterX = pt.x;
+                                    launcherRoot.ctxOpen = true;
+                                    return;
+                                }
+                                launcherRoot.ctxOpen = false;
                                 if (addr !== "") {
-                                    Quickshell.execDetached(["sh", "-c", "POS=$(hyprctl cursorpos | tr -d ' '); X=${POS%,*}; Y=${POS#*,}; hyprctl dispatch \"hl.dsp.focus({ window = 'address:" + addr + "' })\" 2>/dev/null || hyprctl dispatch \"hl.dsp.focuswindow('address:" + addr + "')\"; sleep 0.12; hyprctl dispatch \"hl.dsp.movecursor($X, $Y)\" 2>/dev/null || hyprctl dispatch movecursor $X $Y"]);
+                                    Quickshell.execDetached(["hyprctl", "dispatch", "hl.dsp.focus({ window = 'address:" + addr + "' })"]);
                                 }
                                 launcherRoot.open = false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    PanelWindow {
+        id: ctxWin
+        visible: launcherRoot.ctxOpen
+        exclusiveZone: -1
+        anchors { top: true; bottom: true; left: true; right: true }
+        color: "transparent"
+        WlrLayershell.layer: WlrLayer.Overlay
+        WlrLayershell.namespace: "qs-dock-menu"
+
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onClicked: launcherRoot.ctxOpen = false
+        }
+
+        Rectangle {
+            id: ctxCard
+            x: Math.max(16, Math.min(parent.width - width - 16, (parent.width - dockWin.implicitWidth) / 2 + launcherRoot.ctxIconCenterX - width / 2))
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: (Theme.showFrame && !Theme.isWin7 && !Theme.dockPinned ? Theme.frameThickness : 0) + 98
+            width: 240
+            height: ctxCol.implicitHeight + 20
+            radius: Theme.radiusCard
+            color: Theme.bgSurface
+            border.color: Theme.accent
+            border.width: 2
+
+            MouseArea { anchors.fill: parent }
+
+            ColumnLayout {
+                id: ctxCol
+                anchors { left: parent.left; right: parent.right; top: parent.top; margins: 10 }
+                spacing: 8
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    Layout.leftMargin: 4
+                    Layout.rightMargin: 4
+                    spacing: 10
+
+                    Item {
+                        width: 22; height: 22
+                        Image {
+                            id: ctxIconImg
+                            anchors.fill: parent
+                            sourceSize: Qt.size(32, 32)
+                            source: launcherRoot.ctxIcon
+                            fillMode: Image.PreserveAspectFit
+                            visible: false
+                        }
+                        MultiEffect {
+                            anchors.fill: ctxIconImg
+                            source: ctxIconImg
+                            saturation: -1.0
+                            colorization: 0.85
+                            colorizationColor: Theme.fg
+                            visible: ctxIconImg.status === Image.Ready
+                        }
+                        Text {
+                            anchors.centerIn: parent
+                            text: ""
+                            font.family: Theme.iconFont; font.pixelSize: 16; color: Theme.fg
+                            visible: ctxIconImg.status !== Image.Ready
+                        }
+                    }
+
+                    Text {
+                        Layout.fillWidth: true
+                        text: launcherRoot.ctxName
+                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Bold
+                        color: Theme.fg
+                        elide: Text.ElideRight
+                    }
+                }
+
+                Rectangle {
+                    Layout.fillWidth: true
+                    height: 1
+                    color: Theme.borderSubtle
+                }
+
+                Rectangle {
+                    Layout.fillWidth: true
+                    implicitHeight: 36
+                    radius: Theme.r(ctxCloseMouse.pressed ? 6 : (ctxCloseMouse.containsMouse ? 9 : 12))
+                    scale: ctxCloseMouse.pressed ? 0.96 : (ctxCloseMouse.containsMouse ? 1.02 : 1.0)
+                    color: ctxCloseMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
+                    Behavior on radius { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on color { ColorAnimation { duration: 140 } }
+
+                    RowLayout {
+                        anchors.fill: parent; anchors.leftMargin: 10; anchors.rightMargin: 10; spacing: 8
+                        Text { text: ""; font.family: Theme.iconFont; font.pixelSize: 13; color: "#e67e80" }
+                        Text { text: "Закрыть окно"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Bold; color: Theme.fg; Layout.fillWidth: true }
+                    }
+
+                    MouseArea {
+                        id: ctxCloseMouse
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: {
+                            var addr = launcherRoot.ctxAddr;
+                            launcherRoot.ctxOpen = false;
+                            if (addr !== "") {
+                                Quickshell.execDetached(["hyprctl", "dispatch", "hl.dsp.window.close({ window = 'address:" + addr + "' })"]);
                             }
                         }
                     }

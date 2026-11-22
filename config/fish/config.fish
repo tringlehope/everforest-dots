@@ -22,3 +22,4 @@ alias ls='ls --color=auto'
 alias ll='ls -lah --color=auto'
 
 starship init fish | source
+set -g fish_autosuggestion_enabled 0
