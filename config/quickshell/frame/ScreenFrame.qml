@@ -14,7 +14,7 @@ Scope {
         color: Theme.bgFrame
         WlrLayershell.layer: WlrLayer.Top
         WlrLayershell.namespace: "qs-frame"
-        visible: (Theme.showFrame && !Theme.isWin7)
+        visible: (Theme.showFrame && !Theme.isWin7 && !Theme.dockPinned)
     }
 
     PanelWindow {
@@ -24,7 +24,7 @@ Scope {
         color: Theme.bgFrame
         WlrLayershell.layer: WlrLayer.Top
         WlrLayershell.namespace: "qs-frame"
-        visible: (Theme.showFrame && !Theme.isWin7)
+        visible: (Theme.showFrame && !Theme.isWin7 && !Theme.dockPinned)
     }
 
     PanelWindow {
@@ -34,7 +34,7 @@ Scope {
         color: Theme.bgFrame
         WlrLayershell.layer: WlrLayer.Top
         WlrLayershell.namespace: "qs-frame"
-        visible: (Theme.showFrame && !Theme.isWin7)
+        visible: (Theme.showFrame && !Theme.isWin7 && !Theme.dockPinned)
     }
 
     component CornerCutout: PanelWindow {
@@ -47,12 +47,12 @@ Scope {
         color: "transparent"
         WlrLayershell.layer: WlrLayer.Top
         WlrLayershell.namespace: "qs-corner"
-        visible: (Theme.showFrame && !Theme.isWin7)
+        visible: (Theme.showFrame && !Theme.isWin7 && (isTop || !Theme.dockPinned))
         mask: Region {}
 
         margins {
-            left:   isLeft  ? Theme.frameThickness : 0
-            right:  !isLeft ? Theme.frameThickness : 0
+            left:   isLeft  ? (Theme.dockPinned ? 0 : Theme.frameThickness) : 0
+            right:  !isLeft ? (Theme.dockPinned ? 0 : Theme.frameThickness) : 0
             top:    isTop   ? Theme.topBarHeight   : 0
             bottom: !isTop  ? Theme.frameThickness : 0
         }

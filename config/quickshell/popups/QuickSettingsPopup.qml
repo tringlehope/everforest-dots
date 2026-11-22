@@ -67,7 +67,7 @@ PanelWindow {
 
     Process {
         id: netStateProc
-        command: ["sh", "-c", "python3 - << 'PY'\nimport subprocess, json\ndef run(cmd):\n    try: return subprocess.check_output(cmd, stderr=subprocess.DEVNULL, text=True).strip()\n    except: return ''\nwifi = run(['env', 'LC_ALL=C', 'nmcli', 'radio', 'wifi']) == 'enabled'\ndevs = run(['env', 'LC_ALL=C', 'nmcli', '-t', '-f', 'DEVICE,TYPE,STATE,CONNECTION', 'dev'])\neth_dev, eth_state, eth_con = '', '', ''\nfor ln in devs.splitlines():\n    p = ln.split(':')\n    if len(p) >= 4 and p[1] == 'ethernet':\n        eth_dev, eth_state, eth_con = p[0], p[2], p[3]\n        break\neth_on = eth_state.startswith('connected')\nip, gw, dns, spd = '', '', '', ''\nif eth_dev and eth_on:\n    det = run(['env', 'LC_ALL=C', 'nmcli', '-t', '-f', 'IP4.ADDRESS,IP4.GATEWAY,IP4.DNS', 'dev', 'show', eth_dev])\n    for ln in det.splitlines():\n        if ln.startswith('IP4.ADDRESS') and not ip: ip = ln.split(':', 1)[1]\n        elif ln.startswith('IP4.GATEWAY') and not gw: gw = ln.split(':', 1)[1]\n        elif ln.startswith('IP4.DNS') and not dns: dns = ln.split(':', 1)[1]\n    try:\n        with open(f'/sys/class/net/{eth_dev}/speed') as f:\n            s = f.read().strip()\n            if s.isdigit() and int(s) > 0: spd = s + ' Мбит/с'\n    except: pass\nprint(json.dumps({'wifi': wifi, 'hasWifi': has_wifi, 'ethOn': eth_on, 'ethDev': eth_dev, 'ethCon': eth_con, 'ip': ip, 'gw': gw, 'dns': dns, 'spd': spd}))\nPY"]
+        command: ["sh", "-c", "python3 - << 'PY'\nimport subprocess, json\ndef run(cmd):\n    try: return subprocess.check_output(cmd, stderr=subprocess.DEVNULL, text=True).strip()\n    except: return ''\nwifi = run(['env', 'LC_ALL=C', 'nmcli', 'radio', 'wifi']) == 'enabled'\ndevs = run(['env', 'LC_ALL=C', 'nmcli', '-t', '-f', 'DEVICE,TYPE,STATE,CONNECTION', 'dev'])\neth_dev, eth_state, eth_con = '', '', ''\nhas_wifi = False\nfor ln in devs.splitlines():\n    p = ln.split(':')\n    if len(p) >= 4:\n        if p[1] == 'ethernet' and not p[0].startswith('vmnet') and not eth_dev:\n            eth_dev, eth_state, eth_con = p[0], p[2], p[3]\n        elif p[1] == 'wifi':\n            has_wifi = True\neth_on = eth_state.startswith('connected')\nip, gw, dns, spd = '', '', '', ''\nif eth_dev and eth_on:\n    det = run(['env', 'LC_ALL=C', 'nmcli', '-t', '-f', 'IP4.ADDRESS,IP4.GATEWAY,IP4.DNS', 'dev', 'show', eth_dev])\n    for ln in det.splitlines():\n        if ln.startswith('IP4.ADDRESS') and not ip: ip = ln.split(':', 1)[1]\n        elif ln.startswith('IP4.GATEWAY') and not gw: gw = ln.split(':', 1)[1]\n        elif ln.startswith('IP4.DNS') and not dns: dns = ln.split(':', 1)[1]\n    try:\n        with open(f'/sys/class/net/{eth_dev}/speed') as f:\n            s = f.read().strip()\n            if s.isdigit() and int(s) > 0: spd = s + ' Мбит/с'\n    except: pass\nprint(json.dumps({'wifi': wifi, 'hasWifi': has_wifi, 'ethOn': eth_on, 'ethDev': eth_dev, 'ethCon': eth_con, 'ip': ip, 'gw': gw, 'dns': dns, 'spd': spd}))\nPY"]
         stdout: StdioCollector {
             onStreamFinished: {
                 try {
@@ -266,30 +266,6 @@ PanelWindow {
                 }
             }
 
-            Rectangle {
-                Layout.fillWidth: true
-                implicitHeight: 48
-                radius: Theme.r(14)
-                color: Theme.bgPill
-
-                RowLayout {
-                    anchors.fill: parent
-                    anchors.leftMargin: 12; anchors.rightMargin: 12
-                    spacing: 10
-
-                    Text { text: "\uf185"; font.family: Theme.iconFont; font.pixelSize: 14; color: Theme.accentWarm }
-                    WavySlider {
-                        Layout.fillWidth: true
-                        value: win.brightness
-                        activeColor: Theme.accentWarm
-                        onMoved: v => {
-                            win.brightness = v;
-                            Quickshell.execDetached(["brightnessctl", "set", Math.round(v * 100) + "%"]);
-                        }
-                    }
-                    Text { text: Math.round(win.brightness * 100) + "%"; font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.Bold; color: Theme.fg }
-                }
-            }
 
             GridLayout {
                 Layout.fillWidth: true
@@ -500,7 +476,7 @@ PanelWindow {
                         cursorShape: Qt.PointingHandCursor
                         id: pinM
                         anchors.fill: parent; hoverEnabled: true
-                        onClicked: win.dockPinned = !win.dockPinned
+                        onClicked: { win.dockPinned = !win.dockPinned; Theme.dockPinned = win.dockPinned; Quickshell.execDetached(["sh", "-c", "mkdir -p ~/.local/state && printf '%s' '" + (win.dockPinned ? "1" : "0") + "' > ~/.local/state/qs-dock-pinned"]); }
                     }
                 }
 
@@ -823,7 +799,7 @@ PanelWindow {
 
                     Text {
                         visible: win.wifiList.length === 0 && win.connectedWifiSsid === ""
-                        text: !win.hasWifiDev ? "Wi-Fi адаптер не найден (виртуальная машина)" : (win.wifiScanning ? "Сканирование сетей..." : "Сети не найдены")
+                        text: !win.hasWifiDev ? "Wi-Fi адаптер не найден" : (win.wifiScanning ? "Сканирование сетей..." : "Сети не найдены")
                         font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.Bold
                         color: Theme.fgMuted
                     }
@@ -1007,21 +983,32 @@ PanelWindow {
             anchors { left: parent.left; right: parent.right; top: parent.top; margins: 14 }
             spacing: 10
 
+            readonly property bool btEnabled: Bluetooth.defaultAdapter?.enabled ?? false
+            readonly property bool btScanning: Bluetooth.defaultAdapter?.discovering ?? false
+
+            Timer {
+                id: btScanStopTimer
+                interval: 10000
+                onTriggered: {
+                    if (Bluetooth.defaultAdapter) Bluetooth.defaultAdapter.discovering = false;
+                }
+            }
+
             RowLayout {
                 Layout.fillWidth: true
                 spacing: 8
 
                 Rectangle {
-                    scale: btBackM.pressed ? 0.94 : (btBackM.containsMouse ? 1.04 : 1.0)
-                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
-                    Behavior on color { ColorAnimation { duration: 140 } }
                     width: 30; height: 30; radius: Theme.r(15)
                     color: btBackM.containsMouse ? Theme.bgPillHover : Theme.bgPill
                     Text { anchors.centerIn: parent; text: "\uf053"; font.family: Theme.iconFont; font.pixelSize: 11; color: Theme.fg }
                     MouseArea {
                         id: btBackM
                         anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
-                        onClicked: win.page = "main"
+                        onClicked: {
+                            if (Bluetooth.defaultAdapter) Bluetooth.defaultAdapter.discovering = false;
+                            win.page = "main";
+                        }
                     }
                 }
 
@@ -1033,33 +1020,136 @@ PanelWindow {
                 }
             }
 
-            Text {
-                visible: Bluetooth.devices.values.length === 0
-                text: "Нет сопряжённых Bluetooth-устройств"
-                font.family: Theme.fontFamily; font.weight: Font.Bold; font.pixelSize: 11; color: Theme.fgMuted
+            // Тумблер Bluetooth
+            Rectangle {
+                Layout.fillWidth: true
+                implicitHeight: 44
+                radius: Theme.r(14)
+                color: Theme.bgPill
+
+                RowLayout {
+                    anchors.fill: parent; anchors.leftMargin: 12; anchors.rightMargin: 10; spacing: 8
+                    Text { text: "\uf293"; font.family: Theme.iconFont; font.pixelSize: 14; color: Theme.accent }
+                    Text {
+                        Layout.fillWidth: true
+                        text: btCol.btEnabled ? "Bluetooth включён" : "Bluetooth выключен"
+                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Bold; color: Theme.fg
+                    }
+                    TogglePill {
+                        checked: btCol.btEnabled
+                        onToggled: {
+                            if (Bluetooth.defaultAdapter)
+                                Bluetooth.defaultAdapter.enabled = !Bluetooth.defaultAdapter.enabled;
+                        }
+                    }
+                }
             }
 
-            Repeater {
-                model: Bluetooth.devices
-                delegate: Rectangle {
-                    required property var modelData
+            Text {
+                visible: !btCol.btEnabled
+                text: "Включите Bluetooth для поиска устройств"
+                font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Bold
+                color: Theme.fgMuted
+            }
+
+            ColumnLayout {
+                visible: btCol.btEnabled
+                Layout.fillWidth: true
+                spacing: 8
+
+                RowLayout {
                     Layout.fillWidth: true
-                    implicitHeight: 36
-                    radius: Theme.r(12)
-                    color: modelData.connected ? Theme.accentWarm : Theme.bgPill
-
                     Text {
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.left: parent.left; anchors.margins: 12
-                        text: modelData.name || modelData.address
-                        font.family: Theme.fontFamily; font.weight: Font.Bold; font.pixelSize: 12
-                        color: modelData.connected ? Theme.accentOn : Theme.fg
+                        Layout.fillWidth: true
+                        text: "Устройства"
+                        font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Bold
+                        color: Theme.fgDim
                     }
+                    Rectangle {
+                        implicitWidth: btRefRow.implicitWidth + 16
+                        implicitHeight: 28
+                        radius: Theme.r(10)
+                        color: btRefM.containsMouse ? Theme.bgPillHover : Theme.bgPill
+                        RowLayout {
+                            id: btRefRow
+                            anchors.centerIn: parent; spacing: 5
+                            Text { text: "\uf021"; font.family: Theme.iconFont; font.pixelSize: 11; color: Theme.accent }
+                            Text { text: btCol.btScanning ? "Поиск..." : "Обновить"; font.family: Theme.fontFamily; font.pixelSize: 11; font.weight: Font.Bold; color: Theme.fg }
+                        }
+                        MouseArea {
+                            id: btRefM
+                            anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                if (Bluetooth.defaultAdapter) {
+                                    Bluetooth.defaultAdapter.discovering = true;
+                                    btScanStopTimer.restart();
+                                }
+                            }
+                        }
+                    }
+                }
 
-                    MouseArea {
-                        cursorShape: Qt.PointingHandCursor
-                        anchors.fill: parent
-                        onClicked: modelData.connected = !modelData.connected
+                Text {
+                    visible: Bluetooth.devices.values.length === 0
+                    text: btCol.btScanning ? "Поиск устройств..." : "Устройства не найдены"
+                    font.family: Theme.fontFamily; font.weight: Font.Bold; font.pixelSize: 12; color: Theme.fgMuted
+                }
+
+                Flickable {
+                    visible: Bluetooth.devices.values.length > 0
+                    Layout.fillWidth: true
+                    implicitHeight: Math.min(220, btListCol.implicitHeight)
+                    contentHeight: btListCol.implicitHeight
+                    clip: true
+                    boundsBehavior: Flickable.StopAtBounds
+
+                    ColumnLayout {
+                        id: btListCol
+                        width: parent.width
+                        spacing: 5
+
+                        Repeater {
+                            model: Bluetooth.devices
+                            delegate: Rectangle {
+                                id: btDevCard
+                                required property var modelData
+                                Layout.fillWidth: true
+                                implicitHeight: 40
+                                radius: Theme.r(12)
+                                color: modelData.connected ? Theme.accent : (btDevM.containsMouse ? Theme.bgPillHover : Theme.bgFrame)
+
+                                RowLayout {
+                                    anchors.fill: parent; anchors.leftMargin: 12; anchors.rightMargin: 10; spacing: 8
+                                    Text {
+                                        text: "\uf293"
+                                        font.family: Theme.iconFont; font.pixelSize: 12
+                                        color: btDevCard.modelData.connected ? Theme.accentOn : Theme.accentWarm
+                                    }
+                                    Text {
+                                        Layout.fillWidth: true
+                                        text: btDevCard.modelData.name || btDevCard.modelData.address
+                                        elide: Text.ElideRight
+                                        font.family: Theme.fontFamily; font.weight: Font.Bold; font.pixelSize: 12
+                                        color: btDevCard.modelData.connected ? Theme.accentOn : Theme.fg
+                                    }
+                                    Text {
+                                        text: btDevCard.modelData.connected ? "Подключено" : (btDevCard.modelData.paired ? "Сопряжено" : "Подключить")
+                                        font.family: Theme.fontFamily; font.weight: Font.Bold; font.pixelSize: 11
+                                        color: btDevCard.modelData.connected ? Theme.accentOn : Theme.fgMuted
+                                    }
+                                }
+
+                                MouseArea {
+                                    id: btDevM
+                                    cursorShape: Qt.PointingHandCursor
+                                    anchors.fill: parent; hoverEnabled: true
+                                    onClicked: {
+                                        if (!btDevCard.modelData.paired) btDevCard.modelData.pair();
+                                        btDevCard.modelData.connected = !btDevCard.modelData.connected;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

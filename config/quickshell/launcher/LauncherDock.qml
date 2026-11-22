@@ -13,6 +13,8 @@ Scope {
     property bool pinned: false
     property string searchText: ""
     property var runningClients: []
+    property var openOrder: ({})
+    property int openSeq: 0
     property var groupedClients: []
     property int activeWsId: 1
     property var appFreq: ({})
@@ -28,7 +30,19 @@ Scope {
                         var ws = parseInt(text.slice(0, idx).trim());
                         if (!isNaN(ws)) launcherRoot.activeWsId = ws;
                         var arr = JSON.parse(text.slice(idx + 1));
-                        arr.sort((a, b) => (a.workspace?.id ?? 0) - (b.workspace?.id ?? 0));
+                        for (var k = 0; k < arr.length; k++) {
+                            var ad = arr[k].address;
+                            if (ad && launcherRoot.openOrder[ad] === undefined) {
+                                launcherRoot.openSeq += 1;
+                                launcherRoot.openOrder[ad] = launcherRoot.openSeq;
+                            }
+                        }
+                        arr.sort((a, b) => {
+                            var wa = a.workspace?.id ?? 0;
+                            var wb = b.workspace?.id ?? 0;
+                            if (wa !== wb) return wa - wb;
+                            return (launcherRoot.openOrder[a.address] || 0) - (launcherRoot.openOrder[b.address] || 0);
+                        });
                         launcherRoot.runningClients = arr;
                         var map = {};
                         var groups = [];
@@ -328,7 +342,7 @@ Scope {
         visible: dockTrans.y < 94 || shouldShow
         exclusiveZone: (launcherRoot.pinned && launcherRoot.runningClients.length > 0) ? 90 : -1
         anchors { bottom: true }
-        margins.bottom: (Theme.showFrame && !Theme.isWin7 ? Theme.frameThickness : 0) + 8
+        margins.bottom: (Theme.showFrame && !Theme.isWin7 && !Theme.dockPinned ? Theme.frameThickness : 0) + 8
         implicitWidth: launcherRoot.runningClients.length <= 1 ? 82 : Math.max(82, dockRow.implicitWidth + 24)
         implicitHeight: 96
         color: "transparent"
@@ -405,6 +419,17 @@ Scope {
                             }
                         }
 
+                        Rectangle {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.bottom: parent.bottom
+                            anchors.bottomMargin: 4
+                            width: dockTile.isFocused ? 18 : 0
+                            height: 3
+                            radius: Theme.r(2)
+                            color: Theme.accent
+                            Behavior on width { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                        }
+
                         MouseArea {
                             id: dockItemMouse
                             cursorShape: Qt.PointingHandCursor
@@ -413,7 +438,7 @@ Scope {
                             onClicked: {
                                 var addr = dockTile.modelData.address || "";
                                 if (addr !== "") {
-                                    Quickshell.execDetached(["sh", "-c", "hyprctl dispatch \"hl.dsp.focus({ window = 'address:" + addr + "' })\" 2>/dev/null || hyprctl dispatch \"hl.dsp.focuswindow('address:" + addr + "')\""]);
+                                    Quickshell.execDetached(["sh", "-c", "POS=$(hyprctl cursorpos | tr -d ' '); X=${POS%,*}; Y=${POS#*,}; hyprctl dispatch \"hl.dsp.focus({ window = 'address:" + addr + "' })\" 2>/dev/null || hyprctl dispatch \"hl.dsp.focuswindow('address:" + addr + "')\"; sleep 0.12; hyprctl dispatch \"hl.dsp.movecursor($X, $Y)\" 2>/dev/null || hyprctl dispatch movecursor $X $Y"]);
                                 }
                                 launcherRoot.open = false;
                             }
