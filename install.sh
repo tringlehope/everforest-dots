@@ -175,11 +175,11 @@ backup_and_copy_configs() {
 step "Копирование конфигов (хранится 1 последняя копия в $BACKUP_DIR)"
 rm -rf "$HOME"/.config-backup-* 2>/dev/null || true
 mkdir -p "$HOME/.config" \
-        "$HOME/Pictures/Wallpapers/Everforest" \
-        "$HOME/Pictures/Wallpapers/Catppuccin Macchiato" \
-        "$HOME/Pictures/Wallpapers/Graphite" \
-        "$HOME/Pictures/Wallpapers/Windows 7" \
-        "$HOME/Pictures/Screenshots"
+        "$HOME/.local/share/wallpapers/Everforest" \
+        "$HOME/.local/share/wallpapers/Catppuccin Macchiato" \
+        "$HOME/.local/share/wallpapers/Graphite" \
+        "$HOME/.local/share/wallpapers/Windows 7" \
+        "$HOME/Скриншоты"
 
 local backed_up=0
 for d in hypr quickshell gtk-3.0 gtk-4.0 qt6ct kitty fish fontconfig; do
@@ -213,7 +213,7 @@ info "Резервная копия старых конфигов: $BACKUP_DIR"
 fi
 
 if [ -d "$REPO_DIR/wallpapers" ]; then
-cp -an "$REPO_DIR/wallpapers/." "$HOME/Pictures/Wallpapers/" 2>/dev/null || cp -af "$REPO_DIR/wallpapers/." "$HOME/Pictures/Wallpapers/"
+cp -an "$REPO_DIR/wallpapers/." "$HOME/.local/share/wallpapers/" 2>/dev/null || cp -af "$REPO_DIR/wallpapers/." "$HOME/.local/share/wallpapers/"
 fi
 fc-cache -f >/dev/null 2>&1 || true
 }

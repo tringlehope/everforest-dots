@@ -121,7 +121,7 @@ Scope {
 
     Process {
         id: saveProc
-        command: ["sh", "-c", "mkdir -p \"$HOME/Pictures/Screenshots\" && mv -f /tmp/qs-rec-final.mp4 \"$HOME/Pictures/Screenshots/recording-$(date +%Y%m%d-%H%M%S).mp4\" && rm -f /tmp/qs-rec-*.mp4 /tmp/qs-rec-list.txt"]
+        command: ["sh", "-c", "mkdir -p \"$HOME/Скриншоты\" && mv -f /tmp/qs-rec-final.mp4 \"$HOME/Скриншоты/recording-$(date +%Y%m%d-%H%M%S).mp4\" && rm -f /tmp/qs-rec-*.mp4 /tmp/qs-rec-list.txt"]
         onExited: mgr.showSaveDialog = false
     }
 
@@ -195,7 +195,7 @@ Scope {
 
                 Text {
                     Layout.fillWidth: true
-                    text: "Сохранить видео в ~/Pictures/Screenshots?"
+                    text: "Сохранить видео в ~/Скриншоты?"
                     color: Theme.fgDim
                     font.family: Theme.fontFamily
                     font.pixelSize: 13

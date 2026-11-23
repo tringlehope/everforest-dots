@@ -26,7 +26,7 @@ Item {
         Quickshell.execDetached([Quickshell.env("HOME") + "/.config/quickshell/scripts/set_gtk_theme.sh", pal.gtkTheme]);
 
         var folder = pal.folder.replace(/'/g, "'\\''");
-        Quickshell.execDetached(["sh", "-c", "w=$(find \"$HOME/Pictures/Wallpapers/" + folder + "\" -maxdepth 2 -type f \\( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \\) | sort | head -n1); if [ -n \"$w\" ]; then printf '%s' \"$w\" > ~/.local/state/qs-wallpaper && pkill swaybg; swaybg -i \"$w\" -m fill >/dev/null 2>&1 & fi"]);
+        Quickshell.execDetached(["sh", "-c", "w=$(find \"$HOME/.local/share/wallpapers/" + folder + "\" -maxdepth 2 -type f \\( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \\) | sort | head -n1); if [ -n \"$w\" ]; then printf '%s' \"$w\" > ~/.local/state/qs-wallpaper && pkill swaybg; swaybg -i \"$w\" -m fill >/dev/null 2>&1 & fi"]);
     }
 
     ColumnLayout {

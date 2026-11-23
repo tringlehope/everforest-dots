@@ -21,7 +21,7 @@ PanelWindow {
 
     Process {
         id: scanProc
-        command: ["sh", "-c", "mkdir -p \"$HOME/Pictures/Wallpapers/" + Theme.wallpaperFolder + "\" && find \"$HOME/Pictures/Wallpapers/" + Theme.wallpaperFolder + "\" -maxdepth 2 -type f \\( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \\) | sort"]
+        command: ["sh", "-c", "mkdir -p \"$HOME/.local/share/wallpapers/" + Theme.wallpaperFolder + "\" && find \"$HOME/.local/share/wallpapers/" + Theme.wallpaperFolder + "\" -maxdepth 2 -type f \\( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \\) | sort"]
         stdout: StdioCollector {
             onStreamFinished: {
                 var lines = text.trim().split("\n");
@@ -30,7 +30,7 @@ PanelWindow {
         }
     }
 
-    onOpenChanged: if (open) { scanProc.command = ["sh", "-c", "mkdir -p \"$HOME/Pictures/Wallpapers/" + Theme.wallpaperFolder + "\" && find \"$HOME/Pictures/Wallpapers/" + Theme.wallpaperFolder + "\" -maxdepth 2 -type f \\( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \\) | sort"]; scanProc.running = true; }
+    onOpenChanged: if (open) { scanProc.command = ["sh", "-c", "mkdir -p \"$HOME/.local/share/wallpapers/" + Theme.wallpaperFolder + "\" && find \"$HOME/.local/share/wallpapers/" + Theme.wallpaperFolder + "\" -maxdepth 2 -type f \\( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \\) | sort"]; scanProc.running = true; }
 
     MouseArea { anchors.fill: parent; onClicked: win.open = false }
 
@@ -63,6 +63,18 @@ PanelWindow {
                     font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Bold; color: Theme.fg
                 }
                 Rectangle {
+                    scale: openDirW.pressed ? 0.94 : (openDirW.containsMouse ? 1.04 : 1.0)
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                    Behavior on color { ColorAnimation { duration: 140 } }
+                    implicitWidth: 30; implicitHeight: 30; radius: Theme.r(openDirW.containsMouse ? 8 : 15)
+                    color: openDirW.containsMouse ? Theme.bgPillHover : Theme.bgPill
+                    Text { anchors.centerIn: parent; text: ""; font.family: Theme.iconFont; font.pixelSize: 12; color: Theme.accent }
+                    MouseArea {
+                        id: openDirW; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
+                        onClicked: Quickshell.execDetached(["xdg-open", Quickshell.env("HOME") + "/.local/share/wallpapers/" + Theme.wallpaperFolder])
+                    }
+                }
+                Rectangle {
                     scale: closeW.pressed ? 0.94 : (closeW.containsMouse ? 1.04 : 1.0)
                     Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     Behavior on color { ColorAnimation { duration: 140 } }
@@ -79,7 +91,7 @@ PanelWindow {
                 Layout.fillHeight: true
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
-                text: "Положи картинки (.png / .jpg / .webp)\nв папку ~/Pictures/Wallpapers/" + Theme.wallpaperFolder
+                text: "Положи картинки (.png / .jpg / .webp)\nв папку ~/.local/share/wallpapers/" + Theme.wallpaperFolder
                 font.family: Theme.fontFamily; font.weight: Font.Bold; font.pixelSize: 13; color: Theme.fgMuted
             }
 

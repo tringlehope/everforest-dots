@@ -31,6 +31,14 @@ if [ -d "$REPO/.git" ]; then
     if [ -f "$REPO/config/starship.toml" ]; then
         cp -af "$REPO/config/starship.toml" "$HOME/.config/starship.toml"
     fi
+    if [ -d "$REPO/wallpapers" ]; then
+        mkdir -p "$HOME/.local/share/wallpapers"
+        cp -an "$REPO/wallpapers/." "$HOME/.local/share/wallpapers/" 2>/dev/null || true
+    fi
+    for _hf in everforest-dots yay; do
+        grep -qxF "$_hf" "$HOME/.hidden" 2>/dev/null || printf "%s
+" "$_hf" >> "$HOME/.hidden"
+    done
     if [ -d "$REPO/themes" ]; then
         mkdir -p "$HOME/.local/share/themes"
         cp -af "$REPO/themes/." "$HOME/.local/share/themes/"

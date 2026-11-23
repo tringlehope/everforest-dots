@@ -147,7 +147,7 @@ PanelWindow {
             : ("ffmpeg -y -i /tmp/qs-shot-raw.png -vf \"" + cropFilter + "\" /tmp/qs-shot-out.png")
         var postCmd = (action === "copy")
             ? "wl-copy < /tmp/qs-shot-out.png"
-            : "mkdir -p \"$HOME/Pictures/Screenshots\" && cp /tmp/qs-shot-out.png \"$HOME/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png\""
+            : "mkdir -p \"$HOME/Скриншоты\" && cp /tmp/qs-shot-out.png \"$HOME/Скриншоты/screenshot-$(date +%Y%m%d-%H%M%S).png\""
         exportExecProc.command = ["sh", "-c", ffCmd + " && " + postCmd]
         exportExecProc.running = true
     }
@@ -279,7 +279,7 @@ PanelWindow {
                 if (root.exportAction === "copy") {
                     exportExecProc.command = ["sh", "-c", "wl-copy < /tmp/qs-shot-out.png"]
                 } else {
-                    exportExecProc.command = ["sh", "-c", "mkdir -p \"$HOME/Pictures/Screenshots\" && cp /tmp/qs-shot-out.png \"$HOME/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png\""]
+                    exportExecProc.command = ["sh", "-c", "mkdir -p \"$HOME/Скриншоты\" && cp /tmp/qs-shot-out.png \"$HOME/Скриншоты/screenshot-$(date +%Y%m%d-%H%M%S).png\""]
                 }
                 exportExecProc.running = true
             }
