@@ -167,7 +167,7 @@ sudo pacman -S --needed --noconfirm "${pac_pkgs[@]}"
 fi
 if [ "${#aur_pkgs[@]}" -gt 0 ]; then
 ensure_aur_helper
-"$AUR_HELPER" -S --needed --noconfirm "${aur_pkgs[@]}"
+if [ "$AUR_HELPER" = "yay" ]; then "$AUR_HELPER" -S --needed --noconfirm --answerclean None --answerdiff None --answeredit None "${aur_pkgs[@]}"; else "$AUR_HELPER" -S --needed --noconfirm --skipreview "${aur_pkgs[@]}"; fi
 fi
 }
 
@@ -264,7 +264,7 @@ printf "${C_RESET}"
 
 tui_select "Выберите режим работы" \
     "Полная установка (система + софт + конфиги)" \
-    "Обновление (только конфиги, шрифты, иконки и bauh)" \
+    "Обновление (только конфиги, шрифты, иконки)" \
     "Выход"
 
 if [ "$TUI_CHOICE" -eq 2 ]; then
@@ -277,7 +277,7 @@ step "Обновление шрифтов, иконок, темы и конфи�
 install_pkg_list \
         adw-gtk-theme qt6ct qt5-wayland nwg-look \
         noto-fonts noto-fonts-emoji ttf-nunito ttf-jetbrains-mono-nerd \
-        gruvbox-plus-icon-theme ttf-material-symbols-variable-git bauh
+        gruvbox-plus-icon-theme ttf-material-symbols-variable-git
 backup_and_copy_configs
 if [ -d /usr/share/sddm/themes/everforest-m3 ] && [ -d "$REPO_DIR/sddm-theme/everforest-m3" ]; then
 tui_select "Обновить тему SDDM (everforest-m3)?" "Нет" "Да, обновить"
@@ -331,7 +331,7 @@ install_pkg_list \
     pipewire pipewire-pulse wireplumber playerctl \
     networkmanager bluez bluez-utils \
     grim slurp wl-clipboard cliphist wf-recorder ffmpeg \
-    flatpak fuse2 adw-gtk-theme qt6ct qt5-wayland nwg-look bauh \
+    flatpak fuse2 adw-gtk-theme qt6ct qt5-wayland nwg-look \
     noto-fonts noto-fonts-emoji ttf-nunito ttf-jetbrains-mono-nerd \
     gruvbox-plus-icon-theme ttf-material-symbols-variable-git
 
@@ -418,7 +418,7 @@ fi
 setup_sddm
 
 if command -v fish >/dev/null 2>&1; then
-chsh -s "$(command -v fish)" 2>/dev/null || true
+sudo chsh -s "$(command -v fish)" "$USER" 2>/dev/null || true
 fi
 
 echo "$USER ALL=(ALL) NOPASSWD: /usr/bin/pacman" | sudo tee /etc/sudoers.d/everforest-update >/dev/null

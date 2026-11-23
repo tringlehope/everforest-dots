@@ -13,6 +13,7 @@ Rectangle {
     property string currentUserName: ""
     property string currentSessionName: "Hyprland"
     property bool loginError: false
+    property bool sessionMenuOpen: false
 
     // Скрытые Repeater/ListView для удобного чтения имён из моделей SDDM
     ListView {
@@ -56,31 +57,42 @@ Rectangle {
 
     // --- ВЕРХНЯЯ ПАНЕЛЬ ---
     Item {
+        z: 50
         anchors { top: parent.top; left: parent.left; right: parent.right; margins: 14 }
         height: 36
 
         // Левый верхний угол: выбор сессии
         Rectangle {
+            id: sessBtn
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
             height: 32
             width: sessRow.implicitWidth + 24
-            radius: sessMouse.containsMouse ? 10 : 16
-            color: sessMouse.containsMouse ? "#3d484d" : "#323c41"
-            Behavior on radius { NumberAnimation { duration: 200; easing.type: Easing.OutBack } }
+            radius: (sessMouse.containsMouse || root.sessionMenuOpen) ? 10 : 16
+            color: (sessMouse.containsMouse || root.sessionMenuOpen) ? "#3d484d" : "#323c41"
+            Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
 
             RowLayout {
                 id: sessRow
                 anchors.centerIn: parent
                 spacing: 8
-                Text { text: "\uf108"; font.family: "JetBrainsMono Nerd Font"; font.pixelSize: 13; color: "#a7c080" }
+                Text { text: ""; font.family: "JetBrainsMono Nerd Font"; font.pixelSize: 13; color: "#a7c080" }
                 Text { text: root.currentSessionName; font.family: "Nunito"; font.pixelSize: 12; font.weight: Font.DemiBold; color: "#d3c6aa" }
+                Text {
+                    text: ""
+                    font.family: "JetBrainsMono Nerd Font"
+                    font.pixelSize: 10
+                    color: "#859289"
+                    rotation: root.sessionMenuOpen ? 180 : 0
+                    Behavior on rotation { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                }
             }
 
             MouseArea {
                 id: sessMouse
                 anchors.fill: parent; hoverEnabled: true
-                onClicked: root.sessionIndex = (root.sessionIndex + 1) % Math.max(1, sessionModel.rowCount())
+                cursorShape: Qt.PointingHandCursor
+                onClicked: root.sessionMenuOpen = !root.sessionMenuOpen
             }
         }
 
@@ -280,6 +292,80 @@ Rectangle {
                         Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutBack } }
                         Text { anchors.centerIn: parent; text: "\uf054"; font.family: "JetBrainsMono Nerd Font"; font.pixelSize: 11; color: "#232a2e" }
                         MouseArea { id: enterM; anchors.fill: parent; hoverEnabled: true; onClicked: root.doLogin() }
+                    }
+                }
+            }
+        }
+    }
+
+    // Закрытие выпадающего списка по клику мимо
+    MouseArea {
+        anchors.fill: parent
+        z: 90
+        visible: root.sessionMenuOpen
+        onClicked: {
+            root.sessionMenuOpen = false;
+            passwordInput.forceActiveFocus();
+        }
+    }
+
+    // Выпадающий список графических окружений
+    Rectangle {
+        id: sessionDropdown
+        z: 100
+        x: 14
+        y: 52
+        width: Math.max(210, sessCol.implicitWidth + 16)
+        height: sessCol.implicitHeight + 16
+        radius: 16
+        color: "#2d353b"
+        border.color: "#a7c080"
+        border.width: 2
+
+        transformOrigin: Item.TopLeft
+        visible: opacity > 0.01
+        opacity: root.sessionMenuOpen ? 1.0 : 0.0
+        scale: root.sessionMenuOpen ? 1.0 : 0.85
+
+        Behavior on opacity { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
+        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+
+        Column {
+            id: sessCol
+            anchors { top: parent.top; left: parent.left; right: parent.right; margins: 8 }
+            spacing: 4
+
+            Repeater {
+                model: sessionModel
+                delegate: Rectangle {
+                    readonly property bool isSel: index === root.sessionIndex
+                    width: Math.max(194, sessItemText.implicitWidth + 24)
+                    height: 34
+                    radius: isSel ? 10 : (itemMa.containsMouse ? 10 : 14)
+                    color: isSel ? "#a7c080" : (itemMa.containsMouse ? "#3d484d" : "#323c41")
+                    Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                    Behavior on color { ColorAnimation { duration: 140 } }
+
+                    Text {
+                        id: sessItemText
+                        anchors { verticalCenter: parent.verticalCenter; left: parent.left; leftMargin: 12 }
+                        text: name
+                        font.family: "Nunito"
+                        font.pixelSize: 12
+                        font.weight: isSel ? Font.Bold : Font.DemiBold
+                        color: isSel ? "#232a2e" : "#d3c6aa"
+                    }
+
+                    MouseArea {
+                        id: itemMa
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: {
+                            root.sessionIndex = index;
+                            root.sessionMenuOpen = false;
+                            passwordInput.forceActiveFocus();
+                        }
                     }
                 }
             }
