@@ -158,7 +158,7 @@ Item {
             spacing: 8
 
             Rectangle {
-                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                 Behavior on color { ColorAnimation { duration: 140 } }
                 Layout.fillWidth: true
                 implicitHeight: 34
@@ -201,7 +201,7 @@ Item {
                 Text { text: "Системные"; font.family: Theme.fontFamily; font.weight: Font.Bold; font.pixelSize: 11; color: Theme.fgMuted }
                 Rectangle {
                     scale: btnMa_4.pressed ? 0.94 : (btnMa_4.containsMouse ? 1.04 : 1.0)
-                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     Behavior on color { ColorAnimation { duration: 140 } }
                     implicitWidth: 38; implicitHeight: 22; radius: Theme.r(11)
                     color: root.showSystem ? Theme.accent : Theme.bgPill
@@ -210,7 +210,7 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         x: root.showSystem ? 19 : 3
                         color: root.showSystem ? Theme.accentOn : Theme.fgMuted
-                        Behavior on x { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on x { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     }
                     MouseArea {
                         id: btnMa_4
@@ -230,6 +230,7 @@ Item {
             Layout.fillHeight: true
 
             ListView {
+        OverscrollStretch {}
                 id: installedList
                 anchors { fill: parent; rightMargin: 10 }
                 clip: true
@@ -297,7 +298,7 @@ Item {
 
                 Rectangle {
                     scale: repM.pressed ? 0.94 : (repM.containsMouse ? 1.04 : 1.0)
-                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     Behavior on color { ColorAnimation { duration: 140 } }
                     Layout.fillWidth: true; implicitHeight: 34; radius: Theme.r(10)
                     color: repM.containsMouse ? Theme.bgPillHover : Theme.bgPill
@@ -315,7 +316,7 @@ Item {
 
                 Rectangle {
                     scale: sysM.pressed ? 0.94 : (sysM.containsMouse ? 1.04 : 1.0)
-                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     Behavior on color { ColorAnimation { duration: 140 } }
                     Layout.fillWidth: true; implicitHeight: 34; radius: Theme.r(10)
                     color: sysM.containsMouse ? Theme.accentWarm : Theme.accent
@@ -339,7 +340,7 @@ Item {
 
                 Rectangle {
                     scale: btnMa_5.pressed ? 0.94 : (btnMa_5.containsMouse ? 1.04 : 1.0)
-                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     Behavior on color { ColorAnimation { duration: 140 } }
                     implicitWidth: 105; implicitHeight: 36; radius: Theme.r(10)
                     color: Theme.bgFrame
@@ -360,7 +361,7 @@ Item {
 
                 Rectangle {
                     scale: btnMa_6.pressed ? 0.94 : (btnMa_6.containsMouse ? 1.04 : 1.0)
-                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     Behavior on color { ColorAnimation { duration: 140 } }
                     Layout.fillWidth: true; implicitHeight: 36; radius: Theme.r(10)
                     color: Theme.bgPill
@@ -393,7 +394,7 @@ Item {
 
                 Rectangle {
                     scale: findBtnM.pressed ? 0.94 : (findBtnM.containsMouse ? 1.04 : 1.0)
-                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     Behavior on color { ColorAnimation { duration: 140 } }
                     implicitWidth: 74; implicitHeight: 36; radius: Theme.r(10)
                     color: findBtnM.containsMouse ? Theme.accentWarm : Theme.bgPill
@@ -424,6 +425,7 @@ Item {
                 Layout.fillHeight: true
 
                 ListView {
+        OverscrollStretch {}
                     id: pkgResultsList
                     anchors { fill: parent; rightMargin: 10 }
                     clip: true
@@ -463,7 +465,7 @@ Item {
 
                             Rectangle {
                                 scale: instM.pressed ? 0.94 : (instM.containsMouse ? 1.04 : 1.0)
-                                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                                Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                                 Behavior on color { ColorAnimation { duration: 140 } }
                                 implicitWidth: 92; implicitHeight: 32; radius: Theme.r(9)
                                 color: modelData.installed ? Theme.bgFrame : (instM.containsMouse ? Theme.accentWarm : Theme.accent)
@@ -494,7 +496,7 @@ Item {
             // Встроенное окно логов терминала (ввод пароля, y, Enter)
             Rectangle {
                 scale: backM.pressed ? 0.94 : (backM.containsMouse ? 1.04 : 1.0)
-                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                 Behavior on color { ColorAnimation { duration: 140 } }
                 visible: root.termMode
                 Layout.fillWidth: true
@@ -525,6 +527,7 @@ Item {
                     }
 
                     Flickable {
+        OverscrollStretch {}
                         id: termScroll
                         Layout.fillWidth: true
                         Layout.fillHeight: true
@@ -584,6 +587,7 @@ Item {
             Layout.fillHeight: true
 
             ListView {
+        OverscrollStretch {}
                 id: autoListView
                 anchors { fill: parent; rightMargin: 10 }
                 clip: true
@@ -612,7 +616,7 @@ Item {
                         }
                         Rectangle {
                             scale: btnMa_7.pressed ? 0.94 : (btnMa_7.containsMouse ? 1.04 : 1.0)
-                            Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                            Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                             Behavior on color { ColorAnimation { duration: 140 } }
                             implicitWidth: 40; implicitHeight: 22; radius: Theme.r(11)
                             color: modelData.autostart ? Theme.accent : Theme.bgFrame
@@ -642,7 +646,7 @@ Item {
     }
 
     Rectangle {
-        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
         Behavior on color { ColorAnimation { duration: 140 } }
         visible: root.sourceMenuOpen
         x: 0; y: 128
@@ -682,7 +686,7 @@ Item {
 
     Rectangle {
         scale: delBtnM.pressed ? 0.94 : (delBtnM.containsMouse ? 1.04 : 1.0)
-        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
         Behavior on color { ColorAnimation { duration: 140 } }
         visible: root.ctxOpen
         x: root.ctxX; y: root.ctxY
@@ -704,7 +708,7 @@ Item {
             }
             Rectangle {
                 scale: delBtnM.pressed ? 0.93 : (delBtnM.containsMouse ? 1.05 : 1.0)
-                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                 Behavior on color { ColorAnimation { duration: 140 } }
                 Layout.fillWidth: true; implicitHeight: 34; radius: Theme.r(10)
                 color: delBtnM.containsMouse ? Theme.danger : Theme.bgPill
@@ -726,7 +730,7 @@ Item {
 
     Rectangle {
         scale: dAllM.pressed ? 0.94 : (dAllM.containsMouse ? 1.04 : 1.0)
-        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
         Behavior on color { ColorAnimation { duration: 140 } }
         visible: root.confirmDeleteOpen
         anchors.fill: parent
@@ -752,7 +756,7 @@ Item {
 
             Rectangle {
                 scale: dAllM.pressed ? 0.93 : (dAllM.containsMouse ? 1.05 : 1.0)
-                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                 Behavior on color { ColorAnimation { duration: 140 } }
                 Layout.fillWidth: true; implicitHeight: 38; radius: Theme.r(12)
                 color: dAllM.containsMouse ? Theme.danger : Theme.bgPill
@@ -775,7 +779,7 @@ Item {
 
             Rectangle {
                 scale: dKeepM.pressed ? 0.93 : (dKeepM.containsMouse ? 1.05 : 1.0)
-                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                 Behavior on color { ColorAnimation { duration: 140 } }
                 Layout.fillWidth: true; implicitHeight: 38; radius: Theme.r(12)
                 color: dKeepM.containsMouse ? Theme.accentWarm : Theme.bgPill

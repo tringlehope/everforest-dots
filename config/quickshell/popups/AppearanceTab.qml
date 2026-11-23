@@ -61,8 +61,8 @@ Item {
                     border.color: isActive ? Theme.accent : Theme.borderSubtle
                     border.width: isActive ? 3 : 1
 
-                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
-                    Behavior on radius { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                    Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     Behavior on color { ColorAnimation { duration: 140 } }
 
                     MouseArea {
@@ -109,7 +109,7 @@ Item {
             Rectangle {
                 id: cardFrame
                 scale: btnMa_1.pressed ? 0.94 : (btnMa_1.containsMouse ? 1.04 : 1.0)
-                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                 Behavior on color { ColorAnimation { duration: 140 } }
                 readonly property bool isActive: Theme.showFrame
                 Layout.fillWidth: true
@@ -165,7 +165,7 @@ Item {
             Rectangle {
                 id: cardBubbles
                 scale: btnMa_2.pressed ? 0.94 : (btnMa_2.containsMouse ? 1.04 : 1.0)
-                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                 Behavior on color { ColorAnimation { duration: 140 } }
                 readonly property bool isActive: !Theme.showFrame
                 Layout.fillWidth: true

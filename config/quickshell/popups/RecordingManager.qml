@@ -168,7 +168,7 @@ Scope {
 
         Rectangle {
             scale: delM.pressed ? 0.94 : (delM.containsMouse ? 1.04 : 1.0)
-            Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+            Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
             Behavior on color { ColorAnimation { duration: 140 } }
             anchors.centerIn: parent
             width: 340
@@ -209,7 +209,7 @@ Scope {
 
                     Rectangle {
                         scale: delM.pressed ? 0.93 : (delM.containsMouse ? 1.05 : 1.0)
-                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                         Behavior on color { ColorAnimation { duration: 140 } }
                         Layout.fillWidth: true
                         implicitHeight: 38
@@ -234,7 +234,7 @@ Scope {
 
                     Rectangle {
                         scale: saveM.pressed ? 0.93 : (saveM.containsMouse ? 1.05 : 1.0)
-                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                         Behavior on color { ColorAnimation { duration: 140 } }
                         Layout.fillWidth: true
                         implicitHeight: 38

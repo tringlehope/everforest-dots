@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import "../components"
 import Quickshell.Wayland
 import Quickshell.Io
 import ".."
@@ -124,12 +125,7 @@ PanelWindow {
 
         transformOrigin: Item.Center
         scale: win.open ? 1.0 : 0.0
-        Behavior on scale {
-            NumberAnimation {
-                duration: win.open ? 220 : 160
-                easing.type: win.open ? Easing.OutQuint : Easing.InQuad
-            }
-        }
+        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
 
         MouseArea {
             anchors.fill: parent
@@ -142,7 +138,7 @@ PanelWindow {
 
             // --- ЛЕВЫЙ САЙДБАР ---
             Rectangle {
-                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                 Behavior on color { ColorAnimation { duration: 140 } }
                 Layout.preferredWidth: 195
                 Layout.fillHeight: true
@@ -225,7 +221,7 @@ PanelWindow {
                         }
                         Rectangle {
                             scale: closeS.pressed ? 0.94 : (closeS.containsMouse ? 1.04 : 1.0)
-                            Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                            Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                             Behavior on color { ColorAnimation { duration: 140 } }
                             implicitWidth: 30; implicitHeight: 30
                             radius: Theme.r(closeS.containsMouse ? 8 : 15)
@@ -351,7 +347,7 @@ PanelWindow {
 
                         component DropRow: Rectangle {
                             scale: dm.pressed ? 0.94 : (dm.containsMouse ? 1.04 : 1.0)
-                            Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                            Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                             Behavior on color { ColorAnimation { duration: 140 } }
                             property string label: ""
                             property string valueText: ""
@@ -372,7 +368,7 @@ PanelWindow {
                                 }
                                 Rectangle {
                                     scale: dm.pressed ? 0.93 : (dm.containsMouse ? 1.05 : 1.0)
-                                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                                     Behavior on color { ColorAnimation { duration: 140 } }
                                     implicitWidth: valRow.implicitWidth + 22
                                     implicitHeight: 30
@@ -433,12 +429,12 @@ PanelWindow {
                         Item { Layout.fillWidth: true }
                         Rectangle {
                             scale: appBtnM.pressed ? 0.94 : (appBtnM.containsMouse ? 1.04 : 1.0)
-                            Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                            Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                             Behavior on color { ColorAnimation { duration: 140 } }
                             implicitWidth: 140; implicitHeight: 38
                             radius: Theme.r(appBtnM.containsMouse ? 10 : 19)
                             color: appBtnM.containsMouse ? Theme.accentWarm : Theme.accent
-                            Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                            Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                             Text {
                                 anchors.centerIn: parent
                                 text: "Применить"
@@ -459,7 +455,7 @@ PanelWindow {
 
                 // Всплывающий выпадающий список поверх правой панели
                 Rectangle {
-                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     Behavior on color { ColorAnimation { duration: 140 } }
                     visible: win.activeDropdown !== ""
                     anchors.right: parent.right
@@ -477,6 +473,7 @@ PanelWindow {
                     MouseArea { anchors.fill: parent }
 
                     ListView {
+        OverscrollStretch {}
                         id: dropList
                         anchors.fill: parent; anchors.margins: 6
                         clip: true

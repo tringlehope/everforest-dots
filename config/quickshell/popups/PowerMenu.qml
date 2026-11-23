@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import "../components"
 import Quickshell.Wayland
 import Quickshell.Io
 import ".."
@@ -100,12 +101,7 @@ PanelWindow {
                 easing.type: pm.showing ? Easing.OutQuint : Easing.InQuad
             }
         }
-        Behavior on scale {
-            NumberAnimation {
-                duration: pm.showing ? 260 : 160
-                easing.type: pm.showing ? Easing.OutQuint : Easing.InQuad
-            }
-        }
+        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
 
         // Крестик в правом верхнем углу без обводки
         Rectangle {
@@ -119,8 +115,8 @@ PanelWindow {
             scale: closeM.pressed ? 0.94 : (closeM.containsMouse ? 1.06 : 1.0)
             color: closeM.containsMouse ? Theme.bgPillHover : Theme.bgSurface
 
-            Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
-            Behavior on scale  { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+            Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+            Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
             Behavior on color  { ColorAnimation { duration: 150 } }
 
             Text {
@@ -163,8 +159,8 @@ PanelWindow {
                 border.color: tileM.containsMouse ? Theme.accent : Theme.bgPill
                 border.width: tileM.containsMouse ? 3 : 2
 
-                Behavior on radius { NumberAnimation { duration: 200; easing.type: Easing.OutQuint } }
-                Behavior on scale  { NumberAnimation { duration: 200; easing.type: Easing.OutQuint } }
+                Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                 Behavior on color  { ColorAnimation { duration: 160 } }
                 Behavior on border.color { ColorAnimation { duration: 160 } }
 
@@ -180,7 +176,7 @@ PanelWindow {
                         font.pixelSize: 34
                         color: iconColor
                         scale: tileM.containsMouse ? 1.1 : 1.0
-                        Behavior on scale { NumberAnimation { duration: 200; easing.type: Easing.OutQuint } }
+                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     }
 
                     Text {
@@ -293,6 +289,7 @@ PanelWindow {
                     color: Theme.bgFrame
 
                     Flickable {
+        OverscrollStretch {}
                         id: logFlick
                         anchors.fill: parent
                         anchors.margins: 12
@@ -321,8 +318,8 @@ PanelWindow {
                     scale: cancelM.pressed ? 0.96 : (cancelM.containsMouse ? 1.03 : 1.0)
                     color: cancelM.containsMouse ? Theme.bgPillHover : Theme.bgPill
 
-                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
-                    Behavior on scale  { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     Behavior on color  { ColorAnimation { duration: 150 } }
 
                     Text {

@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import "../components"
 import Quickshell.Wayland
 import Quickshell.Services.Notifications
 import ".."
@@ -48,21 +49,11 @@ PanelWindow {
 
         transformOrigin: Item.Top
         scale: win.open ? 1.0 : 0.94
-        Behavior on scale {
-            NumberAnimation {
-                duration: win.open ? 180 : 120
-                easing.type: win.open ? Easing.OutQuint : Easing.InQuad
-            }
-        }
+        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
         transform: Translate {
             id: topTrans
             y: win.open ? 0 : -(card.height + 48)
-            Behavior on y {
-                NumberAnimation {
-                    duration: win.open ? 180 : 120
-                    easing.type: win.open ? Easing.OutQuint : Easing.InQuad
-                }
-            }
+            Behavior on y { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
         }
 
         MouseArea { anchors.fill: parent }
@@ -87,7 +78,7 @@ PanelWindow {
                     }
                     Rectangle {
                         scale: btnMa_9.pressed ? 0.94 : (btnMa_9.containsMouse ? 1.04 : 1.0)
-                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                         Behavior on color { ColorAnimation { duration: 140 } }
                         implicitWidth: 44; implicitHeight: 24
                         radius: Theme.radiusPill
@@ -97,7 +88,7 @@ PanelWindow {
                             anchors.verticalCenter: parent.verticalCenter
                             x: win.dnd ? 23 : 3
                             color: win.dnd ? Theme.accentOn : Theme.fgMuted
-                            Behavior on x { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                            Behavior on x { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                         }
                         MouseArea { hoverEnabled: true; id: btnMa_9; cursorShape: Qt.PointingHandCursor; anchors.fill: parent; onClicked: win.dnd = !win.dnd }
                     }
@@ -116,6 +107,7 @@ PanelWindow {
                     }
 
                     ListView {
+        OverscrollStretch {}
                         anchors.fill: parent
                         clip: true
                         spacing: 8
@@ -129,8 +121,8 @@ PanelWindow {
                             scale: nM.pressed ? 0.97 : (nM.containsMouse ? 1.02 : 1.0)
                             color: nM.containsMouse ? Theme.bgPillHover : Theme.bgPill
                             Behavior on color { ColorAnimation { duration: 140 } }
-                            Behavior on radius { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
-                            Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                            Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                            Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
 
                             ColumnLayout {
                                 id: notifCol
@@ -163,13 +155,13 @@ PanelWindow {
 
                 Rectangle {
                     scale: clearMouse.pressed ? 0.94 : (clearMouse.containsMouse ? 1.03 : 1.0)
-                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     Behavior on color { ColorAnimation { duration: 140 } }
                     Layout.fillWidth: true
                     implicitHeight: 38
                     radius: Theme.r(clearMouse.containsMouse ? 10 : 19)
                     color: clearMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
-                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     Text {
                         anchors.centerIn: parent
                         text: "Очистить"
@@ -204,8 +196,8 @@ PanelWindow {
                         scale: prevM.pressed ? 0.9 : (prevM.containsMouse ? 1.08 : 1.0)
                         color: prevM.containsMouse ? Theme.bgPillHover : Theme.bgPill
                         Behavior on color { ColorAnimation { duration: 140 } }
-                        Behavior on radius { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
-                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                         Text { anchors.centerIn: parent; text: "\uf053"; font.family: Theme.iconFont; font.pixelSize: 12; color: Theme.fg }
                         MouseArea {
                             id: prevM
@@ -227,8 +219,8 @@ PanelWindow {
                         scale: nextM.pressed ? 0.9 : (nextM.containsMouse ? 1.08 : 1.0)
                         color: nextM.containsMouse ? Theme.bgPillHover : Theme.bgPill
                         Behavior on color { ColorAnimation { duration: 140 } }
-                        Behavior on radius { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
-                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                         Text { anchors.centerIn: parent; text: "\uf054"; font.family: Theme.iconFont; font.pixelSize: 12; color: Theme.fg }
                         MouseArea {
                             id: nextM
@@ -278,7 +270,7 @@ PanelWindow {
                             scale: (modelData > 0 && dayM.containsMouse) ? 1.12 : 1.0
                             color: isToday ? Theme.accentWarm : ((modelData > 0 && dayM.containsMouse) ? Theme.bgPillHover : "transparent")
                             Behavior on color { ColorAnimation { duration: 140 } }
-                            Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                            Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
 
                             Text {
                                 anchors.centerIn: parent

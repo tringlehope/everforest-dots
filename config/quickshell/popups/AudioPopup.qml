@@ -57,12 +57,7 @@ PanelWindow {
 
         transformOrigin: Item.Top
         scale: win.open ? 1.0 : 0.0
-        Behavior on scale {
-            NumberAnimation {
-                duration: win.open ? 260 : 160
-                easing.type: win.open ? Easing.OutQuint : Easing.InQuad
-            }
-        }
+        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
 
         MouseArea { anchors.fill: parent }
 
@@ -72,7 +67,7 @@ PanelWindow {
             spacing: 10
 
             Rectangle {
-                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                 Layout.fillWidth: true
                 implicitHeight: 34
                 radius: Theme.r(14)
@@ -162,6 +157,7 @@ PanelWindow {
             }
 
             Flickable {
+        OverscrollStretch {}
                 visible: win.tabIndex === 1
                 Layout.fillWidth: true
                 Layout.preferredHeight: Math.min(368, srcCol.implicitHeight)

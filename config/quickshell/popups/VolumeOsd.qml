@@ -61,12 +61,7 @@ PanelWindow {
 
         transformOrigin: Item.Top
         scale: osd.showing ? 1.0 : 0.0
-        Behavior on scale {
-            NumberAnimation {
-                duration: osd.showing ? 260 : 160
-                easing.type: osd.showing ? Easing.OutQuint : Easing.InQuad
-            }
-        }
+        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
 
         RowLayout {
             anchors.fill: parent

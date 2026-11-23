@@ -46,12 +46,7 @@ PanelWindow {
 
         transformOrigin: Item.Center
         scale: win.open ? 1.0 : 0.0
-        Behavior on scale {
-            NumberAnimation {
-                duration: win.open ? 260 : 160
-                easing.type: win.open ? Easing.OutQuint : Easing.InQuad
-            }
-        }
+        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
 
         MouseArea { anchors.fill: parent }
 
@@ -69,7 +64,7 @@ PanelWindow {
                 }
                 Rectangle {
                     scale: closeW.pressed ? 0.94 : (closeW.containsMouse ? 1.04 : 1.0)
-                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     Behavior on color { ColorAnimation { duration: 140 } }
                     implicitWidth: 30; implicitHeight: 30; radius: Theme.r(closeW.containsMouse ? 8 : 15)
                     color: closeW.containsMouse ? Theme.bgPillHover : Theme.bgPill
@@ -89,6 +84,7 @@ PanelWindow {
             }
 
             GridView {
+        OverscrollStretch {}
                 visible: win.wallpapers.length > 0
                 Layout.fillWidth: true
                 Layout.fillHeight: true
@@ -103,7 +99,7 @@ PanelWindow {
 
                     Rectangle {
                         scale: wM.pressed ? 0.94 : (wM.containsMouse ? 1.04 : 1.0)
-                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                         Behavior on color { ColorAnimation { duration: 140 } }
                         anchors.fill: parent; anchors.margins: 4
                         radius: Theme.r(wM.containsMouse ? 10 : 14)
@@ -111,7 +107,7 @@ PanelWindow {
                         border.color: wM.containsMouse ? Theme.accentWarm : Theme.borderSubtle
                         border.width: 2
                         clip: true
-                        Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                        Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
 
                         ClippingRectangle {
                             anchors.fill: parent; anchors.margins: 2
@@ -132,7 +128,6 @@ PanelWindow {
                             onClicked: {
                                 var p = modelData.replace(/'/g, "'\\''");
                                 Quickshell.execDetached(["sh", "-c", "printf '%s' '" + p + "' > ~/.local/state/qs-wallpaper && pkill swaybg; swaybg -i '" + p + "' -m fill >/dev/null 2>&1 &"]);
-                                win.open = false;
                             }
                         }
                     }

@@ -10,8 +10,8 @@ hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2
 
 hl.bind("SUPER + W", hl.dsp.exec_cmd("qs ipc call launcher toggle"))
 
-hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "r+1" }))
-hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "r-1" }))
+hl.bind(mainMod .. " + mouse_down", hl.dsp.exec_cmd("~/.config/hypr/ws_step.sh 1"))
+hl.bind(mainMod .. " + mouse_up",   hl.dsp.exec_cmd("~/.config/hypr/ws_step.sh -1"))
 
 for i = 1, 9 do
     hl.bind(mainMod .. " + " .. i,           hl.dsp.focus({ workspace = i }))

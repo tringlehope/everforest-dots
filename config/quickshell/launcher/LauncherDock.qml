@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Effects
 import Quickshell
+import "../components"
 import Quickshell.Wayland
 import Quickshell.Hyprland
 import Quickshell.Io
@@ -236,21 +237,12 @@ Scope {
             height: 540
             radius: Theme.radiusCard
             color: Theme.bgSurface
-            border.width: 0
+            border.color: Theme.accent
+            border.width: 3
 
             scale: launcherRoot.open ? 1.0 : 0.94
-            Behavior on anchors.verticalCenterOffset {
-                NumberAnimation {
-                    duration: launcherRoot.open ? 180 : 120
-                    easing.type: launcherRoot.open ? Easing.OutQuint : Easing.InQuad
-                }
-            }
-            Behavior on scale {
-                NumberAnimation {
-                    duration: launcherRoot.open ? 180 : 120
-                    easing.type: launcherRoot.open ? Easing.OutQuint : Easing.InQuad
-                }
-            }
+            Behavior on anchors.verticalCenterOffset { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+            Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
 
             MouseArea { anchors.fill: parent }
 
@@ -296,8 +288,8 @@ Scope {
                         radius: Theme.r(closeMouse.pressed ? 6 : (closeMouse.containsMouse ? 8 : 12))
                         scale: closeMouse.pressed ? 0.92 : (closeMouse.containsMouse ? 1.06 : 1.0)
                         color: closeMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
-                        Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
-                        Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                        Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                         Behavior on color { ColorAnimation { duration: 150 } }
                         Text { anchors.centerIn: parent; text: "\uf00d"; font.family: Theme.iconFont; font.pixelSize: 13; color: Theme.fgMuted }
                         MouseArea { id: closeMouse; anchors.fill: parent; hoverEnabled: true; onClicked: launcherRoot.open = false }
@@ -309,6 +301,7 @@ Scope {
                     Layout.fillHeight: true
 
                     ListView {
+        OverscrollStretch {}
                         id: appList
                         anchors.fill: parent
                         anchors.rightMargin: 10
@@ -348,8 +341,8 @@ Scope {
                             radius: Theme.r(appMouse.pressed ? 6 : (appMouse.containsMouse ? 9 : 14))
                             scale: appMouse.pressed ? 0.97 : (appMouse.containsMouse ? 1.02 : 1.0)
                             color: appMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
-                            Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
-                            Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                            Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                            Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                             Behavior on color { ColorAnimation { duration: 150 } }
 
                             RowLayout {
@@ -419,8 +412,8 @@ Scope {
                     color: updMouse.containsMouse ? Theme.bgPillHover : Theme.bgElevated
                     border.color: Theme.borderSubtle
                     border.width: 1
-                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
-                    Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     Behavior on color { ColorAnimation { duration: 150 } }
 
                     RowLayout {
@@ -455,17 +448,12 @@ Scope {
             radius: Theme.r(22)
             color: Theme.bgSurface
             border.color: Theme.accent
-            border.width: 0
+            border.width: 3
 
             transform: Translate {
                 id: dockTrans
                 y: dockWin.shouldShow ? 0 : 98
-                Behavior on y {
-                    NumberAnimation {
-                        duration: dockWin.shouldShow ? 180 : 120
-                        easing.type: dockWin.shouldShow ? Easing.OutQuint : Easing.InQuad
-                    }
-                }
+                Behavior on y { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
             }
 
             RowLayout {
@@ -486,16 +474,16 @@ Scope {
                         z: dockItemMouse.containsMouse ? 10 : 0
                         color: isFocused ? Theme.bgFrame : (dockItemMouse.containsMouse ? Theme.bgPillHover : "transparent")
                         Behavior on color { ColorAnimation { duration: 140 } }
-                        Behavior on radius { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
 
                         Item {
                             anchors.centerIn: parent
                             width: 46; height: 46
                             scale: dockItemMouse.pressed ? 0.92 : (dockItemMouse.containsMouse ? 1.24 : 1.0)
-                            Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                            Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                             transform: Translate {
                                 y: dockItemMouse.containsMouse ? -6 : 0
-                                Behavior on y { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                                Behavior on y { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                             }
 
                             Image {
@@ -526,7 +514,7 @@ Scope {
                             height: 3
                             radius: Theme.r(2)
                             color: Theme.accent
-                            Behavior on width { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                            Behavior on width { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                         }
 
                         MouseArea {
@@ -646,8 +634,8 @@ Scope {
                     radius: Theme.r(ctxCloseMouse.pressed ? 6 : (ctxCloseMouse.containsMouse ? 9 : 12))
                     scale: ctxCloseMouse.pressed ? 0.96 : (ctxCloseMouse.containsMouse ? 1.02 : 1.0)
                     color: ctxCloseMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
-                    Behavior on radius { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
-                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     Behavior on color { ColorAnimation { duration: 140 } }
 
                     RowLayout {

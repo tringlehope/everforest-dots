@@ -6,7 +6,7 @@ Canvas {
     property Flickable target: null
 
     visible: target !== null && target.contentHeight > target.height
-    width: 6
+    width: 10
     property real pos: target ? target.visibleArea.yPosition : 0
     property real ratio: target ? target.visibleArea.heightRatio : 1
 
@@ -31,5 +31,18 @@ Canvas {
             else ctx.lineTo(x, y);
         }
         ctx.stroke();
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        cursorShape: Qt.PointingHandCursor
+        function jumpTo(my) {
+            if (!root.target || root.height <= 0) return;
+            var maxY = Math.max(0, root.target.contentHeight - root.target.height);
+            var frac = Math.max(0, Math.min(1, my / root.height));
+            root.target.contentY = frac * maxY;
+        }
+        onPressed: mouse => jumpTo(mouse.y)
+        onPositionChanged: mouse => { if (pressed) jumpTo(mouse.y); }
     }
 }

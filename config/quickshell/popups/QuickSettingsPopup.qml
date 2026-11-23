@@ -149,7 +149,7 @@ PanelWindow {
     // Компактный переиспользуемый тумблер
     component TogglePill: Rectangle {
         scale: btnMa_10.pressed ? 0.94 : (btnMa_10.containsMouse ? 1.04 : 1.0)
-        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
         property bool checked: false
         signal toggled()
         implicitWidth: 44
@@ -167,7 +167,7 @@ PanelWindow {
             anchors.verticalCenter: parent.verticalCenter
             x: checked ? parent.width - width - 4 : 4
             color: checked ? Theme.accentOn : Theme.fgDim
-            Behavior on x { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+            Behavior on x { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
         }
 
         MouseArea {
@@ -192,25 +192,15 @@ PanelWindow {
         border.color: Theme.accent
         border.width: 3
 
-        Behavior on height { NumberAnimation { duration: 200; easing.type: Easing.OutQuint } }
+        Behavior on height { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
 
         transformOrigin: Item.Top
         scale: win.open ? 1.0 : 0.94
-        Behavior on scale {
-            NumberAnimation {
-                duration: win.open ? 180 : 120
-                easing.type: win.open ? Easing.OutQuint : Easing.InQuad
-            }
-        }
+        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
         transform: Translate {
             id: topTrans
             y: win.open ? 0 : -(card.height + 48)
-            Behavior on y {
-                NumberAnimation {
-                    duration: win.open ? 180 : 120
-                    easing.type: win.open ? Easing.OutQuint : Easing.InQuad
-                }
-            }
+            Behavior on y { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
         }
 
         MouseArea { anchors.fill: parent }
@@ -236,8 +226,8 @@ PanelWindow {
                     scale: m.pressed ? 0.94 : (m.containsMouse ? 1.04 : 1.0)
                     color: active ? Theme.danger : (m.containsMouse ? Theme.bgPillHover : Theme.bgPill)
                     Behavior on color { ColorAnimation { duration: Theme.animFast } }
-                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
-                    Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     Text {
                         anchors.centerIn: parent
                         text: icon
@@ -280,10 +270,10 @@ PanelWindow {
                     implicitHeight: 48
                     radius: Theme.r(netM.pressed ? 8 : (netM.containsMouse ? 12 : 21))
                     scale: netM.pressed ? 0.95 : (netM.containsMouse ? 1.03 : 1.0)
-                    Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     color: netActive ? Theme.accent : Theme.bgPill
                     Behavior on color { ColorAnimation { duration: Theme.animFast } }
-                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
 
                     RowLayout {
                         anchors.fill: parent
@@ -312,8 +302,8 @@ PanelWindow {
                         Rectangle {
                             width: 28; height: 28; radius: Theme.r(netArrowM.containsMouse ? 10 : 14)
                             scale: netArrowM.pressed ? 0.9 : (netArrowM.containsMouse ? 1.1 : 1.0)
-                            Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
-                            Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                            Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                            Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                             color: netArrowM.containsMouse
                                    ? ((win.ethConnected || win.connectedWifiSsid !== "") ? "#232a2e" : Theme.bgPillHover)
                                    : ((win.ethConnected || win.connectedWifiSsid !== "") ? "#2d353b" : Theme.bgFrame)
@@ -345,10 +335,10 @@ PanelWindow {
                     implicitHeight: 48
                     radius: Theme.r(btM.pressed ? 8 : (btM.containsMouse ? 12 : 21))
                     scale: btM.pressed ? 0.95 : (btM.containsMouse ? 1.03 : 1.0)
-                    Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     color: btOn ? Theme.accent : Theme.bgPill
                     Behavior on color { ColorAnimation { duration: Theme.animFast } }
-                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
 
                     RowLayout {
                         anchors.fill: parent
@@ -373,8 +363,8 @@ PanelWindow {
                         Rectangle {
                             width: 28; height: 28; radius: Theme.r(btArrowM.containsMouse ? 10 : 14)
                             scale: btArrowM.pressed ? 0.9 : (btArrowM.containsMouse ? 1.1 : 1.0)
-                            Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
-                            Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                            Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                            Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                             color: btArrowM.containsMouse
                                    ? (btPill.btOn ? "#232a2e" : Theme.bgPillHover)
                                    : (btPill.btOn ? "#2d353b" : Theme.bgFrame)
@@ -400,10 +390,10 @@ PanelWindow {
                     implicitHeight: 46
                     radius: Theme.r(layM.pressed ? 8 : (layM.containsMouse ? 12 : 20))
                     scale: layM.pressed ? 0.95 : (layM.containsMouse ? 1.03 : 1.0)
-                    Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     color: win.scrollingLayout ? Theme.accentWarm : (layM.containsMouse ? Theme.bgPillHover : Theme.bgPill)
                     Behavior on color { ColorAnimation { duration: Theme.animFast } }
-                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
 
                     RowLayout {
                         anchors.centerIn: parent; spacing: 6
@@ -431,9 +421,9 @@ PanelWindow {
                     implicitHeight: 46
                     radius: Theme.r(wallM.pressed ? 8 : (wallM.containsMouse ? 12 : 20))
                     scale: wallM.pressed ? 0.95 : (wallM.containsMouse ? 1.03 : 1.0)
-                    Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     color: wallM.containsMouse ? Theme.bgPillHover : Theme.bgPill
-                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
 
                     RowLayout {
                         anchors.centerIn: parent; spacing: 6
@@ -457,10 +447,10 @@ PanelWindow {
                     implicitHeight: 46
                     radius: Theme.r(pinM.pressed ? 8 : (pinM.containsMouse ? 12 : 20))
                     scale: pinM.pressed ? 0.95 : (pinM.containsMouse ? 1.03 : 1.0)
-                    Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     color: win.dockPinned ? Theme.accent : (pinM.containsMouse ? Theme.bgPillHover : Theme.bgPill)
                     Behavior on color { ColorAnimation { duration: Theme.animFast } }
-                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
 
                     RowLayout {
                         anchors.centerIn: parent; spacing: 8
@@ -485,9 +475,9 @@ PanelWindow {
                     implicitHeight: 46
                     radius: Theme.r(setM.pressed ? 8 : (setM.containsMouse ? 12 : 20))
                     scale: setM.pressed ? 0.95 : (setM.containsMouse ? 1.03 : 1.0)
-                    Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     color: setM.containsMouse ? Theme.bgPillHover : Theme.bgPill
-                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
 
                     RowLayout {
                         anchors.centerIn: parent; spacing: 6
@@ -522,7 +512,7 @@ PanelWindow {
 
                 Rectangle {
                     scale: netBackM.pressed ? 0.94 : (netBackM.containsMouse ? 1.04 : 1.0)
-                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     Behavior on color { ColorAnimation { duration: 140 } }
                     width: 30; height: 30; radius: Theme.r(15)
                     color: netBackM.containsMouse ? Theme.bgPillHover : Theme.bgPill
@@ -549,7 +539,7 @@ PanelWindow {
             // 2 вкладки: Ethernet / Wi-Fi
             Rectangle {
                 scale: ethTabM.pressed ? 0.94 : (ethTabM.containsMouse ? 1.04 : 1.0)
-                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                 Behavior on color { ColorAnimation { duration: 140 } }
                 Layout.fillWidth: true
                 implicitHeight: 36
@@ -563,7 +553,7 @@ PanelWindow {
 
                     Rectangle {
                         scale: ethTabM.pressed ? 0.93 : (ethTabM.containsMouse ? 1.05 : 1.0)
-                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                         Behavior on color { ColorAnimation { duration: 140 } }
                         Layout.fillWidth: true; Layout.fillHeight: true; radius: Theme.r(9)
                         color: win.netTab === "eth" ? Theme.accent : (ethTabM.containsMouse ? Theme.bgPill : "transparent")
@@ -581,7 +571,7 @@ PanelWindow {
 
                     Rectangle {
                         scale: wifiTabM.pressed ? 0.93 : (wifiTabM.containsMouse ? 1.05 : 1.0)
-                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                         Behavior on color { ColorAnimation { duration: 140 } }
                         Layout.fillWidth: true; Layout.fillHeight: true; radius: Theme.r(9)
                         color: win.netTab === "wifi" ? Theme.accent : (wifiTabM.containsMouse ? Theme.bgPill : "transparent")
@@ -736,7 +726,7 @@ PanelWindow {
                         }
                         Rectangle {
                             scale: refM.pressed ? 0.94 : (refM.containsMouse ? 1.04 : 1.0)
-                            Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                            Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                             Behavior on color { ColorAnimation { duration: 140 } }
                             implicitWidth: refRow.implicitWidth + 16
                             implicitHeight: 28
@@ -758,7 +748,7 @@ PanelWindow {
 
                     Rectangle {
                         scale: discM.pressed ? 0.94 : (discM.containsMouse ? 1.04 : 1.0)
-                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                         Behavior on color { ColorAnimation { duration: 140 } }
                         visible: win.connectedWifiSsid !== ""
                         Layout.fillWidth: true
@@ -778,7 +768,7 @@ PanelWindow {
                             }
                             Rectangle {
                                 scale: discM.pressed ? 0.93 : (discM.containsMouse ? 1.05 : 1.0)
-                                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                                Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                                 Behavior on color { ColorAnimation { duration: 140 } }
                                 implicitWidth: discTxt.implicitWidth + 12
                                 implicitHeight: 24
@@ -805,6 +795,7 @@ PanelWindow {
                     }
 
                     Flickable {
+        OverscrollStretch {}
                         visible: win.wifiList.length > 0
                         Layout.fillWidth: true
                         implicitHeight: Math.min(165, wifiListCol.implicitHeight)
@@ -871,7 +862,7 @@ PanelWindow {
 
                     Rectangle {
                         scale: btnMa_11.pressed ? 0.94 : (btnMa_11.containsMouse ? 1.04 : 1.0)
-                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                         Behavior on color { ColorAnimation { duration: 140 } }
                         visible: win.selectedWifiSsid !== ""
                         Layout.fillWidth: true
@@ -941,7 +932,7 @@ PanelWindow {
                                 spacing: 6
                                 Rectangle {
                                     scale: cancelPassM.pressed ? 0.93 : (cancelPassM.containsMouse ? 1.05 : 1.0)
-                                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                                     Behavior on color { ColorAnimation { duration: 140 } }
                                     Layout.fillWidth: true; implicitHeight: 28; radius: Theme.r(8)
                                     color: cancelPassM.containsMouse ? Theme.bgPillHover : Theme.bgPill
@@ -954,7 +945,7 @@ PanelWindow {
                                 }
                                 Rectangle {
                                     scale: animMa_1.pressed ? 0.93 : (animMa_1.containsMouse ? 1.05 : 1.0)
-                                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                                     Behavior on color { ColorAnimation { duration: 140 } }
                                     Layout.fillWidth: true; implicitHeight: 28; radius: Theme.r(8)
                                     color: Theme.accent
@@ -1096,6 +1087,7 @@ PanelWindow {
                 }
 
                 Flickable {
+        OverscrollStretch {}
                     visible: Bluetooth.devices.values.length > 0
                     Layout.fillWidth: true
                     implicitHeight: Math.min(220, btListCol.implicitHeight)

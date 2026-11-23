@@ -493,7 +493,7 @@ PanelWindow {
 
             // Дополнительная панель: цвета + размер 1:1 (для кисти/ластика) или формат (для пипетки)
             Rectangle {
-                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                 Behavior on color { ColorAnimation { duration: 140 } }
                 id: subBar
                 visible: root.activeTool === "draw" || root.activeTool === "eraser" || root.activeTool === "pipette"
@@ -518,7 +518,7 @@ PanelWindow {
                         Repeater {
                             model: root.paletteColors
                             Rectangle {
-                                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                                Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                                 Behavior on color { ColorAnimation { duration: 140 } }
                                 width: 24
                                 height: 24
@@ -654,7 +654,7 @@ PanelWindow {
                             model: ["HEX", "RGB", "HSL"]
                             Rectangle {
                                 scale: animMa_2.pressed ? 0.93 : (animMa_2.containsMouse ? 1.05 : 1.0)
-                                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                                Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                                 Behavior on color { ColorAnimation { duration: 140 } }
                                 width: fmtTxt.implicitWidth + 18
                                 height: 28
@@ -710,7 +710,7 @@ PanelWindow {
 
             // Главная панель кнопок (без записи экрана)
             Rectangle {
-                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                 Behavior on color { ColorAnimation { duration: 140 } }
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: mainRow.implicitWidth + 20
@@ -732,7 +732,7 @@ PanelWindow {
                             { id: "pipette", icon: "\uf1fb" }
                         ]
                         Rectangle {
-                            Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                            Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                             Behavior on color { ColorAnimation { duration: 140 } }
                             width: 36
                             height: 34
@@ -757,7 +757,7 @@ PanelWindow {
 
                     Rectangle {
                         scale: animMa_3.pressed ? 0.93 : (animMa_3.containsMouse ? 1.05 : 1.0)
-                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                         Behavior on color { ColorAnimation { duration: 140 } }
                         visible: root.strokes.length > 0
                         width: undoLbl.implicitWidth + 20
@@ -784,7 +784,7 @@ PanelWindow {
 
                     Rectangle {
                         scale: animMa_4.pressed ? 0.93 : (animMa_4.containsMouse ? 1.05 : 1.0)
-                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                         Behavior on color { ColorAnimation { duration: 140 } }
                         width: copyLbl.implicitWidth + 22
                         height: 34
@@ -810,7 +810,7 @@ PanelWindow {
 
                     Rectangle {
                         scale: animMa_5.pressed ? 0.93 : (animMa_5.containsMouse ? 1.05 : 1.0)
-                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                         Behavior on color { ColorAnimation { duration: 140 } }
                         width: saveLbl.implicitWidth + 22
                         height: 34
@@ -836,7 +836,7 @@ PanelWindow {
 
                     Rectangle {
                         scale: animMa_6.pressed ? 0.93 : (animMa_6.containsMouse ? 1.05 : 1.0)
-                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                         Behavior on color { ColorAnimation { duration: 140 } }
                         width: 34
                         height: 34

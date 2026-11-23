@@ -59,21 +59,11 @@ PanelWindow {
         border.width: 3
 
         scale: osd.showing ? 1.0 : 0.92
-        Behavior on scale {
-            NumberAnimation {
-                duration: osd.showing ? 180 : 120
-                easing.type: osd.showing ? Easing.OutQuint : Easing.InQuad
-            }
-        }
+        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
         transform: Translate {
             id: osdTrans
             y: osd.showing ? 0 : -96
-            Behavior on y {
-                NumberAnimation {
-                    duration: osd.showing ? 180 : 120
-                    easing.type: osd.showing ? Easing.OutQuint : Easing.InQuad
-                }
-            }
+            Behavior on y { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
         }
 
         RowLayout {
@@ -90,7 +80,7 @@ PanelWindow {
                     radius: Theme.r(isActive ? 11 : 15)
                     color: isActive ? Theme.accentWarm : Theme.bgPill
                     Behavior on color { ColorAnimation { duration: 150 } }
-                    Behavior on radius { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
 
                     Text {
                         anchors.centerIn: parent

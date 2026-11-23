@@ -135,8 +135,8 @@ PanelWindow {
                     radius: Theme.r(menuMouse.pressed ? 6 : (menuMouse.containsMouse ? 8 : 13))
                     scale: menuMouse.pressed ? 0.92 : (menuMouse.containsMouse ? 1.08 : 1.0)
                     color: menuMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
-                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
-                    Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     Behavior on color { ColorAnimation { duration: 150 } }
 
                     Text {
@@ -164,7 +164,7 @@ PanelWindow {
                     width: parent.width; height: 29
                     radius: Theme.r(wsHover.hovered ? 9 : 13)
                     color: Theme.bgPill
-                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                 }
 
                 HoverHandler { id: wsHover }
@@ -175,8 +175,8 @@ PanelWindow {
                     onWheel: wheel => {
                         var dy = wheel.angleDelta.y !== 0 ? wheel.angleDelta.y : wheel.pixelDelta.y;
                         if (dy === 0) return;
-                        var dir = dy > 0 ? "r-1" : "r+1";
-                        Quickshell.execDetached(["hyprctl", "dispatch", "hl.dsp.focus({ workspace = '" + dir + "' })"]);
+                        var step = dy > 0 ? "-1" : "1";
+                        Quickshell.execDetached([Quickshell.env("HOME") + "/.config/hypr/ws_step.sh", step]);
                     }
                 }
 
@@ -205,9 +205,9 @@ PanelWindow {
                                 scale: wsItemMouse.pressed ? 0.88 : (wsItemMouse.containsMouse ? 1.14 : 1.0)
                                 color: parent.isActive ? Theme.accentWarm : (wsItemMouse.containsMouse ? Theme.bgElevated : (parent.hasWindows ? Theme.bgPillHover : "transparent"))
 
-                                Behavior on width { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
-                                Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
-                                Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                                Behavior on width { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                                Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                                Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                                 Behavior on color { ColorAnimation { duration: Theme.animFast } }
 
                                 Text {
@@ -250,8 +250,8 @@ PanelWindow {
                 radius: Theme.r(centerMouse.containsMouse ? 8 : 13)
                 color: centerMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
 
-                Behavior on width { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
-                Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                Behavior on width { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
             }
 
             MouseArea {
@@ -312,7 +312,7 @@ PanelWindow {
 
                     Rectangle {
                         scale: prevM.pressed ? 0.94 : (prevM.containsMouse ? 1.04 : 1.0)
-                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                         Behavior on color { ColorAnimation { duration: 140 } }
                         implicitWidth: 30; implicitHeight: 29; radius: Theme.r(prevM.containsMouse ? 6 : 11)
                         color: prevM.containsMouse ? Theme.bgElevated : "transparent"
@@ -321,7 +321,7 @@ PanelWindow {
                     }
                     Rectangle {
                         scale: playM.pressed ? 0.94 : (playM.containsMouse ? 1.04 : 1.0)
-                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                         Behavior on color { ColorAnimation { duration: 140 } }
                         implicitWidth: 32; implicitHeight: 29; radius: Theme.r(playM.containsMouse ? 6 : 11)
                         color: playM.containsMouse ? Theme.bgElevated : "transparent"
@@ -330,7 +330,7 @@ PanelWindow {
                     }
                     Rectangle {
                         scale: nextM.pressed ? 0.94 : (nextM.containsMouse ? 1.04 : 1.0)
-                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                         Behavior on color { ColorAnimation { duration: 140 } }
                         implicitWidth: 30; implicitHeight: 29; radius: Theme.r(nextM.containsMouse ? 6 : 11)
                         color: nextM.containsMouse ? Theme.bgElevated : "transparent"
@@ -394,7 +394,7 @@ PanelWindow {
 
                     Rectangle {
                         scale: pauseM.pressed ? 0.94 : (pauseM.containsMouse ? 1.04 : 1.0)
-                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                         Behavior on color { ColorAnimation { duration: 140 } }
                         visible: bar.recording
                         width: 20; height: 20; radius: Theme.r(10)
@@ -416,7 +416,7 @@ PanelWindow {
 
                     Rectangle {
                         scale: stopM.pressed ? 0.94 : (stopM.containsMouse ? 1.04 : 1.0)
-                        Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                         Behavior on color { ColorAnimation { duration: 140 } }
                         visible: bar.recording
                         width: 20; height: 20; radius: Theme.r(10)
@@ -493,7 +493,7 @@ PanelWindow {
                             font.family: Theme.iconFont; font.pixelSize: 13
                             color: trayPill.hasTray ? Theme.fg : Theme.fgDim
                             rotation: trayPill.expanded ? 180 : 0
-                            Behavior on rotation { NumberAnimation { duration: 280; easing.type: Easing.OutCubic } }
+                            Behavior on rotation { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                         }
                     }
 
@@ -504,9 +504,7 @@ PanelWindow {
                         Layout.preferredHeight: 29
                         Layout.preferredWidth: trayPill.expanded ? (trayIconsRow.implicitWidth + 10) : 0
                         implicitWidth: Layout.preferredWidth
-                        Behavior on Layout.preferredWidth {
-                            NumberAnimation { duration: 300; easing.type: Easing.OutCubic }
-                        }
+                        Behavior on Layout.preferredWidth { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
 
                         RowLayout {
                             id: trayIconsRow
@@ -595,8 +593,8 @@ PanelWindow {
                     scale: kbMouse.pressed ? 0.94 : (kbMouse.containsMouse ? 1.05 : 1.0)
                     color: kbMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
                     Behavior on color { ColorAnimation { duration: 150 } }
-                    Behavior on radius { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
-                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutQuint } }
+                    Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                 }
 
                 Text {
@@ -629,8 +627,8 @@ PanelWindow {
                     radius: Theme.r(qsMouse.pressed ? 6 : (qsMouse.containsMouse ? 8 : 13))
                     scale: qsMouse.pressed ? 0.94 : (qsMouse.containsMouse ? 1.05 : 1.0)
                     color: qsMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
-                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
-                    Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     Behavior on color { ColorAnimation { duration: 150 } }
                 }
 
@@ -662,8 +660,8 @@ PanelWindow {
                     radius: Theme.r(timeMouse.pressed ? 6 : (timeMouse.containsMouse ? 8 : 13))
                     scale: timeMouse.pressed ? 0.94 : (timeMouse.containsMouse ? 1.05 : 1.0)
                     color: timeMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
-                    Behavior on radius { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
-                    Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutQuint } }
+                    Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                     Behavior on color { ColorAnimation { duration: 150 } }
                 }
 
