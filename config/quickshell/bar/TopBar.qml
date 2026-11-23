@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Effects
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
@@ -110,7 +111,14 @@ PanelWindow {
     Rectangle {
         anchors.fill: parent
         color: Theme.bgFrame
-        visible: Theme.showFrame
+        visible: Theme.showFrame || Theme.panelStyle === "panel"
+        radius: (Theme.panelStyle === "panel" && !Theme.isWin7) ? 16 : 0
+        Rectangle {
+            visible: Theme.panelStyle === "panel" && !Theme.isWin7
+            anchors { left: parent.left; right: parent.right; top: parent.top }
+            height: 16
+            color: Theme.bgFrame
+        }
     }
 
     Item {
@@ -297,10 +305,22 @@ PanelWindow {
                     visible: bar.showPlayer
                     spacing: 4
 
-                    IconImage {
-                        source: Quickshell.iconPath((bar.playerName || "audio-x-generic").split(".")[0], "audio-x-generic")
-                        implicitSize: 16
+                    Item {
                         width: 16; height: 16
+                        IconImage {
+                            id: playerIconImg
+                            anchors.fill: parent
+                            source: Quickshell.iconPath((bar.playerName || "audio-x-generic").split(".")[0], "audio-x-generic")
+                            implicitSize: 16
+                            visible: false
+                        }
+                        MultiEffect {
+                            anchors.fill: playerIconImg
+                            source: playerIconImg
+                            saturation: -1.0
+                            colorization: 0.85
+                            colorizationColor: Theme.accent
+                        }
                     }
 
                     Text {

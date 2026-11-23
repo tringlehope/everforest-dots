@@ -46,7 +46,12 @@ ShellRoot {
         running: true
         command: ["sh", "-c", "cat ~/.local/state/qs-frame-mode 2>/dev/null || echo 1"]
         stdout: StdioCollector {
-            onStreamFinished: Theme.showFrame = (text.trim() !== "0")
+            onStreamFinished: {
+                var v = text.trim();
+                if (v === "0") { Theme.panelStyle = "bubbles"; Theme.showFrame = false; }
+                else if (v === "2") { Theme.panelStyle = "panel"; Theme.showFrame = false; }
+                else { Theme.panelStyle = "frame"; Theme.showFrame = true; }
+            }
         }
     }
 

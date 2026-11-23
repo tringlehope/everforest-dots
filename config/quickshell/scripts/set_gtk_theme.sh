@@ -41,13 +41,26 @@ for ini in "$HOME/.config/gtk-3.0/settings.ini" "$HOME/.config/gtk-4.0/settings.
 done
 
 QT6CT="$HOME/.config/qt6ct/qt6ct.conf"
+QT_SCHEME="$HOME/.config/qt6ct/colors/everforest.conf"
+case "$THEME" in
+    Catppuccin-*) QT_SCHEME="$HOME/.config/qt6ct/colors/catppuccin-macchiato.conf" ;;
+    Graphite-*)   QT_SCHEME="$HOME/.config/qt6ct/colors/graphite.conf" ;;
+    GTKAero)      QT_SCHEME="$HOME/.config/qt6ct/colors/win7.conf" ;;
+esac
 OLD_QT_ICON=""
+OLD_QT_SCHEME=""
 if [ -f "$QT6CT" ]; then
     OLD_QT_ICON="$(grep '^icon_theme=' "$QT6CT" | cut -d= -f2)"
+    OLD_QT_SCHEME="$(grep '^color_scheme_path=' "$QT6CT" | cut -d= -f2)"
     if grep -q '^icon_theme=' "$QT6CT"; then
         sed -i "s|^icon_theme=.*|icon_theme=$ICON_THEME|" "$QT6CT"
     else
         sed -i "/^\[Appearance\]/a icon_theme=$ICON_THEME" "$QT6CT"
+    fi
+    if grep -q '^color_scheme_path=' "$QT6CT"; then
+        sed -i "s|^color_scheme_path=.*|color_scheme_path=$QT_SCHEME|" "$QT6CT"
+    else
+        sed -i "/^\[Appearance\]/a color_scheme_path=$QT_SCHEME" "$QT6CT"
     fi
 fi
 
@@ -59,7 +72,7 @@ else
     gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' 2>/dev/null || true
 fi
 
-if [ "$OLD_QT_ICON" != "$ICON_THEME" ] && pgrep -x qs >/dev/null; then
+if { [ "$OLD_QT_ICON" != "$ICON_THEME" ] || [ "$OLD_QT_SCHEME" != "$QT_SCHEME" ]; } && pgrep -x qs >/dev/null; then
     (sleep 0.2; pkill -x qs; sleep 0.2; nohup qs > /tmp/qs.log 2>&1 &) &
 fi
 

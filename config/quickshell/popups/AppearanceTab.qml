@@ -6,9 +6,11 @@ import ".."
 Item {
     id: root
 
-    function setFrameMode(enabled) {
-        Theme.showFrame = enabled;
-        Quickshell.execDetached(["sh", "-c", "mkdir -p ~/.local/state && printf '%s' '" + (enabled ? "1" : "0") + "' > ~/.local/state/qs-frame-mode"]);
+    function setPanelStyle(style) {
+        Theme.panelStyle = style;
+        Theme.showFrame = (style === "frame");
+        var code = (style === "bubbles") ? "0" : (style === "panel" ? "2" : "1");
+        Quickshell.execDetached(["sh", "-c", "mkdir -p ~/.local/state && printf '%s' '" + code + "' > ~/.local/state/qs-frame-mode"]);
     }
 
     function setTheme(themeId) {
@@ -111,7 +113,7 @@ Item {
                 scale: btnMa_1.pressed ? 0.94 : (btnMa_1.containsMouse ? 1.04 : 1.0)
                 Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                 Behavior on color { ColorAnimation { duration: 140 } }
-                readonly property bool isActive: Theme.showFrame
+                readonly property bool isActive: Theme.panelStyle === "frame"
                 Layout.fillWidth: true
                 implicitHeight: 170
                 radius: 18
@@ -124,7 +126,7 @@ Item {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     anchors.fill: parent
-                    onClicked: root.setFrameMode(true)
+                    onClicked: root.setPanelStyle("frame")
                 }
 
                 ColumnLayout {
@@ -161,13 +163,77 @@ Item {
                 }
             }
 
-            // Вариант 2: Только пузыри
+
+            // Вариант 2: Панель (без рамок, скруглена снизу)
+            Rectangle {
+                id: cardPanel
+                scale: btnMa_3.pressed ? 0.94 : (btnMa_3.containsMouse ? 1.04 : 1.0)
+                Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                Behavior on color { ColorAnimation { duration: 140 } }
+                readonly property bool isActive: Theme.panelStyle === "panel"
+                Layout.fillWidth: true
+                implicitHeight: 170
+                radius: 18
+                color: isActive ? Theme.bgElevated : Theme.bgPill
+                border.color: isActive ? Theme.accent : Theme.borderSubtle
+                border.width: isActive ? 3 : 1
+
+                MouseArea {
+                    id: btnMa_3
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                    anchors.fill: parent
+                    onClicked: root.setPanelStyle("panel")
+                }
+
+                ColumnLayout {
+                    anchors.fill: parent; anchors.margins: 14; spacing: 10
+
+                    Rectangle {
+                        Layout.fillWidth: true; Layout.fillHeight: true
+                        radius: 12
+                        color: Theme.bgSurface
+                        border.color: Theme.borderSubtle
+                        border.width: 1
+                        clip: true
+
+                        Rectangle {
+                            anchors { top: parent.top; left: parent.left; right: parent.right }
+                            height: 22
+                            radius: Theme.isWin7 ? 0 : 10
+                            color: Theme.bgFrame
+                            Rectangle {
+                                anchors { top: parent.top; left: parent.left; right: parent.right }
+                                height: 10
+                                color: Theme.bgFrame
+                            }
+                            RowLayout {
+                                anchors.fill: parent; anchors.leftMargin: 6; anchors.rightMargin: 6
+                                Rectangle { width: 30; height: 10; radius: 5; color: Theme.accentWarm }
+                                Item { Layout.fillWidth: true }
+                                Rectangle { width: 20; height: 10; radius: 5; color: Theme.bgPillHover }
+                                Item { Layout.fillWidth: true }
+                                Rectangle { width: 26; height: 10; radius: 5; color: Theme.bgPillHover }
+                            }
+                        }
+                    }
+
+                    Text {
+                        Layout.alignment: Qt.AlignHCenter
+                        text: "Панель"
+                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Bold
+                        color: cardPanel.isActive ? Theme.accent : Theme.fg
+                    }
+                }
+            }
+
+            // Вариант 3: Только пузыри
             Rectangle {
                 id: cardBubbles
                 scale: btnMa_2.pressed ? 0.94 : (btnMa_2.containsMouse ? 1.04 : 1.0)
                 Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
                 Behavior on color { ColorAnimation { duration: 140 } }
-                readonly property bool isActive: !Theme.showFrame
+                readonly property bool isActive: Theme.panelStyle === "bubbles"
                 Layout.fillWidth: true
                 implicitHeight: 170
                 radius: 18
@@ -180,7 +246,7 @@ Item {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     anchors.fill: parent
-                    onClicked: root.setFrameMode(false)
+                    onClicked: root.setPanelStyle("bubbles")
                 }
 
                 ColumnLayout {

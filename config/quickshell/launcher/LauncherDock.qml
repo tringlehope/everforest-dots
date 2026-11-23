@@ -599,7 +599,7 @@ Scope {
             radius: Theme.radiusCard
             color: Theme.bgSurface
             border.color: Theme.accent
-            border.width: 2
+            border.width: 3
 
             MouseArea { anchors.fill: parent }
 
@@ -667,7 +667,7 @@ Scope {
 
                     RowLayout {
                         anchors.fill: parent; anchors.leftMargin: 10; anchors.rightMargin: 10; spacing: 8
-                        Text { text: ""; font.family: Theme.iconFont; font.pixelSize: 13; color: "#e67e80" }
+                        Text { text: ""; font.family: Theme.iconFont; font.pixelSize: 13; color: Theme.danger }
                         Text { text: "Закрыть окно"; font.family: Theme.fontFamily; font.pixelSize: 12; font.weight: Font.Bold; color: Theme.fg; Layout.fillWidth: true }
                     }
 

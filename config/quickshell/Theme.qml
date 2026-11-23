@@ -3,6 +3,7 @@ import QtQuick
 
 QtObject {
     property bool showFrame: true
+    property string panelStyle: "frame" // "frame" | "panel" | "bubbles"
     property bool dockPinned: false
     property string currentTheme: "everforest"
     readonly property bool isWin7: currentTheme === "win7"
