@@ -232,17 +232,44 @@ Scope {
         Rectangle {
             id: menuCard
             anchors.centerIn: parent
-            anchors.verticalCenterOffset: launcherRoot.open ? 0 : 650
+            anchors.verticalCenterOffset: 650
             width: 490
             height: 540
             radius: Theme.radiusCard
             color: Theme.bgSurface
             border.color: Theme.accent
             border.width: 3
+            scale: 0.94
 
-            scale: launcherRoot.open ? 1.0 : 0.94
-            Behavior on anchors.verticalCenterOffset { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
-            Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+            states: [
+                State {
+                    name: "open"
+                    when: launcherRoot.open
+                    PropertyChanges { target: menuCard; anchors.verticalCenterOffset: 0; scale: 1.0 }
+                },
+                State {
+                    name: "closed"
+                    when: !launcherRoot.open
+                    PropertyChanges { target: menuCard; anchors.verticalCenterOffset: 650; scale: 0.94 }
+                }
+            ]
+
+            transitions: [
+                Transition {
+                    to: "open"
+                    ParallelAnimation {
+                        SpringAnimation { property: "anchors.verticalCenterOffset"; spring: 4.0; damping: 0.28; epsilon: 0.5 }
+                        SpringAnimation { property: "scale"; spring: 4.2; damping: 0.26; epsilon: 0.005 }
+                    }
+                },
+                Transition {
+                    to: "closed"
+                    ParallelAnimation {
+                        NumberAnimation { property: "anchors.verticalCenterOffset"; duration: 150; easing.type: Easing.InCubic }
+                        NumberAnimation { property: "scale"; duration: 150; easing.type: Easing.InCubic }
+                    }
+                }
+            ]
 
             MouseArea { anchors.fill: parent }
 
