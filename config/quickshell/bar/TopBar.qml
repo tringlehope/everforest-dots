@@ -760,7 +760,7 @@ PanelWindow {
                     Text {
                         id: timeText
                         anchors.centerIn: parent
-                        text: Qt.formatDateTime(clock.date, "HH:mm")
+                        text: clock.date.toLocaleString(Qt.locale("ru_RU"), "d MMMM HH:mm")
                         font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.Bold; color: (timeMouse.containsMouse || timeMouse.pressed) ? Theme.accentOn : Theme.fg; Behavior on color { ColorAnimation { duration: 150 } }
                     }
 
