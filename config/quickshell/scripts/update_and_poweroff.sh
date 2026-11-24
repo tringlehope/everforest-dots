@@ -16,7 +16,8 @@ if command -v yay &>/dev/null; then
 fi
 
 echo "==> [2/4] Обновление конфигов из GitHub..."
-REPO="$HOME/everforest-dots"
+REPO="$HOME/.local/share/everforest-dots"
+[ -d "$HOME/everforest-dots/.git" ] && [ ! -d "$REPO/.git" ] && REPO="$HOME/everforest-dots"
 if [ -d "$REPO/.git" ]; then
     git -C "$REPO" pull --ff-only || echo "[!] Пропущен git pull (есть локальные изменения)"
     BACKUP="$HOME/.config-backup-auto"
