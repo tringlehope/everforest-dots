@@ -4,6 +4,8 @@ import ".."
 Item {
     id: root
     property real value: 0.5
+    property real visualValue: value
+    Behavior on visualValue { NumberAnimation { duration: 110; easing.type: Easing.OutCubic } }
     property color activeColor: Theme.accent
     property color trackColor: Theme.bgFrame
     property bool interactive: true
@@ -31,7 +33,7 @@ Item {
         onHeightChanged: requestPaint()
         Connections {
             target: root
-            function onValueChanged() { waveCanvas.requestPaint(); }
+            function onVisualValueChanged() { waveCanvas.requestPaint(); }
             function onActiveColorChanged() { waveCanvas.requestPaint(); }
         }
 
@@ -47,7 +49,7 @@ Item {
         onPaint: {
             var ctx = getContext("2d");
             ctx.reset();
-            var w = Math.max(0, width * Math.max(0, Math.min(1, root.value)) - 6);
+            var w = Math.max(0, width * Math.max(0, Math.min(1, root.visualValue)) - 6);
             if (w <= 2) return;
             var cy = height / 2;
             var amp = 2.6;
@@ -69,7 +71,7 @@ Item {
     // Бегунок-таблетка
     Rectangle {
         anchors.verticalCenter: parent.verticalCenter
-        x: Math.max(0, Math.min(parent.width - width, parent.width * Math.max(0, Math.min(1, root.value)) - width / 2))
+        x: Math.max(0, Math.min(parent.width - width, parent.width * Math.max(0, Math.min(1, root.visualValue)) - width / 2))
         width: 6
         height: 16
         radius: Theme.r(3)

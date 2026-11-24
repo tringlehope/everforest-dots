@@ -376,6 +376,7 @@ fi
 step "4/4 Настройка сервисов, тем и ассоциаций"
 sudo systemctl enable --now NetworkManager.service 2>/dev/null || true
 sudo systemctl enable --now bluetooth.service 2>/dev/null || true
+systemctl --user enable --now mpris-proxy.service 2>/dev/null || true
 
 sudo mkdir -p /etc/polkit-1/rules.d
 cat << 'PKRULE' | sudo tee /etc/polkit-1/rules.d/50-flatpak.rules >/dev/null

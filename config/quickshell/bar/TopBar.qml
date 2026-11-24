@@ -140,17 +140,17 @@ PanelWindow {
                 Rectangle {
                     anchors.centerIn: parent
                     width: 31; height: 29
-                    radius: Theme.r(menuMouse.pressed ? 6 : (menuMouse.containsMouse ? 8 : 13))
+                    radius: Theme.r(menuMouse.pressed ? 7 : (menuMouse.containsMouse ? 15 : 11))
                     scale: menuMouse.pressed ? 0.92 : (menuMouse.containsMouse ? 1.08 : 1.0)
-                    color: menuMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
-                    Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
-                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                    color: menuMouse.pressed ? Theme.accentWarm : (menuMouse.containsMouse ? Theme.accent : Theme.bgPill)
+                    Behavior on radius { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                    Behavior on scale { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
                     Behavior on color { ColorAnimation { duration: 150 } }
 
                     Text {
                         anchors.centerIn: parent
                         text: "\uf303"
-                        font.family: Theme.iconFont; font.pixelSize: 16; color: Theme.accent
+                        font.family: Theme.iconFont; font.pixelSize: 16; color: (menuMouse.containsMouse || menuMouse.pressed) ? Theme.accentOn : Theme.accent; Behavior on color { ColorAnimation { duration: 150 } }
                     }
                 }
 
@@ -171,8 +171,9 @@ PanelWindow {
                     anchors.centerIn: parent
                     width: parent.width; height: 29
                     radius: Theme.r(wsHover.hovered ? 9 : 13)
-                    color: Theme.bgPill
-                    Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                    color: wsHover.hovered ? Theme.bgElevated : Theme.bgPill
+                    Behavior on color { ColorAnimation { duration: 150 } }
+                    Behavior on radius { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
                 }
 
                 HoverHandler { id: wsHover }
@@ -209,14 +210,14 @@ PanelWindow {
                                 anchors.centerIn: parent
                                 width: parent.width
                                 height: 23
-                                radius: Theme.r(wsItemMouse.pressed ? 5 : (parent.isActive ? 7 : (wsItemMouse.containsMouse ? 6 : 10)))
+                                radius: Theme.r(wsItemMouse.pressed ? 5 : (wsItemMouse.containsMouse ? 12 : (parent.isActive ? 7 : 10)))
                                 scale: wsItemMouse.pressed ? 0.88 : (wsItemMouse.containsMouse ? 1.14 : 1.0)
-                                color: parent.isActive ? Theme.accentWarm : (wsItemMouse.containsMouse ? Theme.bgElevated : (parent.hasWindows ? Theme.bgPillHover : "transparent"))
+                                color: parent.isActive ? Theme.accentWarm : (wsItemMouse.pressed ? Theme.accentWarm : (wsItemMouse.containsMouse ? Theme.accent : (parent.hasWindows ? Theme.bgPillHover : "transparent")))
 
-                                Behavior on width { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
-                                Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
-                                Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
-                                Behavior on color { ColorAnimation { duration: Theme.animFast } }
+                                Behavior on width { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                                Behavior on radius { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                                Behavior on scale { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                                Behavior on color { ColorAnimation { duration: 150 } }
 
                                 Text {
                                     anchors.centerIn: parent
@@ -224,7 +225,8 @@ PanelWindow {
                                     font.family: Theme.fontFamily
                                     font.pixelSize: 13
                                     font.weight: isActive ? Font.Bold : (hasWindows ? Font.Bold : Font.Bold)
-                                    color: isActive ? Theme.accentOn : (hasWindows ? Theme.fg : Theme.fgDim)
+                                    color: (isActive || wsItemMouse.containsMouse || wsItemMouse.pressed) ? Theme.accentOn : (hasWindows ? Theme.fg : Theme.fgDim)
+                                    Behavior on color { ColorAnimation { duration: 150 } }
                                 }
                             }
 
@@ -245,116 +247,171 @@ PanelWindow {
             }
         }
 
-        // --- ЦЕНТР: «Звук» или мини-плеер ---
-        Item {
+        // --- ЦЕНТР: «Звук» или 2 сегмента мини-плеера ---
+        RowLayout {
+            id: centerGroup
             anchors.centerIn: parent
             height: bar.height
-            implicitWidth: centerRow.implicitWidth + 24
+            spacing: 3
 
-            Rectangle {
-                anchors.centerIn: parent
-                width: parent.width
-                height: 29
-                radius: Theme.r(centerMouse.containsMouse ? 8 : 13)
-                color: centerMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
+            // Левый сегмент: «Звук» или «Иконка + Название трека»
+            Item {
+                id: centerInfoItem
+                Layout.fillHeight: true
+                implicitWidth: infoRow.implicitWidth + 22
 
-                Behavior on width { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
-                Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
-            }
+                Rectangle {
+                    anchors.centerIn: parent
+                    width: parent.width
+                    height: 29
+                    topLeftRadius: Theme.r(centerMouse.pressed ? 7 : 15)
+                    bottomLeftRadius: topLeftRadius
+                    topRightRadius: Theme.r(centerMouse.pressed ? 7 : ((centerMouse.containsMouse || !bar.showPlayer) ? 15 : 5))
+                    bottomRightRadius: topRightRadius
+                    scale: centerMouse.pressed ? 0.95 : (centerMouse.containsMouse ? 1.03 : 1.0)
+                    color: centerMouse.pressed ? Theme.accentWarm : (centerMouse.containsMouse ? Theme.accent : Theme.bgPill)
 
-            MouseArea {
-                z: 50
-                anchors.fill: parent
-                acceptedButtons: Qt.NoButton
-                onWheel: wheel => {
-                    var dy = wheel.angleDelta.y !== 0 ? wheel.angleDelta.y : wheel.pixelDelta.y;
-                    if (dy === 0) return;
-                    var step = dy > 0 ? "5%+" : "5%-";
-                    Quickshell.execDetached(["wpctl", "set-volume", "-l", "1.0", "@DEFAULT_AUDIO_SINK@", step]);
-                    bar.volumeScrolled();
+                    Behavior on width { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                    Behavior on topLeftRadius { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                    Behavior on topRightRadius { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                    Behavior on scale { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                    Behavior on color { ColorAnimation { duration: 150 } }
                 }
-            }
 
-            MouseArea {
-                cursorShape: Qt.PointingHandCursor
-                id: centerMouse
-                anchors.fill: parent
-                hoverEnabled: true
-                onClicked: bar.toggleAudio()
-            }
+                MouseArea {
+                    z: 50
+                    anchors.fill: parent
+                    acceptedButtons: Qt.NoButton
+                    onWheel: wheel => {
+                        var dy = wheel.angleDelta.y !== 0 ? wheel.angleDelta.y : wheel.pixelDelta.y;
+                        if (dy === 0) return;
+                        var step = dy > 0 ? "2%+" : "2%-";
+                        Quickshell.execDetached(["wpctl", "set-volume", "-l", "1.0", "@DEFAULT_AUDIO_SINK@", step]);
+                        bar.volumeScrolled();
+                    }
+                }
 
-            RowLayout {
-                id: centerRow
-                anchors.centerIn: parent
-                spacing: 6
+                MouseArea {
+                    id: centerMouse
+                    cursorShape: Qt.PointingHandCursor
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onClicked: bar.toggleAudio()
+                }
 
                 RowLayout {
-                    visible: !bar.showPlayer
+                    id: infoRow
+                    anchors.centerIn: parent
                     spacing: 6
-                    Text {
-                        text: "\uf028"
-                        font.family: Theme.iconFont; font.pixelSize: 13; color: Theme.accent
+
+                    RowLayout {
+                        visible: !bar.showPlayer
+                        spacing: 6
+                        Text {
+                            text: ""
+                            font.family: Theme.iconFont; font.pixelSize: 13
+                            color: (centerMouse.containsMouse || centerMouse.pressed) ? Theme.accentOn : Theme.accent
+                            Behavior on color { ColorAnimation { duration: 150 } }
+                        }
+                        Text {
+                            text: "Звук"
+                            font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.Bold
+                            color: (centerMouse.containsMouse || centerMouse.pressed) ? Theme.accentOn : Theme.fg
+                            Behavior on color { ColorAnimation { duration: 150 } }
+                        }
                     }
-                    Text {
-                        text: "Звук"
-                        font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.Bold; color: Theme.fg
+
+                    RowLayout {
+                        visible: bar.showPlayer
+                        spacing: 6
+
+                        Item {
+                            width: 16; height: 16
+                            IconImage {
+                                id: playerIconImg
+                                anchors.fill: parent
+                                source: Quickshell.iconPath((bar.playerName || "audio-x-generic").split(".")[0], "audio-x-generic")
+                                implicitSize: 16
+                                visible: false
+                            }
+                            MultiEffect {
+                                anchors.fill: playerIconImg
+                                source: playerIconImg
+                                saturation: -1.0
+                                colorization: 0.85
+                                colorizationColor: (centerMouse.containsMouse || centerMouse.pressed) ? Theme.accentOn : Theme.accent
+                            }
+                        }
+
+                        Text {
+                            text: bar.playerTitle || "Музыка"
+                            font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Bold
+                            color: (centerMouse.containsMouse || centerMouse.pressed) ? Theme.accentOn : Theme.fg
+                            Behavior on color { ColorAnimation { duration: 150 } }
+                            elide: Text.ElideRight; Layout.maximumWidth: 150
+                        }
                     }
+                }
+            }
+
+            // Правый сегмент: кнопки управления плеером
+            Item {
+                visible: bar.showPlayer
+                Layout.fillHeight: true
+                implicitWidth: mediaRow.implicitWidth + 10
+
+                HoverHandler { id: mediaGroupHover }
+
+                Rectangle {
+                    anchors.centerIn: parent
+                    width: parent.width
+                    height: 29
+                    topLeftRadius: Theme.r(mediaGroupHover.hovered ? 15 : 5)
+                    bottomLeftRadius: topLeftRadius
+                    topRightRadius: Theme.r(15)
+                    bottomRightRadius: topRightRadius
+                    color: Theme.bgPill
+
+                    Behavior on topLeftRadius { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                    Behavior on color { ColorAnimation { duration: 150 } }
                 }
 
                 RowLayout {
-                    visible: bar.showPlayer
-                    spacing: 4
-
-                    Item {
-                        width: 16; height: 16
-                        IconImage {
-                            id: playerIconImg
-                            anchors.fill: parent
-                            source: Quickshell.iconPath((bar.playerName || "audio-x-generic").split(".")[0], "audio-x-generic")
-                            implicitSize: 16
-                            visible: false
-                        }
-                        MultiEffect {
-                            anchors.fill: playerIconImg
-                            source: playerIconImg
-                            saturation: -1.0
-                            colorization: 0.85
-                            colorizationColor: Theme.accent
-                        }
-                    }
-
-                    Text {
-                        text: bar.playerTitle || "Музыка"
-                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Bold; color: Theme.fg
-                        elide: Text.ElideRight; Layout.maximumWidth: 140
-                        Layout.rightMargin: 4
-                    }
+                    id: mediaRow
+                    anchors.centerIn: parent
+                    spacing: 2
 
                     Rectangle {
-                        scale: prevM.pressed ? 0.94 : (prevM.containsMouse ? 1.04 : 1.0)
-                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
-                        Behavior on color { ColorAnimation { duration: 140 } }
-                        implicitWidth: 30; implicitHeight: 29; radius: Theme.r(prevM.containsMouse ? 6 : 11)
-                        color: prevM.containsMouse ? Theme.bgElevated : "transparent"
-                        Text { anchors.centerIn: parent; text: "\uf048"; font.family: Theme.iconFont; font.pixelSize: 13; color: Theme.fg }
+                        scale: prevM.pressed ? 0.90 : (prevM.containsMouse ? 1.06 : 1.0)
+                        Behavior on scale { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                        Behavior on color { ColorAnimation { duration: 150 } }
+                        Behavior on radius { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                        implicitWidth: 28; implicitHeight: 25
+                        radius: Theme.r(prevM.pressed ? 7 : (prevM.containsMouse ? 12 : 8))
+                        color: prevM.pressed ? Theme.accentWarm : (prevM.containsMouse ? Theme.accent : "transparent")
+                        Text { anchors.centerIn: parent; text: ""; font.family: Theme.iconFont; font.pixelSize: 12; color: (prevM.containsMouse || prevM.pressed) ? Theme.accentOn : Theme.fg; Behavior on color { ColorAnimation { duration: 150 } } }
                         MouseArea { cursorShape: Qt.PointingHandCursor; id: prevM; anchors.fill: parent; hoverEnabled: true; onClicked: bar.runAct(["playerctl", "previous"]) }
                     }
                     Rectangle {
-                        scale: playM.pressed ? 0.94 : (playM.containsMouse ? 1.04 : 1.0)
-                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
-                        Behavior on color { ColorAnimation { duration: 140 } }
-                        implicitWidth: 32; implicitHeight: 29; radius: Theme.r(playM.containsMouse ? 6 : 11)
-                        color: playM.containsMouse ? Theme.bgElevated : "transparent"
-                        Text { anchors.centerIn: parent; text: bar.isPlaying ? "\uf04c" : "\uf04b"; font.family: Theme.iconFont; font.pixelSize: 13; color: Theme.accent }
+                        scale: playM.pressed ? 0.90 : (playM.containsMouse ? 1.06 : 1.0)
+                        Behavior on scale { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                        Behavior on color { ColorAnimation { duration: 150 } }
+                        Behavior on radius { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                        implicitWidth: 30; implicitHeight: 25
+                        radius: Theme.r(playM.pressed ? 7 : (playM.containsMouse ? 12 : 8))
+                        color: playM.pressed ? Theme.accentWarm : (playM.containsMouse ? Theme.accent : "transparent")
+                        Text { anchors.centerIn: parent; text: bar.isPlaying ? "" : ""; font.family: Theme.iconFont; font.pixelSize: 12; color: (playM.containsMouse || playM.pressed) ? Theme.accentOn : Theme.accent; Behavior on color { ColorAnimation { duration: 150 } } }
                         MouseArea { cursorShape: Qt.PointingHandCursor; id: playM; anchors.fill: parent; hoverEnabled: true; onClicked: bar.runAct(["playerctl", "play-pause"]) }
                     }
                     Rectangle {
-                        scale: nextM.pressed ? 0.94 : (nextM.containsMouse ? 1.04 : 1.0)
-                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
-                        Behavior on color { ColorAnimation { duration: 140 } }
-                        implicitWidth: 30; implicitHeight: 29; radius: Theme.r(nextM.containsMouse ? 6 : 11)
-                        color: nextM.containsMouse ? Theme.bgElevated : "transparent"
-                        Text { anchors.centerIn: parent; text: "\uf051"; font.family: Theme.iconFont; font.pixelSize: 13; color: Theme.fg }
+                        scale: nextM.pressed ? 0.90 : (nextM.containsMouse ? 1.06 : 1.0)
+                        Behavior on scale { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                        Behavior on color { ColorAnimation { duration: 150 } }
+                        Behavior on radius { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                        implicitWidth: 28; implicitHeight: 25
+                        radius: Theme.r(nextM.pressed ? 7 : (nextM.containsMouse ? 12 : 8))
+                        color: nextM.pressed ? Theme.accentWarm : (nextM.containsMouse ? Theme.accent : "transparent")
+                        Text { anchors.centerIn: parent; text: ""; font.family: Theme.iconFont; font.pixelSize: 12; color: (nextM.containsMouse || nextM.pressed) ? Theme.accentOn : Theme.fg; Behavior on color { ColorAnimation { duration: 150 } } }
                         MouseArea { cursorShape: Qt.PointingHandCursor; id: nextM; anchors.fill: parent; hoverEnabled: true; onClicked: bar.runAct(["playerctl", "next"]) }
                     }
                 }
@@ -414,8 +471,8 @@ PanelWindow {
 
                     Rectangle {
                         scale: pauseM.pressed ? 0.94 : (pauseM.containsMouse ? 1.04 : 1.0)
-                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
-                        Behavior on color { ColorAnimation { duration: 140 } }
+                        Behavior on scale { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                        Behavior on color { ColorAnimation { duration: 150 } }
                         visible: bar.recording
                         width: 20; height: 20; radius: Theme.r(10)
                         color: pauseM.containsMouse ? Theme.bgPillHover : "transparent"
@@ -436,8 +493,8 @@ PanelWindow {
 
                     Rectangle {
                         scale: stopM.pressed ? 0.94 : (stopM.containsMouse ? 1.04 : 1.0)
-                        Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
-                        Behavior on color { ColorAnimation { duration: 140 } }
+                        Behavior on scale { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                        Behavior on color { ColorAnimation { duration: 150 } }
                         visible: bar.recording
                         width: 20; height: 20; radius: Theme.r(10)
                         color: stopM.containsMouse ? Theme.bgPillHover : "transparent"
@@ -513,7 +570,7 @@ PanelWindow {
                             font.family: Theme.iconFont; font.pixelSize: 13
                             color: trayPill.hasTray ? Theme.fg : Theme.fgDim
                             rotation: trayPill.expanded ? 180 : 0
-                            Behavior on rotation { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                            Behavior on rotation { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
                         }
                     }
 
@@ -524,7 +581,7 @@ PanelWindow {
                         Layout.preferredHeight: 29
                         Layout.preferredWidth: trayPill.expanded ? (trayIconsRow.implicitWidth + 10) : 0
                         implicitWidth: Layout.preferredWidth
-                        Behavior on Layout.preferredWidth { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
+                        Behavior on Layout.preferredWidth { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
 
                         RowLayout {
                             id: trayIconsRow
@@ -600,104 +657,120 @@ PanelWindow {
                 }
             }
 
-            // Отдельный пузырь раскладки (EN / RU)
-            Item {
-                id: kbPill
+            // Сегментированная группа M3 Expressive: Раскладка | Быстрые настройки | Часы
+            RowLayout {
                 Layout.fillHeight: true
-                implicitWidth: kbTxt.implicitWidth + 20
+                spacing: 3
 
-                Rectangle {
-                    anchors.centerIn: parent
-                    width: parent.width; height: 29
-                    radius: kbMouse.pressed ? Theme.r(8) : (kbMouse.containsMouse ? Theme.r(10) : Theme.r(14))
-                    scale: kbMouse.pressed ? 0.94 : (kbMouse.containsMouse ? 1.05 : 1.0)
-                    color: kbMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
-                    Behavior on color { ColorAnimation { duration: 150 } }
-                    Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
-                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
-                }
+                // Левый сегмент: Раскладка (EN / RU)
+                Item {
+                    id: kbPill
+                    Layout.fillHeight: true
+                    implicitWidth: kbTxt.implicitWidth + 20
 
-                Text {
-                    id: kbTxt
-                    anchors.centerIn: parent
-                    text: bar.kbLayout
-                    font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.Bold; color: Theme.fg
-                }
+                    Rectangle {
+                        anchors.centerIn: parent
+                        width: parent.width; height: 29
+                        topLeftRadius: Theme.r(kbMouse.pressed ? 7 : 15)
+                        bottomLeftRadius: topLeftRadius
+                        topRightRadius: Theme.r(kbMouse.pressed ? 7 : (kbMouse.containsMouse ? 15 : 5))
+                        bottomRightRadius: topRightRadius
+                        scale: kbMouse.pressed ? 0.94 : (kbMouse.containsMouse ? 1.04 : 1.0)
+                        color: kbMouse.pressed ? Theme.accentWarm : (kbMouse.containsMouse ? Theme.accent : Theme.bgPill)
+                        Behavior on color { ColorAnimation { duration: 150 } }
+                        Behavior on topLeftRadius { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                        Behavior on topRightRadius { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                        Behavior on scale { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                    }
 
-                MouseArea {
-                    id: kbMouse
-                    cursorShape: Qt.PointingHandCursor
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    onClicked: Quickshell.execDetached(["hyprctl", "switchxkblayout", "all", "next"])
-                    onWheel: wheel => {
-                        var dy = wheel.angleDelta.y !== 0 ? wheel.angleDelta.y : wheel.pixelDelta.y;
-                        if (dy !== 0) Quickshell.execDetached(["hyprctl", "switchxkblayout", "all", "next"]);
+                    Text {
+                        id: kbTxt
+                        anchors.centerIn: parent
+                        text: bar.kbLayout
+                        font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Bold; color: (kbMouse.containsMouse || kbMouse.pressed) ? Theme.accentOn : Theme.fg; Behavior on color { ColorAnimation { duration: 150 } }
+                    }
+
+                    MouseArea {
+                        id: kbMouse
+                        cursorShape: Qt.PointingHandCursor
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        onClicked: Quickshell.execDetached(["hyprctl", "switchxkblayout", "all", "next"])
+                        onWheel: wheel => {
+                            var dy = wheel.angleDelta.y !== 0 ? wheel.angleDelta.y : wheel.pixelDelta.y;
+                            if (dy !== 0) Quickshell.execDetached(["hyprctl", "switchxkblayout", "all", "next"]);
+                        }
                     }
                 }
-            }
 
-            Item {
-                Layout.fillHeight: true
-                implicitWidth: qsIcons.implicitWidth + 18
+                // Средний сегмент: Быстрые настройки
+                Item {
+                    Layout.fillHeight: true
+                    implicitWidth: qsIcons.implicitWidth + 20
 
-                Rectangle {
-                    anchors.centerIn: parent
-                    width: parent.width; height: 29
-                    radius: Theme.r(qsMouse.pressed ? 6 : (qsMouse.containsMouse ? 8 : 13))
-                    scale: qsMouse.pressed ? 0.94 : (qsMouse.containsMouse ? 1.05 : 1.0)
-                    color: qsMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
-                    Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
-                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
-                    Behavior on color { ColorAnimation { duration: 150 } }
+                    Rectangle {
+                        anchors.centerIn: parent
+                        width: parent.width; height: 29
+                        radius: Theme.r(qsMouse.pressed ? 7 : (qsMouse.containsMouse ? 15 : 5))
+                        scale: qsMouse.pressed ? 0.94 : (qsMouse.containsMouse ? 1.04 : 1.0)
+                        color: qsMouse.pressed ? Theme.accentWarm : (qsMouse.containsMouse ? Theme.accent : Theme.bgPill)
+                        Behavior on radius { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                        Behavior on scale { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                        Behavior on color { ColorAnimation { duration: 150 } }
+                    }
+
+                    RowLayout {
+                        id: qsIcons
+                        anchors.centerIn: parent
+                        spacing: 8
+                        Text { text: ""; font.family: Theme.iconFont; font.pixelSize: 14; color: (qsMouse.containsMouse || qsMouse.pressed) ? Theme.accentOn : Theme.fg; Behavior on color { ColorAnimation { duration: 150 } } }
+                        Text { text: ""; font.family: Theme.iconFont; font.pixelSize: 14; color: (qsMouse.containsMouse || qsMouse.pressed) ? Theme.accentOn : Theme.fg; Behavior on color { ColorAnimation { duration: 150 } } }
+                        Text { text: ""; font.family: Theme.iconFont; font.pixelSize: 14; color: (qsMouse.containsMouse || qsMouse.pressed) ? Theme.accentOn : Theme.fg; Behavior on color { ColorAnimation { duration: 150 } } }
+                    }
+
+                    MouseArea {
+                        cursorShape: Qt.PointingHandCursor
+                        id: qsMouse
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        onClicked: bar.toggleQuickSettings()
+                    }
                 }
 
-                RowLayout {
-                    id: qsIcons
-                    anchors.centerIn: parent
-                    spacing: 8
-                    Text { text: "\uf0e8"; font.family: Theme.iconFont; font.pixelSize: 14; color: Theme.fg }
-                    Text { text: "\uf013"; font.family: Theme.iconFont; font.pixelSize: 14; color: Theme.fg }
-                    Text { text: "\uf011"; font.family: Theme.iconFont; font.pixelSize: 14; color: Theme.fg }
-                }
+                // Правый акцентный сегмент: Часы / Уведомления
+                Item {
+                    Layout.fillHeight: true
+                    implicitWidth: timeText.implicitWidth + 22
 
-                MouseArea {
-                    cursorShape: Qt.PointingHandCursor
-                    id: qsMouse
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    onClicked: bar.toggleQuickSettings()
-                }
-            }
+                    Rectangle {
+                        anchors.centerIn: parent
+                        width: parent.width; height: 29
+                        topLeftRadius: Theme.r(timeMouse.pressed ? 7 : (timeMouse.containsMouse ? 15 : 5))
+                        bottomLeftRadius: topLeftRadius
+                        topRightRadius: Theme.r(timeMouse.pressed ? 7 : 15)
+                        bottomRightRadius: topRightRadius
+                        scale: timeMouse.pressed ? 0.94 : (timeMouse.containsMouse ? 1.04 : 1.0)
+                        color: timeMouse.pressed ? Theme.accentWarm : (timeMouse.containsMouse ? Theme.accent : Theme.bgPill)
+                        Behavior on topLeftRadius { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                        Behavior on topRightRadius { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                        Behavior on scale { SpringAnimation { spring: 4.6; damping: 0.22; epsilon: 0.004 } }
+                        Behavior on color { ColorAnimation { duration: 150 } }
+                    }
 
-            Item {
-                Layout.fillHeight: true
-                implicitWidth: timeText.implicitWidth + 18
+                    Text {
+                        id: timeText
+                        anchors.centerIn: parent
+                        text: Qt.formatDateTime(clock.date, "HH:mm")
+                        font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.Bold; color: (timeMouse.containsMouse || timeMouse.pressed) ? Theme.accentOn : Theme.fg; Behavior on color { ColorAnimation { duration: 150 } }
+                    }
 
-                Rectangle {
-                    anchors.centerIn: parent
-                    width: parent.width; height: 29
-                    radius: Theme.r(timeMouse.pressed ? 6 : (timeMouse.containsMouse ? 8 : 13))
-                    scale: timeMouse.pressed ? 0.94 : (timeMouse.containsMouse ? 1.05 : 1.0)
-                    color: timeMouse.containsMouse ? Theme.bgPillHover : Theme.bgPill
-                    Behavior on radius { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
-                    Behavior on scale { SpringAnimation { spring: 4.2; damping: 0.26; epsilon: 0.005 } }
-                    Behavior on color { ColorAnimation { duration: 150 } }
-                }
-
-                Text {
-                    id: timeText
-                    anchors.centerIn: parent
-                    text: Qt.formatDateTime(clock.date, "HH:mm")
-                    font.family: Theme.fontFamily; font.pixelSize: 14; font.weight: Font.Bold; color: Theme.fg
-                }
-
-                MouseArea {
-                    cursorShape: Qt.PointingHandCursor
-                    id: timeMouse
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    onClicked: bar.toggleNotifications()
+                    MouseArea {
+                        cursorShape: Qt.PointingHandCursor
+                        id: timeMouse
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        onClicked: bar.toggleNotifications()
+                    }
                 }
             }
         }

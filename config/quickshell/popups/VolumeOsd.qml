@@ -15,9 +15,9 @@ PanelWindow {
     visible: card.scale > 0.05 || showing
     exclusiveZone: -1
     anchors { top: true }
-    margins.top: Theme.topBarHeight + 8
-    implicitWidth: 270
-    implicitHeight: 62
+    margins.top: Theme.topBarHeight + 2
+    implicitWidth: 310
+    implicitHeight: 84
     color: "transparent"
     WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.namespace: "qs-osd"
