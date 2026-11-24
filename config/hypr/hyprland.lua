@@ -11,7 +11,7 @@ hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 
 hl.on("hyprland.start", function ()
     hl.exec_cmd("systemctl --user start hyprpolkitagent")
-    hl.exec_cmd("sh -c '[ -f ~/.local/state/qs-wallpaper ] && swaybg -i \"$(cat ~/.local/state/qs-wallpaper)\" -m fill'")
+    hl.exec_cmd("sh -c 'w=$(cat ~/.local/state/qs-wallpaper 2>/dev/null); [ -n \"$w\" ] && [ -f \"$w\" ] || w=$(find ~/.local/share/wallpapers/Everforest -type f | sort | head -n1); [ -n \"$w\" ] && { mkdir -p ~/.local/state; printf %s \"$w\" > ~/.local/state/qs-wallpaper; exec swaybg -i \"$w\" -m fill; }'")
     hl.exec_cmd("~/.config/quickshell/scripts/qs_watchdog.sh")
 end)
 
